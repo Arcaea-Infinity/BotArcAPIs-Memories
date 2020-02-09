@@ -17,6 +17,7 @@
 
 #### 🎉 修改版本號
 > $ nano webpack.config.js
+
 修改 `BOT_API_VERSION` 版本 並保存
 
 #### 🚀 開始打包
