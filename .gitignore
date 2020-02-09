@@ -1,0 +1,5 @@
+# webpack bundle path
+[Dd]ist/
+
+# node modules
+[Nn]ode_modules/

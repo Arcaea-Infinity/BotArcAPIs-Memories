@@ -1,0 +1,13 @@
+{
+    "name": "BotArcapi",
+    "author": "CirnoBakaBOT",
+    "version": "0.0.1",
+    "description": "An arcapi for bots running in Cloudflare CDN.",
+    "devDependencies": {
+        "webpack": "^4.41.5",
+        "webpack-cli": "^3.3.10"
+    },
+    "scripts": {
+        "build": "webpack"
+    }
+}
