@@ -1,13 +1,15 @@
 {
-    "name": "BotArcapi",
+    "name": "BotArcAPI",
     "author": "CirnoBakaBOT",
     "version": "0.0.1",
+    "license": "WTFPL",
     "description": "An arcapi for bots running in Cloudflare CDN.",
     "devDependencies": {
         "webpack": "^4.41.5",
         "webpack-cli": "^3.3.10"
     },
     "scripts": {
-        "build": "webpack"
+        "debug": "webpack --config webpack.debug.config.js",
+        "release": "webpack --config webpack.release.config.js"
     }
 }

@@ -1,0 +1,3 @@
+BotArcAPI.userinfo = () => {
+    
+}
