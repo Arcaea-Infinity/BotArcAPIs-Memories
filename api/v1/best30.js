@@ -3,6 +3,6 @@
 // date     : 02/10/2020
 // comment  : api for best30
 
-BotArcAPI.best30 = () => {
-
-}
+export default function () {
+    return "best30";
+};

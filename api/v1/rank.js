@@ -3,6 +3,6 @@
 // date     : 02/10/2020
 // comment  : api for worldrank & friendrank
 
-BotArcAPI.rank = () => {
-    
-}
+export default function () {
+    return "rank";
+};

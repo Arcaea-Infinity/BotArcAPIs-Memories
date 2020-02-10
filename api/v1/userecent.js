@@ -3,6 +3,6 @@
 // date     : 02/10/2020
 // comment  : api for user recent
 
-BotArcAPI.userecent = () => {
-    
-}
+export default function () {
+    return "userecent";
+};

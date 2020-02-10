@@ -3,6 +3,7 @@
 // date     : 02/10/2020
 // comment  : test
 
-BotArcAPI.test = () => {
-    return "233";
-}
+export default function () {
+    return "test";
+};
+

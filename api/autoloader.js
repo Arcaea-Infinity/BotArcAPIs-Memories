@@ -13,5 +13,6 @@ addEventListener('fetch', event => {
 
 // handle request
 async function handleRequest(request) {
-    return new Response(BotArcAPI['test'](), { status: 200 })
+    let api = await new BotArcAPI();
+    return new Response(api.test(), { status: 200 })
 }
