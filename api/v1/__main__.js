@@ -3,12 +3,12 @@
 // date     : 02/10/2020
 // comment  : main file used to export base class
 
-import __test__ from "./test.js";
-import __rank__ from "./rank.js";
-import __best30__ from "./best30.js";
-import __userinfo__ from "./userinfo.js";
-import __userecent__ from "./userecent.js";
-import __checkupdate__ from "./checkupdate.js";
+import __test__ from './test.js';
+import __rank__ from './rank.js';
+import __best30__ from './best30.js';
+import __userinfo__ from './userinfo.js';
+import __userecent__ from './userecent.js';
+import __checkupdate__ from './checkupdate.js';
 
 export default function BotArcAPI() {
     this.test = __test__;

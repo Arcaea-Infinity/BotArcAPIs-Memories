@@ -17,18 +17,18 @@ async function handleRequest(request) {
 
     // process request url, example below:
     // https://example.com/v(_api_version)/(_api_method)[?(_api_arguments)]
-    let _regexp_result = request.url.match(/https:\/\/.*?\/v(\d)\/(.*)/);
+    const _regexp_result = request.url.match(/https:\/\/.*?\/v(\d)\/(.*)/);
     if (!_regexp_result)
         return Utils.MakeHttpResponse(404);
 
     // split method and arguments
-    let _split_result = _regexp_result[2].split('?');
+    const _split_result = _regexp_result[2].split('?');
 
     // prepare data
-    let _api = new BotArcAPI();
-    let _api_version = _regexp_result[1];
-    let _api_method = _split_result[0];
-    let _api_arguments = Utils.UrlArgumentToObject(_split_result[1]);
+    const _api = new BotArcAPI();
+    const _api_version = _regexp_result[1];
+    const _api_method = _split_result[0];
+    const _api_arguments = Utils.UrlArgumentToObject(_split_result[1]);
     console.log(_api_arguments);
 
     // check for api version
@@ -40,7 +40,7 @@ async function handleRequest(request) {
         return Utils.MakeHttpResponse(404);
 
     // invoke method
-    let _api_result = await _api[_api_method](_api_arguments);
+    const _api_result = await _api[_api_method](_api_arguments);
 
     return Utils.MakeHttpResponse(200, JSON.stringify(_api_result));
 }

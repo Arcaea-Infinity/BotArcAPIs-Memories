@@ -26,19 +26,42 @@ export default class {
     }
 
     // construct the json from api results
-    static MakeApiObject(code, message, template) {
-        let _object = {};
+    static MakeApiObject(status, template, message = '') {
 
-        // default response format
-        _object.code = code;
-        _object.message = message;
+        // this is part of http status code
+        const _message_table = {
+            '200': 'OK',
+            '400': 'Bad Request',
+            '401': 'Unauthorized',
+            '403': 'Forbidden',
+            '404': 'Not Found',
+            '405': 'Method Not Allowed',
+            '408': 'Request Timeout',
+            '418': 'I\'m a teapot',
+            '500': 'Internal Server Error',
+            '501': 'Not Implemented',
+            '502': 'Bad Gateway',
+            '503': 'Service Unavailable',
+            '504': 'Gateway Timeout'
+        }
+
+        let _object_body = {};
+
+        // check status is valid
+        if (typeof _message_table[status] != 'string') {
+            status = 501;
+            message = _message_table[_object_body.status];
+        }
+        _object_body.status = status;
+        _object_body.message = (message == '' ? _message_table[status] : message);
 
         // if successful then return data entity
-        if (code === 200)
-            _object.contents = template;
+        if (status == 200)
+            _object_body.contents = template;
 
-        return _object;
+        return _object_body;
     }
+
 
     // convert http arguments string to
     // javascript object like this
@@ -48,4 +71,27 @@ export default class {
         return Object.fromEntries(_url_params);
     }
 
+
+    // request an arc account from cloudflare KV
+    static async RequestArcAccount() {
+        let _account = null;
+
+        // query database for account name
+        const _account_list = await KVARCACCOUNT.list();
+        if (_account_list.list_complete) {
+            if (_account_list.keys.length) {
+
+                // random account selecting
+                const _account_index = parseInt(Math.random() * (_account_list.keys.length - 1));
+                const _account_name = _account_list.keys[_account_index].name;
+
+                // query database for account info
+                const _account_data = await KVARCACCOUNT.get(_account_name);
+                _account = JSON.parse(_account_data);
+            }
+        }
+
+        // return result, null when failing
+        return _account;
+    }
 }

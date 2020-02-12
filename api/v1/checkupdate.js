@@ -9,35 +9,33 @@ export default async function (argument) {
 
     // initialize response data
     let _response_code = 200;
-    let _response_message = 'ok';
     let _response_data_template = {
         'version': null,
         'download_link': null
     };
 
     // build http request
-    let _remote_request_object =
-        new Request(
-            'https://www.fantasyroom.cn/api/v1/arcver.php', {
+    const _remote_request_object =
+        new Request('https://www.fantasyroom.cn/api/v1/arcver.php', {
             method: 'GET',
             headers: {
-                'user-agent': 'BotArcAPI'
+                'User-Agent': 'BotArcAPI'
             }
         });
     const _remote_response_data = await fetch(_remote_request_object);
     const _json_root = await _remote_response_data.json();
 
-    console.log(_json_root);
-
-    // fill the template
+    // fill the data template
     if (_json_root instanceof Object) {
         if (_json_root.res == 'success') {
             _response_data_template.version = _json_root.contents.android.version;
             _response_data_template.download_link = _json_root.contents.android.apk_dl_link;
-        }
-    }
+
+        } else _response_code = 503;
+
+    } else _response_code = 502;
 
     // make response
-    return Utils.MakeApiObject(_response_code, _response_message, _response_data_template);
+    return Utils.MakeApiObject(_response_code, _response_data_template);
 };
 

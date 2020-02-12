@@ -8,8 +8,7 @@ import Utils from 'Utils';
 export default async function (argument) {
 
     // initialize response data
-    let _response_code = 200;
-    let _response_message = 'ok';
+    let _response_status = 200;
     let _response_data_template = {
         'test': null
     };
@@ -18,6 +17,6 @@ export default async function (argument) {
     _response_data_template.test = '(｡･∀･)ﾉﾞ嗨';
 
     // make response
-    return Utils.MakeApiObject(_response_code, _response_message, _response_data_template);
+    return Utils.MakeApiObject(_response_status, _response_data_template);
 };
 
