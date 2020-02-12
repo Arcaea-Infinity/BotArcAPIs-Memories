@@ -1,4 +1,4 @@
-// filename : webpack.debug.js
+// filename : webpack.release.js
 // author   : CirnoBakaBOT
 // date     : 02/09/2020
 // comment  : this file is entry of webpack,
@@ -48,8 +48,8 @@ module.exports = {
             'BOTARCAPI_MINOR': BOTARCAPI_MINOR,
             'BOTARCAPI_VERSION': BOTARCAPI_VERSION,
             'BOTARCAPI_ARCAPI_VERSION': BOTARCAPI_ARCAPI_VERSION,
-            'BOTARCAPI_ARCAPI_USERAGENT': BOTARCAPI_ARCAPI_USERAGENT,
-            'BOTARCAPI_ARCAPI_APPVERSION': BOTARCAPI_ARCAPI_APPVERSION
+            'BOTARCAPI_ARCAPI_USERAGENT': JSON.stringify(BOTARCAPI_ARCAPI_USERAGENT),
+            'BOTARCAPI_ARCAPI_APPVERSION': JSON.stringify(BOTARCAPI_ARCAPI_APPVERSION)
         })
     ],
     output: {
