@@ -8,7 +8,7 @@ import Utils from 'Utils';
 export default async function (argument) {
 
     // initialize response data
-    let _response_code = 200;
+    let _response_status = 200;
     let _response_data_template = {
         'version': null,
         'download_link': null
@@ -31,11 +31,11 @@ export default async function (argument) {
             _response_data_template.version = _json_root.contents.android.version;
             _response_data_template.download_link = _json_root.contents.android.apk_dl_link;
 
-        } else _response_code = 503;
+        } else _response_status = 503;
 
-    } else _response_code = 502;
+    } else _response_status = 502;
 
     // make response
-    return Utils.MakeApiObject(_response_code, _response_data_template);
+    return Utils.MakeApiObject(_response_status, _response_data_template);
 };
 
