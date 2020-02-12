@@ -1,4 +1,4 @@
-// filename : webpack.release.js
+// filename : webpack.debug.js
 // author   : CirnoBakaBOT
 // date     : 02/09/2020
 // comment  : this file is entry of webpack,
@@ -12,9 +12,12 @@ const BOTARCAPI_MAJOR = 1;
 const BOTARCAPI_MINOR = 0;
 const BOTARCAPI_VERSION = 0;
 const BOTARCAPI_ARCAPI_VERSION = 9;
+const BOTARCAPI_ARCAPI_APPVERSION = '2.5.1c';
+const BOTARCAPI_ARCAPI_USERAGENT = 'WeLoveArcaea (Linux; U; Android 2.3.3; BotArcAPI)'
 const BOTARCAPI_SRC_UTILS = `${SRCDIR}/utils.js`;
 const BOTARCAPI_SRC_AUTOLOADER = `${SRCDIR}/autoloader.js`;
 const BOTARCAPI_SRC_PACKTARGET = `${SRCDIR}/v${BOTARCAPI_MAJOR}/__main__.js`;
+
 
 // webpack configs
 let path = require('path');
@@ -44,7 +47,9 @@ module.exports = {
             'BOTARCAPI_MAJOR': BOTARCAPI_MAJOR,
             'BOTARCAPI_MINOR': BOTARCAPI_MINOR,
             'BOTARCAPI_VERSION': BOTARCAPI_VERSION,
-            'BOTARCAPI_ARCAPI_VERSION': BOTARCAPI_ARCAPI_VERSION
+            'BOTARCAPI_ARCAPI_VERSION': BOTARCAPI_ARCAPI_VERSION,
+            'BOTARCAPI_ARCAPI_USERAGENT': BOTARCAPI_ARCAPI_USERAGENT,
+            'BOTARCAPI_ARCAPI_APPVERSION': BOTARCAPI_ARCAPI_APPVERSION
         })
     ],
     output: {
