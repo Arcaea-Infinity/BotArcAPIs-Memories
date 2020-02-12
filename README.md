@@ -1,7 +1,7 @@
 # BotArcAPI
 
 一個運行在 `CloudflareCDN` 的 Arcaea API <br><br>
-![version](https://img.shields.io/static/v1?label=version&message=0.0.1&color=green&style=flat-square) ![status](https://img.shields.io/static/v1?label=build&message=failing&color=red&style=flat-square)
+![version](https://img.shields.io/static/v1?label=version&message=1.0.0&color=green&style=flat-square) ![status](https://img.shields.io/static/v1?label=build&message=failing&color=red&style=flat-square)
 
 
 #### 🤔 環境配置
