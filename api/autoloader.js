@@ -14,20 +14,33 @@ addEventListener('fetch', event => {
 
 // handle request
 async function handleRequest(request) {
-    // process url and check argument
-    let _regexp_result = await request.url.match(/https:\/\/.*?\/(.*)\/(.*)/);
-    if (_regexp_result == null) return Utils.MakeResponse(404)
-    if (_regexp_result.length != 3) return Utils.MakeResponse(404);
-    if (_regexp_result[1] != 'v' + `${BOTARCAPI_MAJOR}`) return Utils.MakeResponse(404);
 
-    let _api_method = _regexp_result[2];
+    // process request url, example below:
+    // https://example.com/v(_api_version)/(_api_method)[?(_api_arguments)]
+    let _regexp_result = request.url.match(/https:\/\/.*?\/v(\d)\/(.*)/);
+    if (!_regexp_result)
+        return Utils.MakeHttpResponse(404);
 
-    // instantiate api and check argument
-    let _api = await new BotArcAPI();
-    if (typeof _api[_api_method] != 'function') return Utils.MakeResponse(404);
+    // split method and arguments
+    let _split_result = _regexp_result[2].split('?');
+
+    // prepare data
+    let _api = new BotArcAPI();
+    let _api_version = _regexp_result[1];
+    let _api_method = _split_result[0];
+    let _api_arguments = Utils.UrlArgumentToObject(_split_result[1]);
+    console.log(_api_arguments);
+
+    // check for api version
+    if (_api_version != `${BOTARCAPI_MAJOR}`)
+        return Utils.MakeHttpResponse(404);
+
+    // check for request method
+    if (!(_api[_api_method] instanceof Function))
+        return Utils.MakeHttpResponse(404);
 
     // invoke method
-    let _api_result = _api[_api_method]();
+    let _api_result = await _api[_api_method](_api_arguments);
 
-    return Utils.MakeResponse(200, _api_result);
+    return Utils.MakeHttpResponse(200, JSON.stringify(_api_result));
 }
