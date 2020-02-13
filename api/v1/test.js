@@ -21,4 +21,3 @@ export default async function (argument) {
     // make response
     return Utils.MakeApiObject(_response_status, _response_data_template);
 };
-
