@@ -1,4 +1,4 @@
-// filename : _arcapi_friend_add.js
+// filename : /v1/_arcapi_friend_add.js
 // author   : CirnoBakaBOT
 // date     : 02/13/2020
 // commont  : add friend

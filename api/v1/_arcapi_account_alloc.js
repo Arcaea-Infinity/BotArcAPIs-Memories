@@ -1,4 +1,4 @@
-// filename : _arcapi_account_alloc.js
+// filename : /v1/_arcapi_account_alloc.js
 // author   : CirnoBakaBOT
 // date     : 02/13/2020
 // common   : request an arc account atomically
@@ -24,10 +24,10 @@ export default async function () {
             // check data valid
             if (_arc_account_info) {
 
-                // account is in use?
+                // account is already in use?
                 if (_arc_account_info.friends.length == 0) {
 
-                    // unused, lock it
+                    // no? lock it
                     _exit = await ArcApiAccountLock(_arc_account);
                 }
             }

@@ -1,4 +1,4 @@
-// filename : _arcapi_account_release.js
+// filename : /v1/_arcapi_account_release.js
 // author   : CirnoBakaBOT
 // date     : 02/13/2020
 // common   : release an arc account atomically

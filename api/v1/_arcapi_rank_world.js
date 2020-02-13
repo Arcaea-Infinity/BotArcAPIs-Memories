@@ -1,4 +1,4 @@
-// filename : _arcapi_rank_world.js
+// filename : /v1/_arcapi_rank_world.js
 // author   : CirnoBakaBOT
 // date     : 02/13/2020
 

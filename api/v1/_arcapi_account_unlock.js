@@ -1,4 +1,4 @@
-// filename : _arcapi_account_unlock.js
+// filename : /v1/_arcapi_account_unlock.js
 // author   : CirnoBakaBOT
 // date     : 02/13/2020
 // commit   : unlock and arc account atomically
