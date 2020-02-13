@@ -3,7 +3,7 @@
 [![version](https://img.shields.io/static/v1?label=version&message=1.0.0&color=green&style=flat-square)](#)
 [![status](https://img.shields.io/static/v1?label=build&message=failing&color=red&style=flat-square)](#)
 
-一個運行在 [CloudflareCDN](https://workers.cloudflare.com/) 的 Arcaea 游戲數據接口<br>
+一個運行在 [CloudflareCDN Workers](https://workers.cloudflare.com/) 的 Arcaea 游戲數據接口<br>
 
 ## 🤔 環境配置
 - node >= `13.7.0`
