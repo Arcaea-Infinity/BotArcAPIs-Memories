@@ -24,6 +24,7 @@ export default async function (arc_account, user_id) {
         });
     const _remote_response_data = await fetch(_remote_request);
     const _json_root = await _remote_response_data.json();
+    console.log('friend delete', _json_root);
 
     // check for origin arcapi data
     if (!_json_root instanceof Object)
