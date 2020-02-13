@@ -36,10 +36,10 @@ export default async function (argument) {
             if (_arc_friendlist) {
 
                 // delete friend
-                ArcApiFriendDelete(_arc_account, argument.usercode);
+                await ArcApiFriendDelete(_arc_account, _arc_friendlist.friends[0].user_id);
                 
                 // release account
-                ArcApiAccountRelease(_arc_account);
+                await ArcApiAccountRelease(_arc_account);
 
                 // fill the data template
                 _response_data_template.name = _arc_friendlist.friends[0].name;

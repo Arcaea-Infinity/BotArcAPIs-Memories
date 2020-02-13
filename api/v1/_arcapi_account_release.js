@@ -6,5 +6,5 @@
 import ArcApiAccountUnlock from './_arcapi_account_unlock';
 
 export default async function (arc_account) {
-    return ArcApiAccountUnlock(arc_account);
+    return await ArcApiAccountUnlock(arc_account);
 }

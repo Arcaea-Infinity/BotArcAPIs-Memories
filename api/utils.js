@@ -87,8 +87,10 @@ export default class {
 
                 // query database for account info
                 const _account_data = await KVARCACCOUNT.get(_account_name);
-                console.log(_account_data);
                 _account = JSON.parse(_account_data);
+
+                console.log('Utils.RequestArcAccount()', _account_name, _account);
+
             }
         }
 

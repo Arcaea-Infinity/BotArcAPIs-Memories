@@ -18,7 +18,7 @@ export default async function (arc_account) {
         _success = true;
 
         // make sure friend has deleted
-        _arc_friendlist.some(friend => {
+        _arc_friendlist.friends.some(friend => {
             if (friend.user_id == '1000001')
                 _success = false;
         })
