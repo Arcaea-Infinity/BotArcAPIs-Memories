@@ -20,6 +20,7 @@ export default async function (argument) {
     'user_id': null,
     'join_date': null,
     'character': null,
+    'recent_score': null,
     'is_skill_sealed': null,
     'is_char_uncapped': null
   };
@@ -64,6 +65,7 @@ export default async function (argument) {
             _response_data_template.user_id = _arc_friend_target.user_id;
             _response_data_template.join_date = _arc_friend_target.join_date;
             _response_data_template.character = _arc_friend_target.character;
+            _response_data_template.recent_score = _arc_friend_target.recent_score;
             _response_data_template.is_skill_sealed = _arc_friend_target.is_skill_sealed;
             _response_data_template.is_char_uncapped = _arc_friend_target.is_char_uncapped;
 
