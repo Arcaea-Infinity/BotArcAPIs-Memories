@@ -13,14 +13,14 @@ import __debug_clear_all_friends__ from './_debug_clear_all_friends';
 
 export default function BotArcAPI() {
 
-    // noral api methods
-    this.test = __test__;
-    this.rank = __rank__;
-    this.best30 = __best30__;
-    this.userinfo = __userinfo__;
-    this.checkupdate = __checkupdate__;
+  // normal api methods
+  this.test = __test__;
+  this.rank = __rank__;
+  this.best30 = __best30__;
+  this.userinfo = __userinfo__;
+  this.checkupdate = __checkupdate__;
 
-    // debug methods
-    this._debug_clear_friends = __debug_clear_friends__;
-    this._debug_clear_all_friends = __debug_clear_all_friends__;
+  // debug methods
+  this._debug_clear_friends = __debug_clear_friends__;
+  this._debug_clear_all_friends = __debug_clear_all_friends__;
 };
