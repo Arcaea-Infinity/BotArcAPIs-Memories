@@ -4,31 +4,40 @@
 
 export default async function (arc_account) {
 
-    // request origin arcapi
-    const _remote_request =
-        new Request(`https://arcapi.lowiro.com/${BOTARCAPI_ARCAPI_VERSION}/user/me`, {
-            method: 'GET',
-            headers: {
-                'Accept-Encoding': 'identity',
-                'DeviceId': arc_account.deviceid,
-                'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-                'Authorization': `Bearer ${arc_account.token}`,
-                'AppVersion': BOTARCAPI_ARCAPI_APPVERSION,
-                'User-Agent': BOTARCAPI_ARCAPI_USERAGENT,
-                'Host': 'arcapi.lowiro.com',
-                'Connection': 'Keep-Alive'
-            }
-        });
-    const _remote_response_data = await fetch(_remote_request);
-    const _json_root = await _remote_response_data.json();
-    console.log('_arcapi_userme', _json_root);
+  const TAG = '_arcapi_userme.js';
 
-    // check for origin arcapi data
-    if (!_json_root instanceof Object)
-        return null;
-    if (!_json_root.success)
-        return null;
+  let _return_template = {
+    success: false,
+    arc_account_info: null
+  };
 
-    return _json_root.value;
+  // request origin arcapi
+  const _remote_request =
+    new Request(`https://arcapi.lowiro.com/${BOTARCAPI_ARCAPI_VERSION}/user/me`, {
+      method: 'GET',
+      headers: {
+        'Accept-Encoding': 'identity',
+        'DeviceId': arc_account.device_id,
+        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+        'Authorization': `Bearer ${arc_account.token}`,
+        'AppVersion': BOTARCAPI_ARCAPI_APPVERSION,
+        'User-Agent': BOTARCAPI_ARCAPI_USERAGENT,
+        'Host': 'arcapi.lowiro.com',
+        'Connection': 'Keep-Alive'
+      }
+    });
+  const _remote_response_data = await fetch(_remote_request);
+  const _json_root = await _remote_response_data.json();
+  console.log(TAG, _json_root);
+
+  // check for origin arcapi data
+  try {
+    if (_json_root.success) {
+      _return_template.success = true;
+      _return_template.arc_account_info = _json_root.value;
+    }
+  } catch (e) { console.log(TAG, e); }
+
+  return _return_template;
 }
 

@@ -9,7 +9,8 @@ import __best30__ from './best30';
 import __userinfo__ from './userinfo';
 import __userecent__ from './userecent';
 import __checkupdate__ from './checkupdate';
-import __debug_clearfriends from './_debug_clearfriends';
+import __debug_clear_friends__ from './_debug_clear_friends';
+import __debug_clear_all_friends__ from './_debug_clear_all_friends';
 
 export default function BotArcAPI() {
 
@@ -22,5 +23,6 @@ export default function BotArcAPI() {
     this.checkupdate = __checkupdate__;
 
     // debug methods
-    this._debug_clearfriends = __debug_clearfriends;
+    this._debug_clear_friends = __debug_clear_friends__;
+    this._debug_clear_all_friends = __debug_clear_all_friends__;
 };

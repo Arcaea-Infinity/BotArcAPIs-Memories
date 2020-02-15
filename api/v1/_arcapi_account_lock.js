@@ -3,25 +3,47 @@
 // date     : 02/13/2020
 // commit   : unlock and arc account atomically
 
+import Utils from 'Utils';
 import ArcApiFriendAdd from './_arcapi_friend_add';
 
-export default async function (arc_account) {
 
-    let _success = false;
+export default async function (arc_account, arc_account_info = null) {
 
-    // try add friend 'hikari'
-    const _arc_friendlist = await ArcApiFriendAdd(arc_account, '000000001');
+  let _return = null;
+  let _return_template = {
+    success: false,
+    arc_friendlist: null
+  };
 
-    // check result
-    if (_arc_friendlist) {
+  // try get account info from server
+  if (!arc_account_info) {
+    _return = await ArcApiUserMe(arc_account);
 
-        // should be one firend normally
-        if (_arc_friendlist.friends.length == 1) {
+    // if failed
+    if (!_return.success)
+      return _return_template;
 
-            // lock successfully
-            _success = (_arc_friendlist.friends[0].user_id == '1000001');
-        }
-    }
+    // save account info
+    arc_account_info = _return.arc_account_info;
+  }
 
-    return _success;
+  // make sure 'hikari' is not exist in friend list
+  _return = Utils.ArcFriendUserIdExist(arc_account_info.friends, BOTARCAPI_ARCAPI_ATOMICUSER.user_id)
+  if (_return)
+    return _return_template;
+
+  // try add friend 'hikari'
+  _return = await ArcApiFriendAdd(arc_account, BOTARCAPI_ARCAPI_ATOMICUSER.user_code);
+  if (_return.success) {
+
+    // update to latest friend list
+    _return_template.arc_friendlist = _return.arc_friendlist;
+
+    // make sure 'hikari' in friend list
+    _return_template.success =
+      Utils.ArcFriendUserIdExist(_return.arc_friendlist, BOTARCAPI_ARCAPI_ATOMICUSER.user_id);
+
+  }
+
+  return _return_template;
 }

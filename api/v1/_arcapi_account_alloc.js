@@ -9,34 +9,55 @@ import ArcApiAccountLock from './_arcapi_account_lock';
 
 export default async function () {
 
-    let _exit = false;
-    let _count = 0;
-    let _arc_account = null;
+  const TAG = '_arcapi_account_alloc.js';
 
-    do {
-        // request an arc account
-        _arc_account = await Utils.RequestArcAccount();
-        if (_arc_account instanceof Object) {
+  let _isfound = false;
+  let _retry_count = 0;
+  let _arc_account = null;
+  let _arc_account_info = null;
 
-            // request origin arcapi
-            const _arc_account_info = await ArcApiUserMe(_arc_account);
+  let _return = null;
+  let _return_template = {
+    success: false,
+    arc_account: null,
+    arc_account_info: null
+  };
 
-            // check data valid
-            if (_arc_account_info) {
+  do {
+    // request an arc account
+    _return = await Utils.ArcRequestAccount();
+    if (_return.success) {
+      _arc_account = _return.arc_account;
+      console.log(TAG, 'ArcRequestAccount() success', _arc_account.token);
 
-                // account is already in use?
-                if (_arc_account_info.friends.length == 0) {
+      // request origin arcapi
+      _return = await ArcApiUserMe(_arc_account);
+      if (_return.success) {
+        _arc_account_info = _return.arc_account_info;
+        console.log(TAG, 'ArcApiUserMe() success', _arc_account_info);
 
-                    // no? lock it
-                    _exit = await ArcApiAccountLock(_arc_account);
-                }
-            }
-        }
+        // try lock it
+        _return = await ArcApiAccountLock(_arc_account, _arc_account_info);
 
-        if (_count++ > 3) _exit = true;
+        // update friend list
+        _arc_account_info.friends = _return.arc_friendlist;
 
-    } while (!_exit)
+        // lock success?
+        _isfound = _return.success;
+        if (_isfound) break;
 
-    // return account when success
-    return _arc_account;
+      }
+    }
+
+    if (_retry_count++ >= 3) break;
+    console.log(TAG, 'Account alloc failing, retry', _retry_count);
+
+  } while (!_isfound)
+
+  // fill template
+  _return_template.success = _isfound;
+  _return_template.arc_account = _isfound ? _arc_account : null;
+  _return_template.arc_account_info = _isfound ? _arc_account_info : null;
+
+  return _return_template;
 }

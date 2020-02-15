@@ -3,26 +3,29 @@
 // date     : 02/13/2020
 // commit   : unlock and arc account atomically
 
+import Utils from 'Utils';
 import ArcApiFriendDelete from './_arcapi_friend_delete';
 
 export default async function (arc_account) {
 
-    let _success = false;
+  let _return = null;
+  let _return_template = {
+    success: false,
+    arc_friendlist: null
+  };
 
-    // try delete friend 'hikari'
-    const _arc_friendlist = await ArcApiFriendDelete(arc_account, '1000001');
+  // try delete friend
+  _return = await ArcApiFriendDelete(arc_account, BOTARCAPI_ARCAPI_ATOMICUSER.user_id);
+  if (_return.success) {
 
-    // check result
-    if (_arc_friendlist) {
+    // update to latest friend list
+    _return_template.arc_friendlist = _return.arc_friendlist;
 
-        _success = true;
+    // make sure friend has been deleted
+    _return_template.success =
+      Utils.ArcFriendUserIdExist(_return.arc_friendlist, BOTARCAPI_ARCAPI_ATOMICUSER.user_id);
 
-        // make sure friend has deleted
-        _arc_friendlist.friends.some(friend => {
-            if (friend.user_id == '1000001')
-                _success = false;
-        })
-    }
+  }
 
-    return _success;
+  return _return_template;
 }

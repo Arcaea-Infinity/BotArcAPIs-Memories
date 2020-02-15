@@ -32,15 +32,14 @@ async function handleRequest(request) {
     console.log(_api_arguments);
 
     // check for api version
-    if (_api_version != `${BOTARCAPI_MAJOR}`)
+    if (_api_version != BOTARCAPI_MAJOR)
         return Utils.MakeHttpResponse(404);
 
-    // check for request method
-    if (!(_api[_api_method] instanceof Function))
-        return Utils.MakeHttpResponse(404);
+    // try invoke method
+    try {
+        const _api_result = await _api[_api_method](_api_arguments);
+        return Utils.MakeHttpResponse(200, JSON.stringify(_api_result));
 
-    // invoke method
-    const _api_result = await _api[_api_method](_api_arguments);
+    } catch (e) { return Utils.MakeHttpResponse(404); }
 
-    return Utils.MakeHttpResponse(200, JSON.stringify(_api_result));
 }

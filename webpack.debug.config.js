@@ -14,10 +14,10 @@ const BOTARCAPI_VERSION = 0;
 const BOTARCAPI_ARCAPI_VERSION = 9;
 const BOTARCAPI_ARCAPI_APPVERSION = '2.5.1c';
 const BOTARCAPI_ARCAPI_USERAGENT = 'WeLoveArcaea (Linux; U; Android 2.3.3; BotArcAPI)'
+const BOTARCAPI_ARCAPI_ATOMICUSER = { name: 'Hikari', user_id: '1000001', user_code: '000000001' };
 const BOTARCAPI_SRC_UTILS = `${SRCDIR}/utils.js`;
 const BOTARCAPI_SRC_AUTOLOADER = `${SRCDIR}/autoloader.js`;
 const BOTARCAPI_SRC_PACKTARGET = `${SRCDIR}/v${BOTARCAPI_MAJOR}/__main__.js`;
-
 
 // webpack configs
 let path = require('path');
@@ -31,29 +31,30 @@ const WEBPACK_TARGET_PATH = path.resolve(__dirname, 'worker');
 // webpack build
 let webpack = require('webpack');
 module.exports = {
-    mode: WEBPACK_MODE,
-    entry: WEBPACK_ENTRY,
-    target: WEBPACK_TARGET,
-    devtool: WEBPACK_DEVTOOL,
-    resolve: {
-        alias: {
-            Utils: path.resolve(__dirname, BOTARCAPI_SRC_UTILS),
-            BotArcAPI: path.resolve(__dirname, BOTARCAPI_SRC_PACKTARGET)
-        }
-    },
-    plugins: [
-        // new webpack.ProgressPlugin(),
-        new webpack.DefinePlugin({
-            'BOTARCAPI_MAJOR': BOTARCAPI_MAJOR,
-            'BOTARCAPI_MINOR': BOTARCAPI_MINOR,
-            'BOTARCAPI_VERSION': BOTARCAPI_VERSION,
-            'BOTARCAPI_ARCAPI_VERSION': BOTARCAPI_ARCAPI_VERSION,
-            'BOTARCAPI_ARCAPI_USERAGENT': JSON.stringify(BOTARCAPI_ARCAPI_USERAGENT),
-            'BOTARCAPI_ARCAPI_APPVERSION': JSON.stringify(BOTARCAPI_ARCAPI_APPVERSION)
-        })
-    ],
-    output: {
-        filename: WEBPACK_TARGET_NAME,
-        path: WEBPACK_TARGET_PATH
+  mode: WEBPACK_MODE,
+  entry: WEBPACK_ENTRY,
+  target: WEBPACK_TARGET,
+  devtool: WEBPACK_DEVTOOL,
+  resolve: {
+    alias: {
+      Utils: path.resolve(__dirname, BOTARCAPI_SRC_UTILS),
+      BotArcAPI: path.resolve(__dirname, BOTARCAPI_SRC_PACKTARGET)
     }
+  },
+  plugins: [
+    // new webpack.ProgressPlugin(),
+    new webpack.DefinePlugin({
+      'BOTARCAPI_MAJOR': BOTARCAPI_MAJOR,
+      'BOTARCAPI_MINOR': BOTARCAPI_MINOR,
+      'BOTARCAPI_VERSION': BOTARCAPI_VERSION,
+      'BOTARCAPI_ARCAPI_VERSION': BOTARCAPI_ARCAPI_VERSION,
+      'BOTARCAPI_ARCAPI_USERAGENT': JSON.stringify(BOTARCAPI_ARCAPI_USERAGENT),
+      'BOTARCAPI_ARCAPI_APPVERSION': JSON.stringify(BOTARCAPI_ARCAPI_APPVERSION),
+      'BOTARCAPI_ARCAPI_ATOMICUSER': JSON.stringify(BOTARCAPI_ARCAPI_ATOMICUSER),
+    })
+  ],
+  output: {
+    filename: WEBPACK_TARGET_NAME,
+    path: WEBPACK_TARGET_PATH
+  }
 };

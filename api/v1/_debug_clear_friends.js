@@ -16,6 +16,8 @@ export default async function (argument) {
         'friend_list': null
     };
 
+    let _return = null;
+
     // check for arguments
     if (typeof argument.username != 'undefined') {
 
@@ -23,12 +25,14 @@ export default async function (argument) {
         const _arc_account_data = await KVARCACCOUNT.get(argument.username);
         const _arc_account = JSON.parse(_arc_account_data);
 
-        // query origin arcapi
-        const _arc_account_info = await ArcApiUserMe(_arc_account);
-        console.log(_arc_account, _arc_account_info);
+        let _arc_account_info = null;
 
-        // check data valid
-        if (_arc_account_info) {
+        // query origin arcapi
+        _return = await ArcApiUserMe(_arc_account);
+        if (_return.success) {
+            _arc_account_info = _return.arc_account_info;
+
+            console.log(_arc_account, _arc_account_info);
 
             // fill the template
             _response_data_template.clear_count = _arc_account_info.friends.length;
