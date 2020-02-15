@@ -7,7 +7,6 @@ import __test__ from './test';
 import __rank__ from './rank';
 import __best30__ from './best30';
 import __userinfo__ from './userinfo';
-import __userecent__ from './userecent';
 import __checkupdate__ from './checkupdate';
 import __debug_clear_friends__ from './_debug_clear_friends';
 import __debug_clear_all_friends__ from './_debug_clear_all_friends';
@@ -19,7 +18,6 @@ export default function BotArcAPI() {
     this.rank = __rank__;
     this.best30 = __best30__;
     this.userinfo = __userinfo__;
-    this.userecent = __userecent__;
     this.checkupdate = __checkupdate__;
 
     // debug methods
