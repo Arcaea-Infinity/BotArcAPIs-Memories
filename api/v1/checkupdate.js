@@ -9,7 +9,7 @@ export default async function (argument) {
 
   // initialize response data
   let _response_status = 200;
-  let _response_data_template = {
+  const _response_data_template = {
     'version': null,
     'download_link': null
   };

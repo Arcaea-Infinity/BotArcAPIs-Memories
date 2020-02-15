@@ -9,7 +9,7 @@ import ArcApiFriendDelete from './_arcapi_friend_delete';
 export default async function (arc_account) {
 
   let _return = null;
-  let _return_template = {
+  const _return_template = {
     success: false,
     arc_friendlist: null
   };

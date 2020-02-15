@@ -6,7 +6,7 @@ export default async function (arc_account) {
 
   const TAG = '_arcapi_userme.js';
 
-  let _return_template = {
+  const _return_template = {
     success: false,
     arc_account_info: null
   };

@@ -17,7 +17,7 @@ export default async function () {
   let _arc_account_info = null;
 
   let _return = null;
-  let _return_template = {
+  const _return_template = {
     success: false,
     arc_account: null,
     arc_account_info: null

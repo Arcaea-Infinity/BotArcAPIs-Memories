@@ -10,13 +10,12 @@ import ArcApiFriendClear from './_arcapi_friend_clear';
 export default async function (argument) {
 
     // initialize response data
+    let _return = null;
     let _response_status = 200;
-    let _response_data_template = {
+    const _response_data_template = {
         'clear_count': null,
         'friend_list': null
     };
-
-    let _return = null;
 
     // check for arguments
     if (typeof argument.username != 'undefined') {

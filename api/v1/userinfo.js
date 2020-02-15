@@ -13,8 +13,9 @@ export default async function (argument) {
   const TAG = 'userinfo.js';
 
   // initialize response data
+  let _return = null;
   let _response_status = 200;
-  let _response_data_template = {
+  const _response_data_template = {
     'name': null,
     'rating': null,
     'user_id': null,
@@ -27,8 +28,6 @@ export default async function (argument) {
 
   // check for arguments
   if (typeof argument.usercode != 'undefined') {
-
-    let _return = null;
 
     // request an arc account
     _return = await ArcApiAccountAlloc();
@@ -49,7 +48,7 @@ export default async function (argument) {
           // compare and find new friend
           const _arc_friend_target =
             Utils.ArcCompareFriendList(_arc_friendlist_before, _arc_friendlist_current);
-          console.log(TAG, '_arc_friend_index', _arc_friend_target);
+          console.log(TAG, '_arc_friend_target', _arc_friend_target);
 
           if (_arc_friend_target) {
 

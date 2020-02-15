@@ -5,7 +5,7 @@
 
 export default async function (arc_account, user_code) {
 
-  let _return_template = {
+  const _return_template = {
     success: false,
     arc_friendlist: null
   };

@@ -10,12 +10,12 @@ import ArcApiFriendClear from './_arcapi_friend_clear';
 export default async function (argument) {
 
     // initialize response data
+    let _return = null;
     let _response_status = 200;
-    let _response_data_template = {
+    const _response_data_template = {
         'clear_count': null,
     };
 
-    let _return = null;
     const _arc_account_names = await KVARCACCOUNT.list();
     if (_arc_account_names.list_complete) {
 
