@@ -3,6 +3,7 @@
 // date     : 02/13/2020
 
 export default async function (arc_account, song_id, difficulty, start = 0, limit = 10) {
+
   const TAG = '_arcapi_rank_me.js';
 
   const _return_template = {
@@ -31,11 +32,12 @@ export default async function (arc_account, song_id, difficulty, start = 0, limi
       }
     });
   const _remote_response_data = await fetch(_remote_request);
-  const _json_root = await _remote_response_data.json();
-  console.log(TAG, _json_root);
 
   // check for origin arcapi data
   try {
+    const _json_root = await _remote_response_data.json();
+    console.log(TAG, _json_root);
+
     if (_json_root.success) {
       _return_template.success = true;
       _return_template.arc_ranklist = _json_root.value;

@@ -15,6 +15,8 @@ addEventListener('fetch', event => {
 // handle request
 async function handleRequest(request) {
 
+  const TAG = 'autoloader.js';
+
   // process request url, example below:
   // https://example.com/v(_api_version)/(_api_method)[?(_api_arguments)]
   const _regexp_result = request.url.match(/https:\/\/.*?\/v(\d)\/(.*)/);
@@ -29,7 +31,7 @@ async function handleRequest(request) {
   const _api_version = _regexp_result[1];
   const _api_method = _split_result[0];
   const _api_arguments = Utils.UrlArgumentToObject(_split_result[1]);
-  console.log(_api_arguments);
+  console.log(TAG, _api_version, _api_method, _api_arguments);
 
   // check for api version
   if (_api_version != BOTARCAPI_MAJOR)
@@ -40,6 +42,6 @@ async function handleRequest(request) {
     const _api_result = await _api[_api_method](_api_arguments);
     return Utils.MakeHttpResponse(200, JSON.stringify(_api_result));
 
-  } catch (e) { return Utils.MakeHttpResponse(404); }
+  } catch (e) { console.log(e); return Utils.MakeHttpResponse(404); }
 
 }

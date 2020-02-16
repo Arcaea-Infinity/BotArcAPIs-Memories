@@ -27,11 +27,12 @@ export default async function (arc_account) {
       }
     });
   const _remote_response_data = await fetch(_remote_request);
-  const _json_root = await _remote_response_data.json();
-  console.log(TAG, _json_root);
 
   // check for origin arcapi data
   try {
+    const _json_root = await _remote_response_data.json();
+    console.log(TAG, _json_root);
+    
     if (_json_root.success) {
       _return_template.success = true;
       _return_template.arc_account_info = _json_root.value;

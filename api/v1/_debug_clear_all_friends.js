@@ -1,4 +1,4 @@
-// filename : /v1/_debug_clearfriends.js
+// filename : /v1/_debug_clear_all_friends.js
 // author   : CirnoBakaBOT
 // date     : 02/14/2020
 // comment  : delete all friends (debug only)
@@ -14,6 +14,7 @@ export default async function (argument) {
     let _response_status = 200;
     const _response_data_template = {
         'clear_count': null,
+        'friend_list': null
     };
 
     const _arc_account_names = await KVARCACCOUNT.list();

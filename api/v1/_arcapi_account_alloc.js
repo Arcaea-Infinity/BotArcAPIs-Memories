@@ -49,7 +49,7 @@ export default async function () {
       }
     }
 
-    if (_retry_count++ >= 3) break;
+    if (++_retry_count >= 3) break;
     console.log(TAG, 'Account alloc failing, retry', _retry_count);
 
   } while (!_isfound)

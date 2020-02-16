@@ -14,9 +14,9 @@ export default function (errcode) {
     602: 'Friend existed',
   };
 
-  try {
-    return _errcode_table[errcode];
-  } catch (e) { return `Unknown error ${errcode}`; }
-
+  if (typeof _errcode_table[errcode] == 'undefined')
+    return `Unknown error ${errcode}`;
+    
+  return _errcode_table[errcode];
 }
 
