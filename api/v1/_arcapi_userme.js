@@ -20,6 +20,7 @@ export default async function (arc_account) {
         'DeviceId': arc_account.device_id,
         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
         'Authorization': `Bearer ${arc_account.token}`,
+        'Platform': 'android',
         'AppVersion': BOTARCAPI_ARCAPI_APPVERSION,
         'User-Agent': BOTARCAPI_ARCAPI_USERAGENT,
         'Host': 'arcapi.lowiro.com',

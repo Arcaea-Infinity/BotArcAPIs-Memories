@@ -17,6 +17,7 @@ export default async function (arc_account, user_id) {
       headers: {
         'Accept-Encoding': 'identity',
         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+        'Platform': 'android',
         'Authorization': `Bearer ${arc_account.token}`,
         'AppVersion': BOTARCAPI_ARCAPI_APPVERSION,
         'User-Agent': BOTARCAPI_ARCAPI_USERAGENT,
