@@ -149,7 +149,7 @@ export default class {
       return ptt + 1.5 + (score - 9950000) / 100000;
     else if (score >= 9800000)
       return ptt + 1 + (score - 9800000) / 400000;
-    else let _value = ptt + (score - 9500000) / 300000;
+    let _value = ptt + (score - 9500000) / 300000;
     return _value < 0 ? 0 : _value;
   }
 }
