@@ -26,7 +26,7 @@ export default class {
   }
 
   // construct the json from api results
-  static MakeApiObject(status, template, message = '') {
+  static MakeApiObject(status, template = {}, message = '') {
 
     // this is part of http status code
     const _message_table = {
@@ -139,5 +139,17 @@ export default class {
     });
 
     return _is_exist;
+  }
+
+  // calc song rating
+  static ArcCalcSongRating(score, ptt) {
+    if (score >= 10000000)
+      return ptt + 2;
+    else if (score >= 9950000)
+      return ptt + 1.5 + (score - 9950000) / 100000;
+    else if (score >= 9800000)
+      return ptt + 1 + (score - 9800000) / 400000;
+    else let _value = ptt + (score - 9500000) / 300000;
+    return _value < 0 ? 0 : _value;
   }
 }
