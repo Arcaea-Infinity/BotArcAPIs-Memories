@@ -28,7 +28,6 @@ export default function (errcode) {
     121: 'This account is locked.',
     122: 'A temporary hold has been placed on your account. Please visit the official website to resolve the issue.',
     150: 'This feature has been restricted for your account. If you are unsure why, please contact support@lowiro.com',
-    301: 'This partner does not exist',
     401: 'This user does not exist.',
     403: 'Could not connect to online server.',
     501: 'This item is currently unavailable to purchase.',
@@ -39,9 +38,13 @@ export default function (errcode) {
     604: 'You can\'t be friends with yourself ;-;',
     601: 'Your friends list is full.',
     602: 'This user is already your friend.',
+    801: "There was a problem receiving the server response. Please check your progress after re-entering World Mode.",
+    802: "This score could not be submitted online. Please restart or update Arcaea.",
     803: 'There was a problem submitting this score online. WARNING!Stamina has already been consumed. Exiting will lose World Mode progress.',
+    804: "Password reset expired. Please request a new reset link.",
     903: 'Max downloads exceeded. Please wait 24 hours and try again.',
-    905: 'Download too much, please wait another 24 hours.',
+    905: "Please wait 24 hours before using this feature again.",
+    9701: "Game data is out of sync due to another device. Please check your progress after re-entering World Mode.",
     9801: 'An error occured downloading the song.Please try again.',
     9802: 'There was a problem saving the song.Please check storage.',
     9905: 'No data found to sync.',
@@ -54,4 +57,3 @@ export default function (errcode) {
 
   return _errcode_table[errcode];
 }
-
