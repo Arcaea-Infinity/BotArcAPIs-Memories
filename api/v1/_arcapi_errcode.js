@@ -48,6 +48,7 @@ export default function (errcode) {
     9801: 'An error occured downloading the song.Please try again.',
     9802: 'There was a problem saving the song.Please check storage.',
     9905: 'No data found to sync.',
+    9906: "Sync failed due to conflicting data from another device. Please perform sync from Main Menu > Network.",
     9907: 'A problem occured updating data...',
     9908: 'There is a new version of Arcaea available.Please update.'
   };
