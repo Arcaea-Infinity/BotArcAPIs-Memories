@@ -2,13 +2,13 @@
   "name": "botarcapi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "source/__loader__.js",
   "dependencies": {
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "debug": "node source/__loader__.js"
   },
   "repository": {
     "type": "git",
