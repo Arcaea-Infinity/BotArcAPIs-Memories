@@ -3,20 +3,22 @@
 [![version](https://img.shields.io/static/v1?label=version&message=1.0.0&color=green&style=flat-square)](#)
 [![status](https://img.shields.io/static/v1?label=build&message=failing&color=red&style=flat-square)](#)
 
-一個運行在 [CloudflareCDN Workers](https://workers.cloudflare.com/) 的 Arcaea 游戲數據接口<br>
+An ArcAPI for bots running in NodeJS. <br/>
 
-## 🤔 環境配置
-- node >= `13.7.0`
-- npm >= `6.13.6`
-- webpack >= `4.41.5`
-- webpack-cli >= `3.3.10`
+## 🤔 Dependences
+- node >= `v12.16.0`
+- npm >= `v6.14.0`
+- sqlite3 >= `v4.1.1`
 
-## 🌎 克隆倉庫
-> $ git clone https://git.moezsoft.com:4333/arcaeascorebot-developer/botarcapi.git  
+## 🌎 Clone
+> $ git clone https://git.moezsoft.com:4333/konata-dev/botarcapi
 > $ git checkout master
 
-## 🎉 打包
+## 🎉 Run directly
 > $ npm run release
 
-## 💕 許可證
-根據 `WTFPL` 許可證授權分發 (想怎麽用就怎麽用 草XD
+## 🐋 Docker
+### Docker image will be support in the future.
+
+## 💕 License
+### Licensed by `WTFPL`.
