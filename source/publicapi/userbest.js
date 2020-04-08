@@ -3,12 +3,12 @@
 // date     : 02/16/2020
 // comment  : api for user best record
 
-import Utils from 'Utils';
-import ArcApiFriendAdd from '../arcapi/_arcapi_friend_add';
-import ArcApiFriendDelete from './arcapi/_arcapi_friend_delete';
-import ArcApiAccountAlloc from './arcapi/_arcapi_account_alloc';
-import ArcApiAccountRelease from './arcapi/_arcapi_account_release';
-import ArcApiRankFriend from './arcapi/_arcapi_rank_friend';
+const Utils = require('./utils.js');
+const ArcApiFriendAdd = require('../arcapi/_arcapi_friend_add');
+const ArcApiFriendDelete = require('./arcapi/_arcapi_friend_delete');
+const ArcApiAccountAlloc = require('./arcapi/_arcapi_account_alloc');
+const ArcApiAccountRelease = require('./arcapi/_arcapi_account_release');
+const ArcApiRankFriend = require('./arcapi/_arcapi_rank_friend');
 
 export default async function (argument) {
   const TAG = 'userbest.js';

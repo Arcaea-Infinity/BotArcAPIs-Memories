@@ -1,5 +1,5 @@
-# webpack bundle path
-[Ww]orker/
-
 # node modules
 [Nn]ode_modules/
+
+# database files
+[Ss]avedata/

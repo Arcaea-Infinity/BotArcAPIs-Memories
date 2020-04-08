@@ -1,6 +1,6 @@
-// filename : /v1/test.js
+// filename : /source/publicapi/test.js
 // author   : CirnoBakaBOT
-// date     : 02/10/2020
+// date     : 04/09/2020
 // comment  : test api
 
 module.exports = async function (argument) {

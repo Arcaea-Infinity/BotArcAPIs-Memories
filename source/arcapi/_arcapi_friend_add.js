@@ -3,7 +3,7 @@
 // date     : 02/13/2020
 // commont  : add friend
 
-export default async function (arc_account, user_code) {
+module.exports = function (arc_account, user_code) {
 
   const _return_template = {
     success: false,

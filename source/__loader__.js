@@ -1,21 +1,21 @@
-// filename : autoloader.js
+// filename : __loader__.js
 // author   : CirnoBakaBOT
 // date     : 02/09/2020
 // comment  : autoloader can handle api request and map to class methods,
 //            make api maintaining easily it's also global access entry
 
+// this is a hack to load config macros
+// and persistence sqlite link in global space
+require('./config');
+require('./database/init');
 const Http = require('http');
-// @ts-ignore
 const Utils = require('./utils.js');
-// @ts-ignore
-const Config = require('./__config__');
-const BotArcAPI = require('./publicapi/__main__');
 
+const TAG = '__loader__.js';
 
-// handle request
+// handle http request
 async function handleRequest(request, response) {
 
-  const TAG = 'autoloader.js';
   let _response_status = 200;
   const _response_template = {
     status: null,
@@ -37,18 +37,20 @@ async function handleRequest(request, response) {
     console.log(TAG, _api_version, _api_method, _api_arguments);
 
     // check for api version
-    if (_api_version == Config.BOTARCAPI_MAJOR) {
+    if (_api_version == BOTARCAPI_MAJOR) {
 
       // try invoke method
       try {
-        const _api_result = await BotArcAPI[_api_method](_api_arguments);
+        const _api_interface = require(`./publicapi/${_api_method}`);
+        const _api_result = await _api_interface(_api_arguments);
+
+        // fill result
         _response_template.status = _api_result.status;
         _response_template.content = _api_result.content;
 
       } catch (e) { console.log(e); _response_status = 404; }
     } else _response_status = 404;
   } else _response_status = 404;
-
 
   // make response body
   let _http_body = null;
@@ -71,11 +73,10 @@ async function handleRequest(request, response) {
   // send json result to client
   response.statusCode = _response_status;
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
-  response.setHeader('Server', `BotArcAPI v${Config.BOTARCAPI_VERSTR}`);
+  response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
   response.end(_http_body);
 }
 
 // create a simple http server
-// listening on port 8000
 const server = Http.createServer(handleRequest);
-server.listen(8000);
+server.listen(SERVER_PORT);

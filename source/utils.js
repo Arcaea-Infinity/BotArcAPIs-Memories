@@ -4,26 +4,6 @@
 // comment  : some utility functions here
 
 module.exports = class {
-  
-  // make http response
-  // default content-type is application/json;
-  static MakeHttpResponse(http_code, message = '') {
-    return new Response(message, {
-      status: http_code,
-      headers: {
-        'content-type': 'application/json; charset=utf-8',
-        'botarcapi-version': `${BOTARCAPI_MAJOR}.${BOTARCAPI_MINOR}.${BOTARCAPI_VERSION}`
-      }
-    });
-  }
-
-  // make http request
-  static MakeHttpRequest(http_method, http_url, http_headers = {}) {
-    return new Request(http_url, {
-      method: http_method,
-      headers: http_headers
-    });
-  }
 
   // convert http arguments string to
   // javascript object like this
@@ -32,7 +12,6 @@ module.exports = class {
     let _url_params = new URLSearchParams(http_arguments);
     return Object.fromEntries(_url_params);
   }
-
 
   // request an arc account from cloudflare KV
   static async ArcRequestAccount() {
@@ -46,38 +25,6 @@ module.exports = class {
       }
     };
     return _return_template;
-    /*
-        let _return_template = {
-          success: false,
-          arc_account: null
-        };
-    
-        // query database for account name
-        const _account_list = await KVARCACCOUNT.list();
-        if (_account_list.list_complete) {
-          if (_account_list.keys.length) {
-    
-            // random account selecting
-            const _account_index = parseInt(Math.random() * (_account_list.keys.length - 1));
-            const _account_name = _account_list.keys[_account_index].name;
-    
-            // query database for account info
-            const _account_data = await KVARCACCOUNT.get(_account_name);
-    
-            _return_template.success = true;
-            _return_template.arc_account = JSON.parse(_account_data);
-    
-            console.log('Utils.RequestArcAccount()', _account_name, _return_template.arc_account);
-          }
-        }
-    
-        return _return_template;
-    */
-  }
-
-  // save arc records to KV database
-  static async ArcSaveRecord(arc_record) {
-
   }
 
   // B must includes A
