@@ -11,14 +11,14 @@ An ArcAPI for bots running in NodeJS. <br/>
 - sqlite3 >= `v4.1.1`
 
 ## 🌎 Clone
-> $ git clone https://git.moezsoft.com:4333/konata-dev/botarcapi
+> $ git clone https://git.moezsoft.com:4333/konata-dev/botarcapi  
 > $ git checkout master
 
 ## 🎉 Run directly
 > $ npm run release
 
 ## 🐋 Docker
-### Docker image will be support in the future.
+#### Docker image will be support in the future.
 
 ## 💕 License
-### Licensed by `WTFPL`.
+#### Licensed by `WTFPL`.
