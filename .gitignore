@@ -3,6 +3,3 @@
 
 # node modules
 [Nn]ode_modules/
-
-# cloudflare wrangler
-wrangler.toml

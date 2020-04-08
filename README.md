@@ -10,7 +10,6 @@
 - npm >= `6.13.6`
 - webpack >= `4.41.5`
 - webpack-cli >= `3.3.10`
-- wrangler >= `1.7.0` (可選)
 
 ## 🌎 克隆倉庫
 > $ git clone https://git.moezsoft.com:4333/arcaeascorebot-developer/botarcapi.git  

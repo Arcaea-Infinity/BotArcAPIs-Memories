@@ -1,15 +1,19 @@
 {
-    "name": "BotArcAPI",
-    "author": "CirnoBakaBOT",
-    "version": "1.0.0",
-    "license": "WTFPL",
-    "description": "An arcapi for bots running in Cloudflare CDN.",
-    "devDependencies": {
-        "webpack": "^4.41.5",
-        "webpack-cli": "^3.3.10"
-    },
-    "scripts": {
-        "debug": "webpack --config webpack.debug.config.js",
-        "release": "webpack --config webpack.release.config.js"
-    }
+  "name": "botarcapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.moezsoft.com:4333/konata-dev/botarcapi.git"
+  },
+  "author": "",
+  "license": "WTFPL"
 }

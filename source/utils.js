@@ -3,8 +3,8 @@
 // date     : 02/09/2020
 // comment  : some utility functions here
 
-export default class {
-
+module.exports = class {
+  
   // make http response
   // default content-type is application/json;
   static MakeHttpResponse(http_code, message = '') {
@@ -24,44 +24,6 @@ export default class {
       headers: http_headers
     });
   }
-
-  // construct the json from api results
-  static MakeApiObject(status, template = {}, message = '') {
-
-    // this is part of http status code
-    const _message_table = {
-      '200': 'OK',
-      '400': 'Bad Request',
-      '401': 'Unauthorized',
-      '403': 'Forbidden',
-      '404': 'Not Found',
-      '405': 'Method Not Allowed',
-      '408': 'Request Timeout',
-      '418': 'I\'m a teapot',
-      '500': 'Internal Server Error',
-      '501': 'Not Implemented',
-      '502': 'Bad Gateway',
-      '503': 'Service Unavailable',
-      '504': 'Gateway Timeout'
-    }
-
-    let _object_body = {};
-
-    // check status is valid
-    if (typeof _message_table[status] != 'string') {
-      status = 501;
-      message = _message_table[_object_body.status];
-    }
-    _object_body.status = status;
-    _object_body.message = (message == '' ? _message_table[status] : message);
-
-    // if successful then return data entity
-    if (status == 200)
-      _object_body.contents = template;
-
-    return _object_body;
-  }
-
 
   // convert http arguments string to
   // javascript object like this

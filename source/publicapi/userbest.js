@@ -4,11 +4,11 @@
 // comment  : api for user best record
 
 import Utils from 'Utils';
-import ArcApiFriendAdd from './_arcapi_friend_add';
-import ArcApiFriendDelete from './_arcapi_friend_delete';
-import ArcApiAccountAlloc from './_arcapi_account_alloc';
-import ArcApiAccountRelease from './_arcapi_account_release';
-import ArcApiRankFriend from './_arcapi_rank_friend';
+import ArcApiFriendAdd from '../arcapi/_arcapi_friend_add';
+import ArcApiFriendDelete from './arcapi/_arcapi_friend_delete';
+import ArcApiAccountAlloc from './arcapi/_arcapi_account_alloc';
+import ArcApiAccountRelease from './arcapi/_arcapi_account_release';
+import ArcApiRankFriend from './arcapi/_arcapi_rank_friend';
 
 export default async function (argument) {
   const TAG = 'userbest.js';
