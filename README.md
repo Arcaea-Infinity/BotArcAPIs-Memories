@@ -15,7 +15,7 @@ An ArcAPI for bots running in NodeJS. <br/>
 > $ git checkout master
 
 ## 🎉 Run directly
-> $ npm run release
+> $ npm run start
 
 ## 🐋 Docker
 #### Docker image will be support in the future.

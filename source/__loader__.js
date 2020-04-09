@@ -5,11 +5,10 @@
 //            make api maintaining easily it's also global access entry
 
 // this is a hack to load config macros
-// and persistence sqlite link in global space
+// and persistent sqlite link in global space
 require('./config');
 require('./database/init');
 const Http = require('http');
-const Utils = require('./utils.js');
 
 const TAG = '__loader__.js';
 
@@ -23,34 +22,22 @@ async function handleRequest(request, response) {
     message: null
   };
 
-  // process request url, example below:
-  // https://example.com/v(_api_version)/(_api_method)[?(_api_arguments)]
-  const _regexp_result = request.url.match(/\/v(\d)\/(.*)/);
-  if (_regexp_result) {
-    // split method and arguments
-    const _split_result = _regexp_result[2].split('?');
+  // process request url
+  const _api_url = new URL(`http://0.0.0.0${request.url}`);
+  const _api_path = _api_url.pathname;
+  const _api_arguments = Object.fromEntries(_api_url.searchParams);
+  console.log(TAG, _api_path, _api_arguments);
 
-    // prepare data
-    const _api_version = _regexp_result[1];
-    const _api_method = _split_result[0];
-    const _api_arguments = Utils.UrlArgumentToObject(_split_result[1]);
-    console.log(TAG, _api_version, _api_method, _api_arguments);
+  // try invoke method
+  try {
+    const _api_entry = require(`./publicapi/${_api_path}`);
+    const _api_result = await _api_entry(_api_arguments);
 
-    // check for api version
-    if (_api_version == BOTARCAPI_MAJOR) {
+    // fill result
+    _response_template.status = _api_result.status;
+    _response_template.content = _api_result.content;
 
-      // try invoke method
-      try {
-        const _api_interface = require(`./publicapi/${_api_method}`);
-        const _api_result = await _api_interface(_api_arguments);
-
-        // fill result
-        _response_template.status = _api_result.status;
-        _response_template.content = _api_result.content;
-
-      } catch (e) { console.log(e); _response_status = 404; }
-    } else _response_status = 404;
-  } else _response_status = 404;
+  } catch (e) { console.log(e); _response_status = 404; }
 
   // make response body
   let _http_body = null;

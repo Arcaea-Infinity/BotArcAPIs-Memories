@@ -1,19 +1,18 @@
-// filename : /v1/_arcapi_userme.js
+// filename : /source/publicapi/_arcapi_userme.js
 // author   : CirnoBakaBOT
-// date     : 02/13/2020
+// date     : 04/09/2020
 
-export default async function (arc_account) {
-
+module.exports = async function (arc_account) {
   const TAG = '_arcapi_userme.js';
-
   const _return_template = {
     success: false,
     arc_account_info: null
   };
 
   // request origin arcapi
+  const fetch = require('node-fetch');
   const _remote_request =
-    new Request(`https://arcapi.lowiro.com/${BOTARCAPI_ARCAPI_VERSION}/user/me`, {
+    new fetch.Request(`https://arcapi.lowiro.com/${ARCAPI_VERSION}/user/me`, {
       method: 'GET',
       headers: {
         'Accept-Encoding': 'identity',
@@ -21,8 +20,8 @@ export default async function (arc_account) {
         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
         'Authorization': `Bearer ${arc_account.token}`,
         'Platform': 'android',
-        'AppVersion': BOTARCAPI_ARCAPI_APPVERSION,
-        'User-Agent': BOTARCAPI_ARCAPI_USERAGENT,
+        'AppVersion': ARCAPI_APPVERSION,
+        'User-Agent': ARCAPI_USERAGENT,
         'Host': 'arcapi.lowiro.com',
         'Connection': 'Keep-Alive'
       }

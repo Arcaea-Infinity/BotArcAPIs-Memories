@@ -1,19 +1,18 @@
-// filename : /v1/_arcapi_rank_me.js
+// filename : /source/publicapi/_arcapi_rank_me.js
 // author   : CirnoBakaBOT
-// date     : 02/13/2020
+// date     : 04/09/2020
 
-export default async function (arc_account, song_id, difficulty, start = 0, limit = 10) {
-
+module.exports = async function (arc_account, song_id, difficulty, start = 0, limit = 10) {
   const TAG = '_arcapi_rank_me.js';
-
   const _return_template = {
     success: false,
     arc_ranklist: null
   };
 
   // request origin arcapi
+  const fetch = require('node-fetch');
   const _remote_request =
-    new Request(`https://arcapi.lowiro.com/${BOTARCAPI_ARCAPI_VERSION}/score/song/me?` +
+    new fetch.Request(`https://arcapi.lowiro.com/${ARCAPI_VERSION}/score/song/me?` +
       new URLSearchParams({
         'song_id': song_id,
         'difficulty': difficulty,
@@ -26,8 +25,8 @@ export default async function (arc_account, song_id, difficulty, start = 0, limi
         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
         'Authorization': `Bearer ${arc_account.token}`,
         'Platform': 'android',
-        'AppVersion': BOTARCAPI_ARCAPI_APPVERSION,
-        'User-Agent': BOTARCAPI_ARCAPI_USERAGENT,
+        'AppVersion': ARCAPI_APPVERSION,
+        'User-Agent': ARCAPI_USERAGENT,
         'Host': 'arcapi.lowiro.com',
         'Connection': 'Keep-Alive'
       }

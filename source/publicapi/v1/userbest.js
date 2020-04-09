@@ -4,7 +4,7 @@
 // comment  : api for user best record
 
 const Utils = require('./utils.js');
-const ArcApiFriendAdd = require('../arcapi/_arcapi_friend_add');
+const ArcApiFriendAdd = require('../../arcapi/_arcapi_friend_add');
 const ArcApiFriendDelete = require('./arcapi/_arcapi_friend_delete');
 const ArcApiAccountAlloc = require('./arcapi/_arcapi_account_alloc');
 const ArcApiAccountRelease = require('./arcapi/_arcapi_account_release');

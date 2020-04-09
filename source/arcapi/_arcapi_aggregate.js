@@ -1,7 +1,7 @@
-// filename : /v1/_arcapi_aggregate.js
+// filename : /source/publicapi/_arcapi_aggregate.js
 // author   : CirnoBakaBOT
-// date     : 02/13/2020
+// date     : 04/09/2020
 
-export default async function (arcaccount) {
+module.exports = async function (arcaccount) {
 
 }

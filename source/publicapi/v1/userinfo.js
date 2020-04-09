@@ -1,29 +1,30 @@
-// filename : /v1/userinfo.js
+// filename : /publicapi/v1/userinfo.js
 // author   : CirnoBakaBOT
 // date     : 02/10/2020
 // comment  : api for user information
 
-import Utils from 'Utils';
-import ArcApiFriendAdd from './_arcapi_friend_add';
-import ArcApiFriendDelete from './_arcapi_friend_delete';
-import ArcApiAccountAlloc from './_arcapi_account_alloc';
-import ArcApiAccountRelease from './_arcapi_account_release';
+const ArcApiFriendAdd = require('../../arcapi/_arcapi_friend_add');
+const ArcApiFriendClear = require('../../_arcapi_friend_clear');
+const ArcApiAccountAlloc = require('../../_arcapi_account_alloc');
+const ArcApiAccountRelease = require('../../_arcapi_account_release');
 
 export default async function (argument) {
   const TAG = 'userinfo.js';
 
   // initialize response data
   let _return = null;
-  let _response_status = 200;
-  const _response_data_template = {
-    'name': null,
-    'rating': null,
-    'user_id': null,
-    'join_date': null,
-    'character': null,
-    'recent_score': null,
-    'is_skill_sealed': null,
-    'is_char_uncapped': null
+  const _response_template = {
+    'status': null,
+    'content': {
+      'name': null,
+      'rating': null,
+      'user_id': null,
+      'join_date': null,
+      'character': null,
+      'recent_score': null,
+      'is_skill_sealed': null,
+      'is_char_uncapped': null
+    }
   };
 
   // check for arguments
@@ -52,37 +53,34 @@ export default async function (argument) {
 
           if (_arc_friend_target) {
 
-            // delete friend
-            await ArcApiFriendDelete(_arc_account, _arc_friend_target.user_id);
-
             // release account
             await ArcApiAccountRelease(_arc_account);
 
             // fill the data template
-            _response_data_template.name = _arc_friend_target.name;
-            _response_data_template.rating = _arc_friend_target.rating;
-            _response_data_template.user_id = _arc_friend_target.user_id;
-            _response_data_template.join_date = _arc_friend_target.join_date;
-            _response_data_template.character = _arc_friend_target.character;
-            _response_data_template.recent_score = _arc_friend_target.recent_score;
-            _response_data_template.is_skill_sealed = _arc_friend_target.is_skill_sealed;
-            _response_data_template.is_char_uncapped = _arc_friend_target.is_char_uncapped;
+            _response_template.content.name = _arc_friend_target.name;
+            _response_template.content.rating = _arc_friend_target.rating;
+            _response_template.content.user_id = _arc_friend_target.user_id;
+            _response_template.content.join_date = _arc_friend_target.join_date;
+            _response_template.content.character = _arc_friend_target.character;
+            _response_template.content.recent_score = _arc_friend_target.recent_score;
+            _response_template.content.is_skill_sealed = _arc_friend_target.is_skill_sealed;
+            _response_template.content.is_char_uncapped = _arc_friend_target.is_char_uncapped;
 
             // invalid friend target
-          } else _response_status = 500;
+          } else _response_template.status = -5;
 
           // invalid friend list
-        } else _response_status = 502;
+        } else _response_template.status = -4;
 
         // add friend error
-      } else _response_status = 502;
+      } else _response_template.status = -3;
 
       // alloc arc account error
-    } else _response_status = 400;
+    } else _response_template.status = -2;
 
     // argument error
-  } else _response_status = 400;
+  } else _response_template.status = -1;
 
   // return data
-  return Utils.MakeApiObject(_response_status, _response_data_template);
+  return _response_template;
 };

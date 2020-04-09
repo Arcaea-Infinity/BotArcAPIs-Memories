@@ -1,10 +1,8 @@
-// filename : /v1/_arcapi_account_release.js
+// filename : /source/publicapi/_arcapi_account_release.js
 // author   : CirnoBakaBOT
-// date     : 02/13/2020
-// common   : release an arc account atomically
+// date     : 04/09/2020
+// common   : release an arc account
 
-import ArcApiAccountUnlock from './_arcapi_account_unlock';
+module.exports = async function (arc_account) {
 
-export default async function (arc_account) {
-    return await ArcApiAccountUnlock(arc_account);
 }

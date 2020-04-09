@@ -2,13 +2,13 @@
   "name": "botarcapi",
   "version": "1.0.0",
   "description": "An ArcAPI for bots running in NodeJS.",
-  "main": "source/__loader__.js",
   "dependencies": {
+    "node-fetch": "^2.6.0",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {},
   "scripts": {
-    "debug": "node source/__loader__.js"
+    "start": "node source/__loader__.js"
   },
   "repository": {
     "type": "git",

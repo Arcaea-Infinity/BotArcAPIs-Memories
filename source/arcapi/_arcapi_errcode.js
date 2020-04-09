@@ -1,9 +1,9 @@
-// filename : /v1/_arcapi_errcode.js
+// filename : /source/publicapi/_arcapi_errcode.js
 // author   : CirnoBakaBOT
-// date     : 02/16/2020
+// date     : 04/09/2020
 // comment  : arcapi errcode definitions
 
-export default function (errcode) {
+module.exports = function (errcode) {
 
   const _errcode_table = {
     0: 'An error occurred completing purchases. Please try restarting your device or Arcaea and ensuring that you\'re logged in to.',
