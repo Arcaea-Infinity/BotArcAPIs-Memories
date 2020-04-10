@@ -114,6 +114,10 @@ class SystemLog {
       'unknwon' : module.parent.filename.split('/').slice(-2).join('/');
     this.log(level, _caller_name, args);
   }
+
+  static d(...args){
+    _internal_log(args);
+  }
 }
 
 // this is a hack to load
