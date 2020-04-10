@@ -6,7 +6,7 @@
 
 const TAG = '__loader__.js';
 
-module.exports = (request, response) => {
+module.exports = async (request, response) => {
   let _response_status = 200;
   const _response_template = {
     status: null,
