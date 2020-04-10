@@ -4,7 +4,7 @@
   "description": "An ArcAPI for bots running in NodeJS.",
   "dependencies": {
     "node-fetch": "^2.6.0",
-    "sqlite3": "^4.1.1"
+    "sqlite-async": "^1.0.12"
   },
   "devDependencies": {},
   "scripts": {

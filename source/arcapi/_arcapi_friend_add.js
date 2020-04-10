@@ -1,13 +1,14 @@
 // filename : /source/arcapi/_arcapi_friend_add.js
 // author   : CirnoBakaBOT
-// date     : 04/09/2020
+// date     : 04/10/2020
 // commont  : add friend
 
+const TAG = 'arcapi/_arcapi_friend_add.js';
+
 module.exports = async function (arc_account, user_code) {
-  const TAG = '_arcapi_friend_add.js';
   const _return_template = {
     success: false,
-    arc_friendlist: null
+    friend_list: null
   };
 
   // request origin arcapi
@@ -38,7 +39,7 @@ module.exports = async function (arc_account, user_code) {
 
     if (_json_root.success) {
       _return_template.success = true;
-      _return_template.arc_friendlist = _json_root.value.friends;
+      _return_template.friend_list = _json_root.value.friends;
     }
   } catch (e) { console.log(TAG, e); }
 

@@ -4,17 +4,22 @@
 // comment  : autoloader can handle api request and map to class methods,
 //            make api maintaining easily it's also global access entry
 
-// this is a hack to load config macros
-// and persistent sqlite link in global space
-require('./config');
-require('./database/init');
-const Http = require('http');
-
 const TAG = '__loader__.js';
 
-// handle http request
-async function handleRequest(request, response) {
+// this is a hack to load config macros
+// and persistent sqlite link in global space
+const http = require('http');
+const database = require('./database');
+const config = require('./config');
 
+// initialize config first
+config.loadMacros();
+
+// initialize database
+database.initDataBases();
+
+// create http server and handle request from client
+http.createServer(async (request, response) => {
   let _response_status = 200;
   const _response_template = {
     status: null,
@@ -30,7 +35,6 @@ async function handleRequest(request, response) {
 
   try {
     // try invoke method
-
     const _api_entry = require(`./publicapi/${_api_path}`);
     const _api_result = await _api_entry(_api_arguments);
 
@@ -47,6 +51,7 @@ async function handleRequest(request, response) {
     }
   }
   catch (e) {
+    console.log(e);
     _response_status = 404;
   }
 
@@ -63,8 +68,5 @@ async function handleRequest(request, response) {
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
   response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
   response.end(_http_body);
-}
-
-// create a simple http server
-const server = Http.createServer(handleRequest);
-server.listen(SERVER_PORT);
+})
+  .listen(SERVER_PORT);
