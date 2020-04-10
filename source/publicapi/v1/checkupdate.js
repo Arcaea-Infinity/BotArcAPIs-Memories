@@ -4,11 +4,14 @@
 // comment  : checkupdate
 
 const TAG = 'v1/checkupdate.js';
+
 const fetch = require('node-fetch');
+const Request = require('node-fetch').Request;
+const APIError = require('../../error');
 
 module.exports = async function (argument) {
-  const _response_template = {
-    'status': null,
+  const _return_template = {
+    'status': 0,
     'message': null,
     'content': {
       'version': null,
@@ -18,32 +21,36 @@ module.exports = async function (argument) {
 
   // build http request
   const _remote_request =
-    new fetch.Request('https://www.fantasyroom.cn/api/v1/arcver.php', {
+    new Request('https://www.fantasyroom.cn/api/v1/arcver.php', {
       method: 'GET',
       headers: {
         'User-Agent': 'BotArcAPI'
       }
     });
-  const _remote_response = await fetch(_remote_request);
-  const _json_root = await _remote_response.json();
 
   try {
+    let _remote_response = null;
+    let _json_root = null;
+
+    // try to request origin service
+    try {
+      _remote_response = await fetch(_remote_request);
+      _json_root = await _remote_response.json();
+    } catch (e) {
+      throw new APIError(-1, 'remote service unavaliable');
+    }
 
     // fill the data template
-    if (_json_root.res == 'success') {
-      _response_template.status = 0;
-      _response_template.content.version = _json_root.contents.android.version;
-      _response_template.content.download_link = _json_root.contents.android.apk_dl_link;
+    if (_json_root.res != 'success')
+      throw new APIError(-2, 'fetch latest version failed');
+    _return_template.content.version = _json_root.contents.android.version;
+    _return_template.content.download_link = _json_root.contents.android.apk_dl_link;
 
-    } else {
-      _response_template.status = -2;
-      _response_template.message = 'fetch latest version failed';
-    }
   } catch (e) {
-    _response_template.status = -1;
-    _response_template.message = 'remote service unavaliable';
+    // return errcode and errmessage
+    _return_template.status = e.status;
+    _return_template.message = e.notify;
   }
 
-  return _response_template;
+  return _return_template;
 };
-
