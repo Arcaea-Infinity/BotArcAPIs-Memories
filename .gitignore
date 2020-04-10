@@ -3,3 +3,4 @@
 
 # database files
 [Ss]avedata/
+*.db
