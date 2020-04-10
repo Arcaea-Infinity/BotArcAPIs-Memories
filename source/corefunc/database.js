@@ -1,4 +1,4 @@
-// filename : sqlite3.js
+// filename : database.js
 // author   : CirnoBakaBOT
 // date     : 04/09/2020
 // comment  : init database and preare datatable
@@ -9,16 +9,17 @@ const database = require('sqlite-async');
 
 module.exports.initDataBases = () => {
 
-  const _path_save = path.resolve(__dirname, DATABASE_PATH);
-  const _first_create = !file.existsSync(_path_save);
+  const _path_to_databases = path.resolve(__dirname, DATABASE_PATH);
+  const _first_create = !file.existsSync(_path_to_databases);
 
   // prepare folder if database first time creating
   if (_first_create) {
-    file.mkdirSync(_path_save);
+    file.mkdirSync(_path_to_databases);
   }
 
   // database for arcaea accounts
-  database.open(`${_path_save}/arcaccount.db`, database.OPEN_READWRITE | database.OPEN_CREATE)
+  _path_database_arcaccount = `${_path_to_databases}/arcaccount.db`;
+  database.open(_path_database_arcaccount, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link) => {
       link.exec(
         "CREATE TABLE IF NOT EXISTS `accounts` ( \
@@ -37,12 +38,16 @@ module.exports.initDataBases = () => {
       Object.defineProperty(global, 'ARCACCOUNTS',
         { value: _accounts, writable: true, configurable: false });
 
+      // close database
+      link.close();
+
       // INSERT INTO `accounts` VALUES('test','12345678','0','000000001','tokentest','false')
     })
-    .catch((e) => { throw new Error(`open database => arcaccount.db failed`); });
+    .catch((e) => { throw e; /*new Error(`open database => ${_path_database_arcaccount} failed`); */ });
 
   // database for arcaea best30 cache
-  database.open(`${_path_save}/arcbest30.db`, database.OPEN_READWRITE | database.OPEN_CREATE)
+  _path_database_arcbest30 = `${_path_to_databases}/arcbest30.db`;
+  database.open(_path_database_arcbest30, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link) => {
       link.exec(
         "CREATE TABLE IF NOT EXISTS `cache` ( \
@@ -52,12 +57,13 @@ module.exports.initDataBases = () => {
         );"
       );
       Object.defineProperty(global, 'DATABASE_ARCBEST30',
-        { value: _database_arcbest30, writable: false, configurable: false });
+        { value: link, writable: false, configurable: false });
     })
-    .catch((e) => { throw new Error(`open database => arcbest30.db failed`); });
+    .catch((e) => { throw e; /*new Error(`open database => ${_path_database_arcbest30} failed`); */ });
 
   // database for arcaea player's info
-  database.open(`${_path_save}/arcplayer.db`, database.OPEN_READWRITE | database.OPEN_CREATE)
+  _path_database_arcplayer = `${_path_to_databases}/arcplayer.db`;
+  database.open(_path_database_arcplayer, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link) => {
       link.exec(
         "CREATE TABLE IF NOT EXISTS `players` ( \
@@ -67,12 +73,13 @@ module.exports.initDataBases = () => {
         );"
       );
       Object.defineProperty(global, 'DATABASE_ARCPLAYER',
-        { value: _database_arcplayer, writable: false, configurable: false });
+        { value: link, writable: false, configurable: false });
     })
-    .catch((e) => { throw new Error(`open database => arcplayer.db failed`); });
+    .catch((e) => { throw e;/* new Error(`open database => ${_path_database_arcplayer} failed`); */ });
 
   // database for arcaea player's record
-  database.open(`${_path_save}/arcrecord.db`, database.OPEN_READWRITE | database.OPEN_CREATE)
+  const _path_database_arcrecord = `${_path_to_databases}/arcrecord.db`
+  database.open(_path_database_arcrecord, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link) => {
       link.exec(
         "CREATE TABLE IF NOT EXISTS `records` ( \
@@ -89,7 +96,7 @@ module.exports.initDataBases = () => {
       Object.defineProperty(global, 'DATABASE_ARCRECORD',
         { value: link, writable: false, configurable: false });
     })
-    .catch((e) => { throw new Error(`open database => arcrecord.db failed`); });
+    .catch((e) => { throw e;/*new Error(`open database => ${_path_database_arcrecord} failed`)*/ });
 }
 
 /*

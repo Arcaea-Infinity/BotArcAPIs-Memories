@@ -1,4 +1,4 @@
-// filename : /publicapi/v1/userinfo.js
+// filename : v1/userinfo.js
 // author   : CirnoBakaBOT
 // date     : 04/10/2020
 // comment  : api for arcuser information

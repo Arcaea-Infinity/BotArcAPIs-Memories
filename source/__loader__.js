@@ -6,20 +6,7 @@
 
 const TAG = '__loader__.js';
 
-// this is a hack to load config macros
-// and persistent sqlite link in global space
-const http = require('http');
-const database = require('./database');
-const config = require('./config');
-
-// initialize config first
-config.loadMacros();
-
-// initialize database
-database.initDataBases();
-
-// create http server and handle request from client
-http.createServer(async (request, response) => {
+module.exports = (request, response) => {
   let _response_status = 200;
   const _response_template = {
     status: null,
@@ -68,5 +55,4 @@ http.createServer(async (request, response) => {
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
   response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
   response.end(_http_body);
-})
-  .listen(SERVER_PORT);
+}
