@@ -71,7 +71,7 @@ module.exports.initDataBases = () => {
     })
     .catch((e) => { throw new Error(`open database => arcplayer.db failed`); });
 
-  // database for arcaea player's info
+  // database for arcaea player's record
   database.open(`${_path_save}/arcrecord.db`, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link) => {
       link.exec(
@@ -92,7 +92,6 @@ module.exports.initDataBases = () => {
     .catch((e) => { throw new Error(`open database => arcrecord.db failed`); });
 }
 
-*/
 /*
 // must close all database link when exit
 process.on('SIGINT', async function () {
