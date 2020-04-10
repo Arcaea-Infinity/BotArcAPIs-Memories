@@ -4,7 +4,7 @@
 // comment  : autoloader can handle api request and map to class methods,
 //            make api maintaining easily it's also global access entry
 
-const TAG = '__loader__.js';
+const TAG = 'source/__loader__.js';
 
 module.exports = async (request, response) => {
   let _response_status = 200;
@@ -18,7 +18,8 @@ module.exports = async (request, response) => {
   const _api_url = new URL(`http://0.0.0.0${request.url}`);
   const _api_path = _api_url.pathname;
   const _api_arguments = Object.fromEntries(_api_url.searchParams);
-  console.log(TAG, _api_path, _api_arguments);
+  syslog.v(TAG, `Accept request at => ${_api_path}`);
+  syslog.v(TAG, `Accept request at => ${response}`);
 
   try {
     // try invoke method
@@ -38,8 +39,8 @@ module.exports = async (request, response) => {
     }
   }
   catch (e) {
-    console.log(e);
     _response_status = 404;
+    syslog.e(TAG, e.toString());
   }
 
   // make response body
@@ -55,4 +56,6 @@ module.exports = async (request, response) => {
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
   response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
   response.end(_http_body);
+
+  syslog.v(TAG, 'Send response back');
 }

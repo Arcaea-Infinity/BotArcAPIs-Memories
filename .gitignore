@@ -4,3 +4,6 @@
 # database files
 [Ss]avedata/
 *.db
+
+# logs
+[Ss]avelogs/
