@@ -27,12 +27,14 @@ database.initDataBases();
 const service = http.createServer(__loader__).listen(SERVER_PORT);
 console.info(`Http server started at 0.0.0.0:${SERVER_PORT}`);
 
+
+// nodejs event handlers
 process.on('exit', (code) => {
   console.info('** Stop Service **');
 
   // stop http server
   service.close();
-  console.info('Stop http service');
+  console.info('Stop http server');
 
   // close databases
   database.close();
@@ -43,7 +45,6 @@ process.on('exit', (code) => {
   syslog.stop();
 });
 
-// handle ctrl+c event
 process.on('SIGINT', () => {
   console.warn(`You pressed ctrl + c`);
   process.exit(0);
