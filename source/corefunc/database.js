@@ -40,7 +40,8 @@ module.exports = {
         link.exec(
           "CREATE TABLE IF NOT EXISTS `accounts` ( \
             `arc_name` TEXT NOT NULL, `arc_pswd` TEXT NOT NULL, \
-            `arc_uid` TEXT, `arc_ucode` TEXT, `arc_token` TEXT, `arc_banned` INTEGER, \
+            `arc_uid` TEXT, `arc_ucode` TEXT, `arc_token` TEXT, \
+            `arc_deviceid` TEXT, `arc_banned` INTEGER, \
             PRIMARY KEY (`arc_name` ASC) \
           );"
         );
@@ -50,17 +51,22 @@ module.exports = {
         link.all('SELECT * FROM `accounts`')
           .then((result) => {
 
-            // if has no arc account
-            if (!result.length)
-              syslog.w(TAG, 'There\'s no arc account in the database');
+            // no arc account in the database
+            if (!result.length) {
+              syslog.w(TAG, `${_database_arcaccount} => There\'s no arc account in the database`);
+              syslog.w(TAG, `${_database_arcaccount} => You must add at least one account to the database`);
+            }
             else {
-
               // map to global space
-              syslog.v(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
               Object.defineProperty(global, 'ARCACCOUNTS',
                 { value: result, writable: true, configurable: false });
+
+              for (let i = 0; i < result.length; ++i)
+                syslog.v(TAG, `${_database_arcaccount} => ${result[i].arc_name} ${result[i].arc_token}`);
+              syslog.v(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
             }
-          });
+          })
+          .catch((e) => { syslog.f(TAG, `${_database_arcaccount} => ${e.toString()}`); });
 
         // close database
         syslog.v(TAG, `${_database_arcaccount} => Close database`);
