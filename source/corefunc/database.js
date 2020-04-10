@@ -28,12 +28,13 @@ module.exports = {
     //////////////////////////////////////////////////////////////////////////
     // database for arcaea accounts                                         //
     //////////////////////////////////////////////////////////////////////////
-    _path_database_arcaccount = `${_path_to_databases}/arcaccount.db`;
+    const _database_arcaccount = 'arcaccount.db';
+    const _path_database_arcaccount = `${_path_to_databases}/${_database_arcaccount}`;
     syslog.v(TAG, `Opening database => ${_path_database_arcaccount}`);
 
     database.open(_path_database_arcaccount, database.OPEN_READWRITE | database.OPEN_CREATE)
       .then((link) => {
-        syslog.i(TAG, `arcaccount.db => OK`);
+        syslog.i(TAG, `${_database_arcaccount} => OK`);
 
         // always execute this sql to keep datatable valid
         link.exec(
@@ -45,7 +46,7 @@ module.exports = {
         );
 
         // pre-read all arc account to queue
-        syslog.v(TAG, `arcaccount.db => Loading arc accounts from database`);
+        syslog.v(TAG, `${_database_arcaccount} => Loading arc accounts from database`);
         link.all('SELECT * FROM `accounts`')
           .then((result) => {
 
@@ -55,30 +56,31 @@ module.exports = {
             else {
 
               // map to global space
-              syslog.v(TAG, `arcaccount.db => Arc account(s) loaded: ${result.length}`);
+              syslog.v(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
               Object.defineProperty(global, 'ARCACCOUNTS',
                 { value: result, writable: true, configurable: false });
             }
           });
 
         // close database
-        syslog.v(TAG, `arcaccount.db => Close database`);
+        syslog.v(TAG, `${_database_arcaccount} => Close database`);
         link.close();
 
         // INSERT INTO `accounts` VALUES('test','12345678','0','000000001','tokentest','false')
       })
-      .catch((e) => { syslog.f(TAG, `arcaccount.db => ${e.toString()}`); });
+      .catch((e) => { syslog.f(TAG, `${_database_arcaccount} => ${e.toString()}`); });
 
 
     //////////////////////////////////////////////////////////////////////////
     // database for arcaea best30 cache                                     //
     //////////////////////////////////////////////////////////////////////////
-    _path_database_arcbest30 = `${_path_to_databases}/arcbest30.db`;
+    const _database_arcbest30 = 'arcbest30.db';
+    const _path_database_arcbest30 = `${_path_to_databases}/${_database_arcbest30}`;
     syslog.v(TAG, `Opening database => ${_path_database_arcbest30}`);
 
     database.open(_path_database_arcbest30, database.OPEN_READWRITE | database.OPEN_CREATE)
       .then((link) => {
-        syslog.i(TAG, `arcbest30.db => OK`);
+        syslog.i(TAG, `${_database_arcbest30} => OK`);
 
         // always execute this sql to keep datatable valid
         link.exec(
@@ -94,18 +96,19 @@ module.exports = {
           { value: link, writable: false, configurable: false });
 
       })
-      .catch((e) => { syslog.f(TAG, `arcbest30.db => ${e.toString()}`); });
+      .catch((e) => { syslog.f(TAG, `${_database_arcbest30} => ${e.toString()}`); });
 
 
     //////////////////////////////////////////////////////////////////////////
     // database for arcaea player's info                                    //
     //////////////////////////////////////////////////////////////////////////
-    _path_database_arcplayer = `${_path_to_databases}/arcplayer.db`;
+    const _database_arcplayer = 'arcplayer.db';
+    const _path_database_arcplayer = `${_path_to_databases}/${_database_arcplayer}`;
     syslog.v(TAG, `Opening database => ${_path_database_arcplayer}`);
 
     database.open(_path_database_arcplayer, database.OPEN_READWRITE | database.OPEN_CREATE)
       .then((link) => {
-        syslog.i(TAG, `arcplayer.db => OK`);
+        syslog.i(TAG, `${_database_arcplayer} => OK`);
 
         // always execute this sql to keep datatable valid
         link.exec(
@@ -121,18 +124,19 @@ module.exports = {
           { value: link, writable: false, configurable: false });
 
       })
-      .catch((e) => { syslog.f(TAG, `arcplayer.db => ${e.toString()}`); });
+      .catch((e) => { syslog.f(TAG, `${_database_arcplayer} => ${e.toString()}`); });
 
 
     //////////////////////////////////////////////////////////////////////////
     // database for arcaea player's record                                  //
     //////////////////////////////////////////////////////////////////////////
-    const _path_database_arcrecord = `${_path_to_databases}/arcrecord.db`
+    const _database_arcrecord = 'arcrecord.db';
+    const _path_database_arcrecord = `${_path_to_databases}/${_database_arcrecord}`
     syslog.v(TAG, `Opening database => ${_path_database_arcrecord}`);
 
     database.open(_path_database_arcrecord, database.OPEN_READWRITE | database.OPEN_CREATE)
       .then((link) => {
-        syslog.i(TAG, `arcrecord.db => OK`);
+        syslog.i(TAG, `${_database_arcrecord} => OK`);
 
         // always execute this sql to keep datatable valid
         link.exec(
@@ -153,7 +157,7 @@ module.exports = {
           { value: link, writable: false, configurable: false });
 
       })
-      .catch((e) => { syslog.f(TAG, `arcrecord.db => ${e.toString()}`); });
+      .catch((e) => { syslog.f(TAG, `${_database_arcrecord} => ${e.toString()}`); });
 
   },
 
