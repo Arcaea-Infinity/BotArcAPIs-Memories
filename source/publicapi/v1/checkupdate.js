@@ -49,7 +49,7 @@ module.exports = async function () {
       .catch((e) => { throw new APIError(-3, 'request timeout'); });
 
   } catch (e) {
-    syslog.e(e.notyify);
+    syslog.e(TAG, e.notyify);
     _return_template.status = e.status;
     _return_template.message = e.notify;
   }
