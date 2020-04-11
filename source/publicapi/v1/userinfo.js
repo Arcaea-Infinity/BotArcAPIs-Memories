@@ -3,19 +3,16 @@
 // date     : 04/10/2020
 // comment  : api for arcuser information
 
-const TAG = 'v1/userinfo.js';
+const TAG = 'v1/userinfo.js\t';
 
-const APIError = require('../../error.js');
+const APIError = require('../../corefunc/error');
 const arcapi_friend_add = require('../../arcapi/_arcapi_friend_add');
 const arcapi_friend_clear = require('../../arcapi/_arcapi_friend_clear');
 const arcapi_account_alloc = require('../../arcapi/_arcapi_account_alloc');
 const arcapi_account_release = require('../../arcapi/_arcapi_account_release');
 
-const dbproc_arcaccount_alloc = require('../../database/_dbproc_arcaccount_alloc');
-const dbproc_arcaccount_release = require('../../database/_dbproc_arcaccount_release');
-
 const dbproc_record_update = require('../../database/_dbproc_record_update');
-const dbproc_userinfo_update = require('../../database/dbproc_userinfo_update');
+const dbproc_userinfo_update = require('../../database/_dbproc_userinfo_update');
 const dbproc_userinfo_byusercode = require('../../database/_dbproc_userinfo_byusercode');
 
 module.exports = async function (argument) {
@@ -55,31 +52,33 @@ module.exports = async function (argument) {
 
     // /userinfo?usercode=xxx[&hasrecent=true]
     // check for request arguments
-    if (typeof argument.usercode != 'undefined')
+    if (typeof argument.usercode == 'undefined')
       throw new APIError(-1, 'invalid argument');
 
     // try to query userinfo by usercode
-    _return = await dbproc_userinfo_byusercode(arguemnt.usercode);
+    _return = await dbproc_userinfo_byusercode(argument.usercode);
     const _user_info = _return.user_info;
+    syslog.i(TAG, `Userinfo => ${_user_info.name} ${_user_info.code}`);
 
     // request an arc account
-    _return = await dbproc_arcaccount_alloc();
+    _return = arcapi_account_alloc();
     if (!_return.success)
       throw new APIError(-2, 'request an arc account from pool failed');
     _arc_account = _return.arc_account;
+    syslog.i(TAG, `Allocated arc account => ${_arc_account.name} ${_arc_account.token}`);
 
-    throw new APIError(-233,'debug break');
+    throw new APIError(-233, 'debug break');
 
     // if we know user id then can add friend directly
     // otherwise we must clear friend list to keep atomically
     if (!_user_info.user_id) {
-      _return = await arcapi_friend_clear(_arc_account);
+      _return = arcapi_friend_clear(_arc_account);
       if (!_return.success)
         throw new APIError(-3, 'clear friend list failed');
     }
 
     // add friend and fetch result then release arc account
-    _return = await arcapi_friend_add(_arc_account, argument.usercode)
+    _return = arcapi_friend_add(_arc_account, argument.usercode)
     if (!_return.success)
       throw new APIError(-4, 'add friend failed');
     arcapi_account_release(_arc_account);
@@ -118,6 +117,8 @@ module.exports = async function (argument) {
     }
 
   } catch (e) {
+
+    syslog.e(TAG, e.message);
 
     // release this account
     if (_arc_account)

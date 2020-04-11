@@ -16,7 +16,7 @@ module.exports = async function (arc_account) {
       method: 'GET',
       headers: {
         'Accept-Encoding': 'identity',
-        'DeviceId': arc_account.device_id,
+        'DeviceId': arc_account.deviceid,
         'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
         'Authorization': `Bearer ${arc_account.token}`,
         'Platform': 'android',

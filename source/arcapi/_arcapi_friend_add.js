@@ -5,6 +5,9 @@
 
 const TAG = 'arcapi/_arcapi_friend_add.js';
 
+const fetch = require('node-fetch');
+const Request = fetch.Request;
+
 module.exports = async function (arc_account, user_code) {
   const _return_template = {
     success: false,
@@ -12,9 +15,8 @@ module.exports = async function (arc_account, user_code) {
   };
 
   // request origin arcapi
-  const fetch = require('node-fetch');
   const _remote_request =
-    new fetch.Request(`https://arcapi.lowiro.com/${ARCAPI_VERSION}/friend/me/add`, {
+    new Request(`https://arcapi.lowiro.com/${ARCAPI_VERSION}/friend/me/add`, {
       method: 'POST',
       headers: {
         'Accept-Encoding': 'identity',

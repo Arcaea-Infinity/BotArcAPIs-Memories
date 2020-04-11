@@ -14,10 +14,10 @@ const _internal_log_assert = console.assert;
 
 const _level_table = ['V', 'I', 'W', 'E', 'F'];
 const _color_table = [
-  '\x1b[0m\x1b[1m',    // V Dim
+  '\x1b[0m\x1b[1m',    // V Reset
   '\x1b[32m\x1b[1m',   // I FgGreen
   '\x1b[33m\x1b[1m',   // W FgYellow
-  '\x1b[36m\x1b[1m',   // E FgCyan
+  '\x1b[35m\x1b[1m',   // E FgMagenta
   '\x1b[31m\x1b[1m'    // F FgRed
 ];
 

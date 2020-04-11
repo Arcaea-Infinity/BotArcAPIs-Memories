@@ -39,9 +39,9 @@ module.exports = {
         // always execute this sql to keep datatable valid
         link.exec(
           "CREATE TABLE IF NOT EXISTS `accounts` ( \
-            `arc_name` TEXT NOT NULL, `arc_pswd` TEXT NOT NULL, \
-            `arc_uid` TEXT, `arc_ucode` TEXT, `arc_token` TEXT, \
-            `arc_deviceid` TEXT, `arc_banned` INTEGER, \
+            `name` TEXT NOT NULL, `pwd` TEXT NOT NULL, \
+            `uid` TEXT, `ucode` TEXT, `token` TEXT, \
+            `deviceid` TEXT, `banned` INTEGER, \
             PRIMARY KEY (`arc_name` ASC) \
           );"
         );
@@ -58,7 +58,7 @@ module.exports = {
             }
             else {
               // map to global space
-              Object.defineProperty(global, 'ARCACCOUNTS',
+              Object.defineProperty(global, 'ARCACCOUNT',
                 { value: result, writable: true, configurable: false });
 
               for (let i = 0; i < result.length; ++i)

@@ -10,11 +10,10 @@ class APIError extends Error {
     if (typeof notify != 'string')
       throw new TypeError('second argument is notify message, cannot be null');
 
-    super();
+    super(`APIError: status: ${status}, notify: ${notify}`);
     this.name = 'APIError';
     this.status = status;
     this.notify = notify;
-    this.message = `status: ${status}, notify: ${notify}`;
   }
 }
 
