@@ -21,11 +21,11 @@ export interface ArcAPIExtra {
   userpwd?: string,
   usertoken?: string,
 
-  // will send deviceid
+  // will send deviceid headers
   deviceid?: string,
 
   // POST only
-  body?: BodyInit
+  postdata?: BodyInit
 }
 
 declare function arcfetch(request: ArcAPIRequest): Promise<string>;

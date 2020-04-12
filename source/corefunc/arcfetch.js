@@ -1,7 +1,7 @@
 // filename : corefunc/arcfetch.js
 // author   : CirnoBakaBOT
 // date     : 04/12/2020
-// comment  : all arcapi requests will goes to here
+// comment  : all arcapi requests will goes here
 'use strict'
 
 const btoa = require('btoa');
@@ -18,8 +18,12 @@ class ArcAPIRequest extends Request {
     if (!init)
       throw new TypeError('init cannot be null');
 
+    // request url
+    // const _request_url = `https://arcapi.lowiro.com/${ARCAPI_VERSION}/${resturl}`;
+    const _request_url = `http://localhost:60000/${ARCAPI_VERSION}/${resturl}`;
+
     // standard http headers
-    let _request_headers = {
+    const _request_headers = {
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
       'AppVersion': ARCAPI_APPVERSION,
       'User-Agent': ARCAPI_USERAGENT,
@@ -30,7 +34,7 @@ class ArcAPIRequest extends Request {
     // extra identity header
     if (init.usertoken) {
       _request_headers['Accept-Encoding'] = 'identity';
-      _request_headers['Authorization'] = `Basic ${init.usertoken}`;
+      _request_headers['Authorization'] = `Bearer ${init.usertoken}`;
     }
     else if (init.username && init.userpwd) {
       _request_headers['Accept-Encoding'] = 'identity';
@@ -43,10 +47,11 @@ class ArcAPIRequest extends Request {
     }
 
     // for POST forms
-    let _request_body =
-      (method === 'POST') ? init.body : null;
+    if (init.postdata && method == 'GET')
+      throw new TypeError('GET method not supported post data');
+    const _request_body = init.postdata;
 
-    super(resturl, {
+    super(_request_url, {
       method: method,
       headers: _request_headers,
       body: _request_body
