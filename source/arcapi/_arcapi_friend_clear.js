@@ -27,7 +27,7 @@ module.exports = async (account, friends = []) => {
   // delete all friends
   if (friends.length) {
     try {
-      friends.forEach(v => {
+      friends.forEach((v) => {
         const _return = await arcapi_friend_delete(account, v.user_id);
         if (!_return.success) throw new Error('wtf???');
       });
