@@ -7,10 +7,10 @@ const TAG = 'arcapi/_arcapi_friend_delete.js';
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = async function (arcaccount, songid, difficulty, start = 0, limit = 10) {
+module.exports = async function (account, songid, difficulty, start = 0, limit = 10) {
   const _return_template = {
     success: false,
-    ranklist: null
+    ranks: null
   };
 
   try {
@@ -23,14 +23,14 @@ module.exports = async function (arcaccount, songid, difficulty, start = 0, limi
           'start': start,
           'limit': limit
         }), {
-        usertoken: arcaccount.token
+        usertoken: account.token
       });
 
     // send request
     await arcfetch(_remote_request)
       .then((root) => {
         _return_template.success = true;
-        _return_template.ranklist = root.value;
+        _return_template.ranks = root.value;
       })
       .catch((e) => { throw e; })
 
