@@ -10,10 +10,11 @@ const ArcAPIRequest = arcfetch.ArcAPIRequest;
 module.exports = async function (account, songid, difficulty, start = 0, limit = 10) {
   const _return_template = {
     success: false,
-    ranks: null
+    ranklist: null
   };
 
   try {
+    
     // construct remote request
     const _remote_request =
       new ArcAPIRequest('GET', 'score/song/friend?' +
@@ -30,7 +31,7 @@ module.exports = async function (account, songid, difficulty, start = 0, limit =
     await arcfetch(_remote_request)
       .then((root) => {
         _return_template.success = true;
-        _return_template.ranks = root.value;
+        _return_template.ranklist = root.value;
       })
       .catch((e) => { throw e; })
 
