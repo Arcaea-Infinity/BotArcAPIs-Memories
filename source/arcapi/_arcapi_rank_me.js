@@ -2,7 +2,7 @@
 // author   : CirnoBakaBOT
 // date     : 04/13/2020
 
-const TAG = '_arcapi_rank_me.js';
+const TAG = 'arcapi/_arcapi_rank_me.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
