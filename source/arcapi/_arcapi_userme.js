@@ -10,7 +10,7 @@ const ArcAPIRequest = arcfetch.ArcAPIRequest;
 module.exports = async (account) => {
   const _return_template = {
     success: false,
-    account_info: null
+    info: null
   };
 
   try {
@@ -25,7 +25,7 @@ module.exports = async (account) => {
     await arcfetch(_remote_request)
       .then((root) => {
         _return_template.success = true;
-        _return_template.account_info = root.value;
+        _return_template.info = root.value;
       })
       .catch((e) => { throw e; })
 
