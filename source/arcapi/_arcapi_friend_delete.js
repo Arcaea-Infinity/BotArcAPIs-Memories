@@ -11,7 +11,7 @@ const ArcAPIRequest = arcfetch.ArcAPIRequest;
 module.exports = async function (arc_account, user_id) {
   const _return_template = {
     success: false,
-    arc_friendlist: null
+    friend_list: null
   };
 
   try {
@@ -27,7 +27,7 @@ module.exports = async function (arc_account, user_id) {
     await arcfetch(_remote_request)
       .then((root) => {
         _return_template.success = true;
-        _return_template.arc_friendlist = root.value.friends;
+        _return_template.friend_list = root.value.friends;
       })
       .catch((e) => { throw e; })
 
