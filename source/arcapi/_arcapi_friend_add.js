@@ -5,8 +5,8 @@
 
 const TAG = 'arcapi/_arcapi_friend_add.js';
 
-const fetch = require('node-fetch');
-const Request = fetch.Request;
+const arcfetch = require('../corefunc/arcfetch');
+const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
 module.exports = async function (arc_account, user_code) {
   const _return_template = {
@@ -14,36 +14,24 @@ module.exports = async function (arc_account, user_code) {
     friend_list: null
   };
 
-  // request origin arcapi
-  const _remote_request =
-    new Request(`https://arcapi.lowiro.com/${ARCAPI_VERSION}/friend/me/add`, {
-      method: 'POST',
-      headers: {
-        'Accept-Encoding': 'identity',
-        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-        'Authorization': `Bearer ${arc_account.token}`,
-        'Platform': 'android',
-        'AppVersion': ARCAPI_APPVERSION,
-        'User-Agent': ARCAPI_USERAGENT,
-        'Host': 'arcapi.lowiro.com',
-        'Connection': 'Keep-Alive'
-      },
-      body: new URLSearchParams({
-        'friend_code': user_code
-      })
-    });
-  const _remote_response_data = await fetch(_remote_request);
-
-  // check for origin arcapi data
   try {
-    const _json_root = await _remote_response_data.json();
-    console.log(TAG, _json_root);
 
-    if (_json_root.success) {
-      _return_template.success = true;
-      _return_template.friend_list = _json_root.value.friends;
-    }
-  } catch (e) { console.log(TAG, e); }
+    // construct remote request
+    const _remote_request =
+      new ArcAPIRequest('POST', `friend/me/add`, {
+        usertoken: arc_account.token,
+        postdata: new URLSearchParams({ 'friend_code': user_code })
+      });
+
+    // send request
+    await arcfetch(_remote_request)
+      .then((root) => {
+        _return_template.success = true;
+        _return_template.friend_list = root.value.friends;
+      })
+      .catch((e) => { throw e; })
+
+  } catch (e) { syslog.e(TAG, e); }
 
   return _return_template;
 }
