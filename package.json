@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "An ArcAPI for bots running in NodeJS.",
   "dependencies": {
+    "btoa": "^1.2.1",
     "node-fetch": "^2.6.0",
     "sqlite-async": "^1.0.12"
   },
-  "devDependencies": {},
   "scripts": {
     "start": "node index.js"
   },

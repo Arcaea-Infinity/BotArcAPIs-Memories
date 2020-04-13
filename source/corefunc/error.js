@@ -4,6 +4,12 @@
 // comment  : error with status code
 
 class APIError extends Error {
+
+  /**
+   * An APIError
+   * @param {number} status 
+   * @param {string} notify 
+   */
   constructor(status, notify) {
     if (typeof status != 'number')
       throw new TypeError('first argument is status code, cannot be null');

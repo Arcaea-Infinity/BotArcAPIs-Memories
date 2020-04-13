@@ -41,6 +41,7 @@ module.exports = async (request, response) => {
   catch (e) {
     _response_status = 404;
     syslog.e(TAG, e.toString());
+    syslog.e(TAG, e.stack);
   }
 
   // make response body
@@ -53,6 +54,7 @@ module.exports = async (request, response) => {
 
   // send json result to client
   response.statusCode = _response_status;
+  response.setHeader('Access-Control-Allow-Origin', '*');
   response.setHeader('Content-Type', 'application/json; charset=utf-8');
   response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
   response.end(_http_body);

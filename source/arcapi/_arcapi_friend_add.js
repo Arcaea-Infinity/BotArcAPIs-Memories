@@ -8,14 +8,13 @@ const TAG = 'arcapi/_arcapi_friend_add.js';
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = async function (account, usercode) {
+module.exports = async (account, usercode) => {
   const _return_template = {
     success: false,
     friends: null
   };
 
   try {
-
     // construct remote request
     const _remote_request =
       new ArcAPIRequest('POST', 'friend/me/add', {

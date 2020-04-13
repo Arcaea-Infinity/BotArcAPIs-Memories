@@ -8,7 +8,7 @@ const TAG = 'arcapi/_arcapi_friend_delete.js';
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = async function (account, userid) {
+module.exports = async (account, userid) => {
   const _return_template = {
     success: false,
     friends: null

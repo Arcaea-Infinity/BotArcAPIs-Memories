@@ -13,36 +13,12 @@ const arcapi_account_release = require('../../arcapi/_arcapi_account_release');
 
 const dbproc_record_update = require('../../database/_dbproc_record_update');
 const dbproc_userinfo_update = require('../../database/_dbproc_userinfo_update');
-const dbproc_userinfo_byusercode = require('../../database/_dbproc_userinfo_byusercode');
 
-module.exports = async function (argument) {
+module.exports = async (argument) => {
   const _return_template = {
     'status': 0,
     'message': null,
-    'content': {
-      'name': null,
-      'rating': null,
-      'user_id': null,
-      'join_date': null,
-      'character': null,
-      'is_skill_sealed': null,
-      'is_char_uncapped': null,
-      'recent': {
-        'score': null,
-        'health': null,
-        'rating': null,
-        'song_id': null,
-        'modifier': null,
-        'difficulty': null,
-        'near_count': null,
-        'miss_count': null,
-        'clear_type': null,
-        'time_played': null,
-        'perfect_count': null,
-        'best_clear_type': null,
-        'shiny_perfect_count': null
-      }
-    }
+    'content': null
   };
 
   let _return = null;
@@ -55,70 +31,47 @@ module.exports = async function (argument) {
     if (typeof argument.usercode == 'undefined')
       throw new APIError(-1, 'invalid argument');
 
-    // try to query userinfo by usercode
-    _return = await dbproc_userinfo_byusercode(argument.usercode);
-    const _user_info = _return.user_info;
-    syslog.i(TAG, `Userinfo => ${_user_info.name} ${_user_info.code}`);
-
     // request an arc account
     _return = arcapi_account_alloc();
     if (!_return.success)
       throw new APIError(-2, 'request an arc account from pool failed');
-    _arc_account = _return.arc_account;
-    syslog.i(TAG, `Allocated arc account => ${_arc_account.name} ${_arc_account.token}`);
+    _arc_account = _return.account;
 
-    throw new APIError(-233, 'debug break');
+    // clear friend list
+    _return = await arcapi_friend_clear(_arc_account);
+    if (!_return)
+      throw new APIError(-3, 'internal error');
 
-    // if we know user id then can add friend directly
-    // otherwise we must clear friend list to keep atomically
-    if (!_user_info.user_id) {
-      _return = arcapi_friend_clear(_arc_account);
-      if (!_return.success)
-        throw new APIError(-3, 'clear friend list failed');
-    }
-
-    // add friend and fetch result then release arc account
-    _return = arcapi_friend_add(_arc_account, argument.usercode)
+    // add friend
+    _return = await arcapi_friend_add(_arc_account, argument.usercode);
     if (!_return.success)
       throw new APIError(-4, 'add friend failed');
+
+    // length must be 1
+    if (_return.friends.length != 1)
+      throw new APIError(-5, 'internal error');
+    const _arc_friend = _return.friends[0];
+
+    // release account
     arcapi_account_release(_arc_account);
 
-    // find out this user
-    const _arc_friend_list = _return.friend_list;
-    const _arc_friend = _arc_friend_list[0];
+    // update user info and recent played
+    // dbproc_userinfo_update(_arc_friend);
+    // if (_arc_friend.recent_score.length)
+    //   dbproc_record_update(_arc_friend.recent);
 
     // fill the data template
-    _return_template.content.name = _arc_friend.name;
-    _return_template.content.rating = _arc_friend.rating;
-    _return_template.content.user_id = _arc_friend.user_id;
-    _return_template.content.join_date = _arc_friend.join_date;
-    _return_template.content.character = _arc_friend.character;
-    _return_template.content.recent_score = _arc_friend.recent_score;
-    _return_template.content.is_skill_sealed = _arc_friend.is_skill_sealed;
-    _return_template.content.is_char_uncapped = _arc_friend.is_char_uncapped;
-    dbproc_userinfo_update(_arc_friend);
+    _return_template.content = _arc_friend;
+    _return_template.content.recent_score = _arc_friend.recent_score[0];
 
-    // if need recent data and this user has recent
-    if (argument.hasrecent && _arc_friend.recent) {
-      _return_template.content.recent.score = _arc_friend.recent.score;
-      _return_template.content.recent.health = _arc_friend.recent.health;
-      _return_template.content.recent.rating = _arc_friend.recent.rating;
-      _return_template.content.recent.song_id = _arc_friend.recent.song_id;
-      _return_template.content.recent.modifier = _arc_friend.recent.modifier;
-      _return_template.content.recent.difficulty = _arc_friend.recent.difficulty;
-      _return_template.content.recent.near_count = _arc_friend.recent.near_count;
-      _return_template.content.recent.miss_count = _arc_friend.recent.miss_count;
-      _return_template.content.recent.clear_type = _arc_friend.recent.clear_type;
-      _return_template.content.recent.time_played = _arc_friend.recent.time_played;
-      _return_template.content.recent.perfect_count = _arc_friend.recent.perfect_count;
-      _return_template.content.recent.best_clear_type = _arc_friend.recent.best_clear_type;
-      _return_template.content.recent.shiny_perfect_count = _arc_friend.recent.shiny_perfect_count;
-      dbproc_record_update(_arc_friend.recent);
+    // if need recent data
+    if (!argument.hasrecent && !_arc_friend.recent_score.length) {
+      delete _return_template.content.recent_score;
     }
 
   } catch (e) {
 
-    syslog.e(TAG, e.message);
+    syslog.e(TAG, e.stack);
 
     // release this account
     if (_arc_account)

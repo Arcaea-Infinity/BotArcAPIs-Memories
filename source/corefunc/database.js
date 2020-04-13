@@ -40,8 +40,8 @@ module.exports = {
         link.exec(
           "CREATE TABLE IF NOT EXISTS `accounts` ( \
             `name` TEXT NOT NULL, `pwd` TEXT NOT NULL, \
-            `uid` TEXT, `ucode` TEXT, `token` TEXT, \
-            `deviceid` TEXT, `banned` INTEGER, \
+            `uid` INTEGER, `ucode` TEXT, `token` TEXT, \
+            `deviceid` TEXT, `banned` TEXT, \
             PRIMARY KEY (`arc_name` ASC) \
           );"
         );
@@ -62,7 +62,7 @@ module.exports = {
                 { value: result, writable: true, configurable: false });
 
               for (let i = 0; i < result.length; ++i)
-                syslog.v(TAG, `${_database_arcaccount} => ${result[i].arc_name} ${result[i].arc_token}`);
+                syslog.v(TAG, `${_database_arcaccount} => ${result[i].name} ${result[i].token}`);
               syslog.v(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
             }
           })

@@ -12,8 +12,8 @@ const MACROS = {
   'BOTARCAPI_VERSTR': 'v1.0.0',
 
   // arcaea api config
-  'ARCAPI_VERSION': 10,
-  'ARCAPI_APPVERSION': '2.6.2c',
+  'ARCAPI_VERSION': 11,
+  'ARCAPI_APPVERSION': '2.6.1c',
   'ARCAPI_USERAGENT': 'WeLoveArcaea (Linux; U; Android 2.3.3; BotArcAPI)',
 
   // path to database folder

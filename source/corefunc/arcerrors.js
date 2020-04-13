@@ -50,7 +50,8 @@ module.exports = function (errcode) {
     9905: 'No data found to sync.',
     9906: "Sync failed due to conflicting data from another device. Please perform sync from Main Menu > Network.",
     9907: 'A problem occured updating data...',
-    9908: 'There is a new version of Arcaea available.Please update.'
+    9908: 'There is a new version of Arcaea available.Please update.',
+    'UnauthorizedError': 'Bearer token invalid. Follow the oauth2-token link to get a valid one!'
   };
 
   if (typeof _errcode_table[errcode] == 'undefined')

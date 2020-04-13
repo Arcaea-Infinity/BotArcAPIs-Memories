@@ -53,7 +53,7 @@ process.on('SIGINT', () => {
 process.on('warning', (w) => {
   console.warn(`warning => ${w.message}`);
 });
-
+/*
 process.on('uncaughtException', (e, origin) => {
   console.assert(`uncaughtException => ${e.message}`);
   process.exit(1);
@@ -62,3 +62,4 @@ process.on('uncaughtException', (e, origin) => {
 process.on('unhandledRejection', (reason, promise) => {
   console.assert(`unhandledRejection => ${reason}`);
 });
+*/

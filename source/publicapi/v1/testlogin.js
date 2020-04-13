@@ -1,6 +1,6 @@
-// filename : /source/publicapi/test.js
+// filename : publicapi/testlogin.js
 // author   : CirnoBakaBOT
-// date     : 04/09/2020
+// date     : 04/13/2020
 // comment  : test api
 
 const TAG = 'v1/test.js';
@@ -17,7 +17,7 @@ module.exports = async (argument) => {
     }
   };
 
-  //const arcapi_login = require('../../arcapi/_arcapi_login');
+  //
   //const _return =  await arcapi_login('AliceCao', '12345678', '395f817c834a2d3f');
 
   // const arcapi_delete = require('../../arcapi/_arcapi_friend_delete');
@@ -29,23 +29,24 @@ module.exports = async (argument) => {
   // const arcapi_rankfriend = require('../../arcapi/_arcapi_rank_friend');
   // const _return = await arcapi_rankfriend({ token: '1234' }, 'gl', 2);
 
+  const arcapi_login = require('../../arcapi/_arcapi_login');
   const arcapi_account_alloc = require('../../arcapi/_arcapi_account_alloc');
   const arcapi_account_release = require('../../arcapi/_arcapi_account_release');
   const arcapi_userme = require('../../arcapi/_arcapi_userme');
-  const arcapi_friend_add = require('../../arcapi/_arcapi_friend_add');
-  const arcapi_friend_clear = require('../../arcapi/_arcapi_friend_clear');
 
   let _return = null;
 
-  _return = arcapi_account_alloc();
+  _return = await arcapi_account_alloc();
   if (_return.success) {
-    const _arc_account = _return.account;
-    // _return = await arcapi_friend_clear(_return.account);
-    _return = await arcapi_friend_add(_arc_account, '636401085');
-    arcapi_account_release(_arc_account);
+    const _account = _return.account;
 
-    syslog.d(TAG, JSON.stringify(_return));
+    _return = await arcapi_login(_account.name, _account.pswd, _account.deviceid);
+    syslog.d(_return);
+
+    arcapi_account_release(_account);
   }
+
+
 
   // fill the template
   _response_template.status = 418;

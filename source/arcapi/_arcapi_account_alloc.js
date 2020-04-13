@@ -8,7 +8,7 @@ const TAG = 'arcapi/_arcapi_account_alloc.js';
 module.exports = function () {
   const _return_template = {
     success: false,
-    arc_account: null,
+    account: null,
   };
 
   // request an arc account from global ARCACCOUNT
@@ -16,10 +16,11 @@ module.exports = function () {
   if (typeof ARCACCOUNT != 'undefined') {
 
     // grab an account from queue
-    const _arc_account = ARCACCOUNT.shift(1);
-    if (typeof _arc_account != 'undefined') {
+    const _element = ARCACCOUNT.shift(1);
+    if (typeof _element != 'undefined') {
       _return_template.success = true;
-      _return_template.arc_account = _arc_account;
+      _return_template.account = _element;
+      syslog.i(TAG, `Allocated arc account => ${_element.name} ${_element.token}`);
     }
   }
 

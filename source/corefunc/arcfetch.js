@@ -4,10 +4,12 @@
 // comment  : all arcapi requests will goes here
 'use strict'
 
+const TAG = 'corefunc/arcfetch.js';
+
 const btoa = require('btoa');
 const fetch = require('node-fetch');
 const Request = fetch.Request;
-const arcapi_errcode = require('../arcapi/_arcapi_errcode');
+const APIError = require('./error');
 
 class ArcAPIRequest extends Request {
   constructor(method, resturl, init) {
@@ -19,8 +21,8 @@ class ArcAPIRequest extends Request {
       throw new TypeError('init cannot be null');
 
     // request url
-    // const _request_url = `https://arcapi.lowiro.com/${ARCAPI_VERSION}/${resturl}`;
-    const _request_url = `http://localhost:60000/${ARCAPI_VERSION}/${resturl}`;
+    const _request_url = `https://arcapi.lowiro.com/${ARCAPI_VERSION}/${resturl}`;
+    // const _request_url = `http://localhost:60000/${ARCAPI_VERSION}/${resturl}`;
 
     // standard http headers
     const _request_headers = {
@@ -64,6 +66,8 @@ class ArcAPIRequest extends Request {
  * @param {ArcAPIRequest} request
  */
 function arcfetch(request) {
+  syslog.v(TAG, `Arcfetch => ${request.url}`);
+
   return new Promise((resolve, reject) => {
 
     // request origin arcapi
@@ -78,16 +82,20 @@ function arcfetch(request) {
         try {
           return JSON.parse(rawdata);
         } catch (e) {
-          return reject(new Error(`Arcapi currently unavailable. \n${rawdata}`));
+          syslog.d(rawdata);
+          return reject(new APIError(-1, `Arcapi currently unavailable`));
         }
       })
 
-      // this is a json
+      // ensure it's a json
       .then((root) => {
         if (root.success)
           return resolve(root);
-        else
-          return reject(new Error(`Response from arcapi => ${arcapi_errcode(root.error_code)}`));
+        else {
+          syslog.d(JSON.stringify(root));
+          return reject(new APIError(root.error_code, 'Arcapi returns an error'
+          ));
+        }
       })
 
       // any errors
