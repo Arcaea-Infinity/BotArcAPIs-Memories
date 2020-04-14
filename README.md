@@ -14,7 +14,7 @@ An ArcAPI for bots running in NodeJS. <br/>
 
 ## 🎉 Run directly
 ```bash
-$ npm i -g npm-pre-gyp # sqlite3 needed
+$ npm i -g node-pre-gyp # sqlite3 needed
 $ npm i # install all node dependences
 $ npm start
 ```
