@@ -42,7 +42,7 @@ module.exports = {
             `name` TEXT NOT NULL, `pwd` TEXT NOT NULL, \
             `uid` INTEGER, `ucode` TEXT, `token` TEXT, \
             `deviceid` TEXT, `banned` TEXT, \
-            PRIMARY KEY (`arc_name` ASC) \
+            PRIMARY KEY (`name` ASC) \
           );"
         );
 
@@ -120,9 +120,9 @@ module.exports = {
         // always execute this sql to keep datatable valid
         link.exec(
           "CREATE TABLE IF NOT EXISTS `players` ( \
-            `id` integer NOT NULL, `join_date` integer NOT NULL, \
-            `name` text NOT NULL, `rating` integer NOT NULL, `code` text NOT NULL, \
-            PRIMARY KEY (`id` ASC) \
+            `user_id` integer NOT NULL, `join_date` integer NOT NULL, \
+            `name` text NOT NULL, `rating` integer DEFAULT -1, `code` text NOT NULL, \
+            PRIMARY KEY (`user_id` ASC) \
           );"
         );
 

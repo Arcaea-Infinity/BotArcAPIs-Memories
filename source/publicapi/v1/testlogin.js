@@ -32,21 +32,16 @@ module.exports = async (argument) => {
   const arcapi_login = require('../../arcapi/_arcapi_login');
   const arcapi_account_alloc = require('../../arcapi/_arcapi_account_alloc');
   const arcapi_account_release = require('../../arcapi/_arcapi_account_release');
-  const arcapi_userme = require('../../arcapi/_arcapi_userme');
 
-  let _return = null;
-
-  _return = await arcapi_account_alloc();
-  if (_return.success) {
-    const _account = _return.account;
-
-    _return = await arcapi_login(_account.name, _account.pswd, _account.deviceid);
-    syslog.d(_return);
-
-    arcapi_account_release(_account);
-  }
-
-
+  await arcapi_account_alloc()
+    .then((account) => {
+      arcapi_login(account.name, account.pwd, account.deviceid)
+        .then((token) => {
+          syslog.d(token);
+          arcapi_account_release(account);
+        });
+    })
+    .catch((e) => { syslog.e('Alloc account failed') });
 
   // fill the template
   _response_template.status = 418;
