@@ -9,6 +9,12 @@ module.exports = (userid, records) => {
 
     records.forEach((element, index) => {
 
+      // check database valid
+      if (!DATABASE_ARCRECORD) {
+        syslog.e(TAG, `Database error? DATABASE_ARCRECORD => ${JSON.stringify(DATABASE_ARCRECORD)}`);
+        return reject(new Error('Invalid database link'));
+      }
+
       // check data valid
       if (typeof userid != 'number' ||
         typeof element.score != 'number' ||
@@ -28,35 +34,30 @@ module.exports = (userid, records) => {
         return reject(new Error('Invalid input data'));
       }
 
-      // check database valid
-      if (!DATABASE_ARCRECORD) {
-        syslog.e(TAG, `Database error? DATABASE_ARCPLAYER => ${JSON.stringify(DATABASE_ARCRECORD)}`);
-        return reject(new Error('Invalid database link'));
-      }
+      const _sqlbinding = {
+        player: userid,
+        score: element.score,
+        health: element.health,
+        rating: parseInt(element.rating * 10000),
+        song_id: element.song_id,
+        modifier: element.modifier,
+        difficulty: element.difficulty,
+        clear_type: element.clear_type,
+        best_clear_type: element.best_clear_type,
+        time_played: element.time_played,
+        near_count: element.near_count,
+        miss_count: element.miss_count,
+        perfect_count: element.perfect_count,
+        shiny_perfect_count: element.shiny_perfect_count,
+      };
 
       const _sql = 'INSERT OR REPLACE INTO ' +
-        '`records`(player,score,health,rating,song_id,modifier,difficulty,clear_type,' +
-        'best_clear_type,time_played,near_count,miss_count,perfect_count,shiny_perfect_count) ' +
-        'VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?);';
+        `\`records\`(${Object.keys(_sqlbinding).join()}) ` +
+        `VALUES(${new Array(Object.keys(_sqlbinding).length).fill('?').join(',')});`;
       syslog.v(TAG, _sql);
 
       // execute sql
-      DATABASE_ARCRECORD.run(_sql, [
-        userid,
-        element.score,
-        element.health,
-        parseInt(element.rating * 10000),
-        element.song_id,
-        element.modifier,
-        element.difficulty,
-        element.clear_type,
-        element.best_clear_type,
-        element.time_played,
-        element.near_count,
-        element.miss_count,
-        element.perfect_count,
-        element.shiny_perfect_count,
-      ])
+      DATABASE_ARCRECORD.run(_sql, Object.values(_sqlbinding))
         .then(() => {
           if (index == records.length - 1)
             reslove();
