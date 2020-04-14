@@ -21,7 +21,6 @@ module.exports = async (argument) => {
     'content': null
   };
 
-  let _return = null;
   let _arc_account = null;
 
   try {
@@ -32,40 +31,45 @@ module.exports = async (argument) => {
       throw new APIError(-1, 'invalid argument');
 
     // request an arc account
-    _return = arcapi_account_alloc();
-    if (!_return.success)
-      throw new APIError(-2, 'request an arc account from pool failed');
-    _arc_account = _return.account;
+    await arcapi_account_alloc()
+      .then((x) => { _arc_account = x; })
+      .catch((e) => { throw new APIError(-2, 'request an arc account from pool failed'); });
 
     // clear friend list
-    _return = await arcapi_friend_clear(_arc_account);
-    if (!_return)
-      throw new APIError(-3, 'internal error');
+    await arcapi_friend_clear(_arc_account)
+      .catch((e) => { throw new APIError(-3, 'internal error'); });
 
     // add friend
-    _return = await arcapi_friend_add(_arc_account, argument.usercode);
-    if (!_return.success)
-      throw new APIError(-4, 'add friend failed');
+    await arcapi_friend_add(_arc_account, argument.usercode)
+      .then((x) => {
+        // length must be 1
+        if (x.length != 1) return reject();
 
-    // length must be 1
-    if (_return.friends.length != 1)
-      throw new APIError(-5, 'internal error');
-    const _arc_friend = _return.friends[0];
+        // save userinfo
+        _arc_friend = x[0];
+        _arc_friend.code = argument.usercode;
+      })
+      .catch((e) => { throw new APIError(-4, 'add friend failed'); });
 
     // release account
-    arcapi_account_release(_arc_account);
+    arcapi_account_release(_arc_account)
+      .catch((e) => { syslog.e(e.stack); });
 
-    // update user info and recent played
-    // dbproc_userinfo_update(_arc_friend);
-    // if (_arc_friend.recent_score.length)
-    //   dbproc_record_update(_arc_friend.recent);
+    // update user info and recently played
+    dbproc_userinfo_update(_arc_friend)
+      .catch((e) => { syslog.e(e.stack); });
+
+    // insert new record into database
+    if (_arc_friend.recent_score.length)
+      dbproc_record_update(_arc_friend.user_id, _arc_friend.recent_score)
+        .catch((e) => { syslog.e(e.stack); });
 
     // fill the data template
     _return_template.content = _arc_friend;
     _return_template.content.recent_score = _arc_friend.recent_score[0];
 
     // if need recent data
-    if (!argument.hasrecent && !_arc_friend.recent_score.length) {
+    if (argument.hasrecent != 'true' && !_arc_friend.recent_score.length) {
       delete _return_template.content.recent_score;
     }
 

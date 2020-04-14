@@ -22,7 +22,7 @@ class ArcAPIRequest extends Request {
 
     // request url
     const _request_url = `https://arcapi.lowiro.com/${ARCAPI_VERSION}/${resturl}`;
-    // const _request_url = `http://localhost:60000/${ARCAPI_VERSION}/${resturl}`;
+    //const _request_url = `http://localhost:60000/${ARCAPI_VERSION}/${resturl}`;
 
     // standard http headers
     const _request_headers = {

@@ -100,6 +100,7 @@ module.exports = {
         // map to global space
         Object.defineProperty(global, 'DATABASE_ARCBEST30',
           { value: link, writable: false, configurable: false });
+        Object.freeze(DATABASE_ARCBEST30);
 
       })
       .catch((e) => { syslog.f(TAG, `${_database_arcbest30} => ${e.toString()}`); });
@@ -128,6 +129,7 @@ module.exports = {
         // map to global space
         Object.defineProperty(global, 'DATABASE_ARCPLAYER',
           { value: link, writable: false, configurable: false });
+        Object.freeze(DATABASE_ARCPLAYER);
 
       })
       .catch((e) => { syslog.f(TAG, `${_database_arcplayer} => ${e.toString()}`); });
@@ -147,7 +149,7 @@ module.exports = {
         // always execute this sql to keep datatable valid
         link.exec(
           "CREATE TABLE IF NOT EXISTS `records` ( \
-            `hash` TEXT NOT NULL, `player` INTEGER NOT NULL, \
+            `player` INTEGER NOT NULL, \
             `score` INTEGER NOT NULL, `health` INTEGER NOT NULL, \
             `rating` INTEGER NOT NULL, `song_id` TEXT NOT NULL, \
             `modifier` INTEGER NOT NULL, `difficulty` INTEGER NOT NULL, \
@@ -161,6 +163,7 @@ module.exports = {
         // map to global space
         Object.defineProperty(global, 'DATABASE_ARCRECORD',
           { value: link, writable: false, configurable: false });
+        Object.freeze(DATABASE_ARCRECORD);
 
       })
       .catch((e) => { syslog.f(TAG, `${_database_arcrecord} => ${e.toString()}`); });

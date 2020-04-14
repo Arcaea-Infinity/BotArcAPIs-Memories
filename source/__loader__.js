@@ -18,8 +18,7 @@ module.exports = async (request, response) => {
   const _api_url = new URL(`http://0.0.0.0${request.url}`);
   const _api_path = _api_url.pathname;
   const _api_arguments = Object.fromEntries(_api_url.searchParams);
-  syslog.v(TAG, `Accept request at => ${_api_path}`);
-  syslog.v(TAG, `Accept request at => ${response}`);
+  syslog.v(TAG, `Accept request at => ${_api_path} ${JSON.stringify(_api_arguments)}`);
 
   try {
     // try invoke method
