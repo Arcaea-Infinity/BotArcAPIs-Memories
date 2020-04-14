@@ -1,6 +1,7 @@
 // filename : arcapi/_arcapi_userme.js
 // author   : CirnoBakaBOT
 // date     : 04/12/2020
+// comment  : userme
 
 const TAG = 'arcapi/_arcapi_userme.js';
 
@@ -8,12 +9,8 @@ const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
 module.exports = async (account) => {
-  const _return_template = {
-    success: false,
-    info: null
-  };
+  return new Promise((reslove, reject) => {
 
-  try {
     // construct remote request
     const _remote_request =
       new ArcAPIRequest('GET', 'user/me', {
@@ -22,14 +19,10 @@ module.exports = async (account) => {
       });
 
     // send request
-    await arcfetch(_remote_request)
+    arcfetch(_remote_request)
       .then((root) => {
-        _return_template.success = true;
-        _return_template.info = root.value;
+        return reslove(root.value);
       })
-      .catch((e) => { throw e; })
-
-  } catch (e) { syslog.e(TAG, e); }
-
-  return _return_template;
+      .catch((e) => { return reject(e); })
+  });
 }

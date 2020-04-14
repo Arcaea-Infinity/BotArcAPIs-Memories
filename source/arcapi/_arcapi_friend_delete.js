@@ -8,13 +8,8 @@ const TAG = 'arcapi/_arcapi_friend_delete.js';
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = async (account, userid) => {
-  const _return_template = {
-    success: false,
-    friends: null
-  };
-
-  try {
+module.exports = (account, userid) => {
+  return new Promise((reslove, reject) => {
 
     // construct remote request
     const _remote_request =
@@ -24,14 +19,8 @@ module.exports = async (account, userid) => {
       });
 
     // send request
-    await arcfetch(_remote_request)
-      .then((root) => {
-        _return_template.success = true;
-        _return_template.friends = root.value.friends;
-      })
-      .catch((e) => { throw e; })
-
-  } catch (e) { syslog.e(TAG, e); }
-
-  return _return_template;
+    arcfetch(_remote_request)
+      .then((root) => { return reslove(root.value.friends); })
+      .catch((e) => { return reject(e); })
+  });
 }

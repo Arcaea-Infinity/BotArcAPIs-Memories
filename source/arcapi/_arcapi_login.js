@@ -8,13 +8,8 @@ const TAG = 'arcapi/_arcapi_login.js';
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = async (name, password, deviceid) => {
-  const _return_template = {
-    success: false,
-    access_token: null
-  };
-
-  try {
+module.exports = (name, password, deviceid) => {
+  return new Promise((reslove, reject) => {
 
     // construct remote request
     const _remote_request =
@@ -26,14 +21,8 @@ module.exports = async (name, password, deviceid) => {
       });
 
     // send request
-    await arcfetch(_remote_request)
-      .then((root) => {
-        _return_template.success = true;
-        _return_template.access_token = root.access_token;
-      })
-      .catch((e) => { throw e; })
-
-  } catch (e) { syslog.e(TAG, e); }
-
-  return _return_template;
+    arcfetch(_remote_request)
+      .then((root) => { return reslove(root); })
+      .catch((e) => { return reject(e); })
+  });
 }

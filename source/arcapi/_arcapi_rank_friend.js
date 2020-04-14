@@ -7,14 +7,9 @@ const TAG = 'arcapi/_arcapi_friend_delete.js';
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = async function (account, songid, difficulty, start = 0, limit = 10) {
-  const _return_template = {
-    success: false,
-    ranklist: null
-  };
+module.exports = (account, songid, difficulty, start = 0, limit = 10) => {
+  return new Promise((reslove, reject) => {
 
-  try {
-    
     // construct remote request
     const _remote_request =
       new ArcAPIRequest('GET', 'score/song/friend?' +
@@ -28,14 +23,8 @@ module.exports = async function (account, songid, difficulty, start = 0, limit =
       });
 
     // send request
-    await arcfetch(_remote_request)
-      .then((root) => {
-        _return_template.success = true;
-        _return_template.ranklist = root.value;
-      })
-      .catch((e) => { throw e; })
-
-  } catch (e) { syslog.e(TAG, e); }
-
-  return _return_template;
+    arcfetch(_remote_request)
+      .then((root) => { return reslove(root.value); })
+      .catch((e) => { return reject(e); })
+  });
 }

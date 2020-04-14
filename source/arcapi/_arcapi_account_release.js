@@ -5,18 +5,19 @@
 
 const TAG = 'arcapi/_arcapi_account_release.js';
 
-module.exports = function (account) {
-  const _return_template = {
-    success: false
-  };
+module.exports = (account) => {
+  return new Promise((reslove, reject) => {
 
-  // push an account back to queue
-  // ** pretend to be a queue =(:3) z)_ **
-  if (typeof ARCACCOUNT != 'undefined' || typeof account != 'undefined') {
+    if (typeof ARCACCOUNT == 'undefined')
+      return reject();
+    if (typeof account == 'undefined')
+      return reject();
+
+    // push an account back to queue
+    // ** pretend to be a queue =(:3) z)_ **
     ARCACCOUNT.push(account);
-    _return_template.success = true;
-    syslog.i(TAG, `Released arc account => ${account.name} ${account.token}`);
-  }
 
-  return _return_template;
+    reslove();
+    syslog.i(TAG, `Released arc account => ${account.name} ${account.token}`);
+  });
 }
