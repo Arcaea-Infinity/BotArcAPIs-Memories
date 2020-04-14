@@ -111,7 +111,7 @@ class SystemLog {
    */
   static _console(level, ...args) {
     let _caller_name = !module.parent.filename ?
-      'unknwon' : module.parent.filename.split('/').slice(-2).join('/');
+      'unknwon' : module.parent.filename.replace(/\\/g, '/').split('/').slice(-2).join('/');
     this.log(level, _caller_name, args);
   }
 
