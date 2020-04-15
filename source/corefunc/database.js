@@ -9,170 +9,148 @@ const file = require('fs');
 const path = require('path');
 const database = require('sqlite-async');
 
-module.exports = {
-  initDataBases: () => {
+const dbproc_arcaccount_init = require('../database/_dbproc_arcaccount_init');
+const dbproc_arcaccount_loadall = require('../database/_dbproc_arcaccount_loadall');
+const dbproc_arcbest30_init = require('../database/_dbproc_arcbest30_init');
+const dbproc_arcrecord_init = require('../database/_dbproc_arcrecord_init');
+const dbproc_arcplayer_init = require('../database/_dbproc_arcplayer_init');
+const dbproc_arcsong_init = require('../database/_dbproc_arcsong_init');
 
-    const _path_to_databases = path.resolve(__dirname, DATABASE_PATH);
-    syslog.v(TAG, `Path to databases => ${_path_to_databases}`);
+const initDataBases = () => {
 
-    const _first_create = !file.existsSync(_path_to_databases);
-    syslog.v(TAG, `Database first creating? => ${_first_create}`);
+  const _path_to_databases = path.resolve(__dirname, DATABASE_PATH);
+  syslog.v(TAG, `Path to databases => ${_path_to_databases}`);
 
-    // create folder first
-    // if database is first time creating
-    if (_first_create) {
-      file.mkdirSync(_path_to_databases);
-    }
+  const _first_create = !file.existsSync(_path_to_databases);
+  syslog.v(TAG, `Database first creating? => ${_first_create}`);
 
-
-    //////////////////////////////////////////////////////////////////////////
-    // database for arcaea accounts                                         //
-    //////////////////////////////////////////////////////////////////////////
-    const _database_arcaccount = 'arcaccount.db';
-    const _path_database_arcaccount = `${_path_to_databases}/${_database_arcaccount}`;
-    syslog.v(TAG, `Opening database => ${_path_database_arcaccount}`);
-
-    database.open(_path_database_arcaccount, database.OPEN_READWRITE | database.OPEN_CREATE)
-      .then((link) => {
-        syslog.i(TAG, `${_database_arcaccount} => OK`);
-
-        // always execute this sql to keep datatable valid
-        link.exec(
-          "CREATE TABLE IF NOT EXISTS `accounts` ( \
-            `name` TEXT NOT NULL, `pwd` TEXT NOT NULL, \
-            `uid` INTEGER, `ucode` TEXT, `token` TEXT, \
-            `deviceid` TEXT, `banned` TEXT, \
-            PRIMARY KEY (`name` ASC) \
-          );"
-        );
-
-        // pre-read all arc account to queue
-        syslog.v(TAG, `${_database_arcaccount} => Loading arc accounts from database`);
-        link.all('SELECT * FROM `accounts`')
-          .then((result) => {
-
-            // no arc account in the database
-            if (!result.length) {
-              syslog.w(TAG, `${_database_arcaccount} => There\'s no arc account in the database`);
-              syslog.w(TAG, `${_database_arcaccount} => You must add at least one account to the database`);
-            }
-            else {
-              // map to global space
-              Object.defineProperty(global, 'ARCACCOUNT',
-                { value: result, writable: true, configurable: false });
-
-              for (let i = 0; i < result.length; ++i)
-                syslog.v(TAG, `${_database_arcaccount} => ${result[i].name} ${result[i].token}`);
-              syslog.v(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
-            }
-          })
-          .catch((e) => { syslog.f(TAG, `${_database_arcaccount} => ${e.toString()}`); });
-
-        // close database
-        syslog.v(TAG, `${_database_arcaccount} => Close database`);
-        link.close();
-
-        // INSERT INTO `accounts` VALUES('test','12345678','0','000000001','tokentest','false')
-      })
-      .catch((e) => { syslog.f(TAG, `${_database_arcaccount} => ${e.toString()}`); });
+  // create folder first
+  // if database is first time creating
+  if (_first_create)
+    file.mkdirSync(_path_to_databases);
 
 
-    //////////////////////////////////////////////////////////////////////////
-    // database for arcaea best30 cache                                     //
-    //////////////////////////////////////////////////////////////////////////
-    const _database_arcbest30 = 'arcbest30.db';
-    const _path_database_arcbest30 = `${_path_to_databases}/${_database_arcbest30}`;
-    syslog.v(TAG, `Opening database => ${_path_database_arcbest30}`);
+  //////////////////////////////////////////////////////////////////////////
+  // database for arcaea accounts                                         //
+  //////////////////////////////////////////////////////////////////////////
+  const _database_arcaccount = 'arcaccount.db';
+  const _path_database_arcaccount = `${_path_to_databases}/${_database_arcaccount}`;
+  syslog.v(TAG, `Opening database => ${_path_database_arcaccount}`);
 
-    database.open(_path_database_arcbest30, database.OPEN_READWRITE | database.OPEN_CREATE)
-      .then((link) => {
-        syslog.i(TAG, `${_database_arcbest30} => OK`);
+  database.open(_path_database_arcaccount, database.OPEN_READWRITE | database.OPEN_CREATE)
+    .then((link) => {
+      Object.defineProperty(global, 'DATABASE_ARCACCOUNT',
+        { value: link, writable: false, configurable: false });
+      Object.freeze(DATABASE_ARCACCOUNT);
+    })
+    .then(() => { dbproc_arcaccount_init(); })
+    .then(() => {
+      syslog.v(TAG, `${_database_arcaccount} => Loading arc accounts from database`);
 
-        // always execute this sql to keep datatable valid
-        link.exec(
-          "CREATE TABLE IF NOT EXISTS `cache` ( \
-            `uid` INTEGER NOT NULL, `last_played` INTEGER, \
-            `best30_avg` INTEGER, `recent10_avg` INTEGER, `best30_list` TEXT, \
-            PRIMARY KEY (`uid` ASC) \
-          );"
-        );
+      // preload all arc account to queue
+      dbproc_arcaccount_loadall()
+        .then((result) => {
+          // no arc account in the database
+          if (!result.length) {
+            syslog.w(TAG, `${_database_arcaccount} => There\'s no arc account in the database`);
+            syslog.w(TAG, `${_database_arcaccount} => You must add ATLEAST ONE account to the database`);
+          }
+          // map to global space
+          Object.defineProperty(global, 'ARCACCOUNT',
+            { value: result, writable: true, configurable: false });
 
-        // map to global space
-        Object.defineProperty(global, 'DATABASE_ARCBEST30',
-          { value: link, writable: false, configurable: false });
-        Object.freeze(DATABASE_ARCBEST30);
-
-      })
-      .catch((e) => { syslog.f(TAG, `${_database_arcbest30} => ${e.toString()}`); });
-
-
-    //////////////////////////////////////////////////////////////////////////
-    // database for arcaea player's info                                    //
-    //////////////////////////////////////////////////////////////////////////
-    const _database_arcplayer = 'arcplayer.db';
-    const _path_database_arcplayer = `${_path_to_databases}/${_database_arcplayer}`;
-    syslog.v(TAG, `Opening database => ${_path_database_arcplayer}`);
-
-    database.open(_path_database_arcplayer, database.OPEN_READWRITE | database.OPEN_CREATE)
-      .then((link) => {
-        syslog.i(TAG, `${_database_arcplayer} => OK`);
-
-        // always execute this sql to keep datatable valid
-        link.exec(
-          "CREATE TABLE IF NOT EXISTS `players` ( \
-            `user_id` integer NOT NULL, `join_date` integer NOT NULL, \
-            `name` text NOT NULL, `rating` integer DEFAULT -1, `code` text NOT NULL, \
-            PRIMARY KEY (`user_id` ASC) \
-          );"
-        );
-
-        // map to global space
-        Object.defineProperty(global, 'DATABASE_ARCPLAYER',
-          { value: link, writable: false, configurable: false });
-        Object.freeze(DATABASE_ARCPLAYER);
-
-      })
-      .catch((e) => { syslog.f(TAG, `${_database_arcplayer} => ${e.toString()}`); });
+          // verbose output
+          for (let i = 0; i < result.length; ++i)
+            syslog.v(TAG, `${_database_arcaccount} => ${result[i].name} ${result[i].token}`);
+          syslog.v(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
+        })
+        .then(() => { syslog.i(TAG, `${_database_arcaccount} => OK`); })
+        .catch((e) => { reject(e) });
+    })
+    .catch((e) => { syslog.f(TAG, `${_database_arcaccount} => ${e.toString()}`); });
 
 
-    //////////////////////////////////////////////////////////////////////////
-    // database for arcaea player's record                                  //
-    //////////////////////////////////////////////////////////////////////////
-    const _database_arcrecord = 'arcrecord.db';
-    const _path_database_arcrecord = `${_path_to_databases}/${_database_arcrecord}`
-    syslog.v(TAG, `Opening database => ${_path_database_arcrecord}`);
+  //////////////////////////////////////////////////////////////////////////
+  // database for arcaea best30 cache                                     //
+  //////////////////////////////////////////////////////////////////////////
+  const _database_arcbest30 = 'arcbest30.db';
+  const _path_database_arcbest30 = `${_path_to_databases}/${_database_arcbest30}`;
+  syslog.v(TAG, `Opening database => ${_path_database_arcbest30}`);
 
-    database.open(_path_database_arcrecord, database.OPEN_READWRITE | database.OPEN_CREATE)
-      .then((link) => {
-        syslog.i(TAG, `${_database_arcrecord} => OK`);
+  database.open(_path_database_arcbest30, database.OPEN_READWRITE | database.OPEN_CREATE)
+    .then((link) => {
+      Object.defineProperty(global, 'DATABASE_ARCBEST30',
+        { value: link, writable: false, configurable: false });
+      Object.freeze(DATABASE_ARCBEST30);
+    })
+    .then(() => { dbproc_arcbest30_init(); })
+    .then(() => { syslog.i(TAG, `${_database_arcbest30} => OK`); })
+    .catch((e) => { syslog.f(TAG, `${_database_arcbest30} => ${e.toString()}`); });
 
-        // always execute this sql to keep datatable valid
-        link.exec(
-          "CREATE TABLE IF NOT EXISTS `records` ( \
-            `player` INTEGER NOT NULL, \
-            `score` INTEGER NOT NULL, `health` INTEGER NOT NULL, \
-            `rating` INTEGER NOT NULL, `song_id` TEXT NOT NULL, \
-            `modifier` INTEGER NOT NULL, `difficulty` INTEGER NOT NULL, \
-            `clear_type` INTEGER NOT NULL, `best_clear_type` INTEGER NOT NULL, \
-            `time_played` INTEGER NOT NULL, `near_count` INTEGER NOT NULL, \
-            `miss_count` INTEGER NOT NULL, `perfect_count` INTEGER NOT NULL, \
-            `shiny_perfect_count` INTEGER NOT NULL\
-          );"
-        );
 
-        // map to global space
-        Object.defineProperty(global, 'DATABASE_ARCRECORD',
-          { value: link, writable: false, configurable: false });
-        Object.freeze(DATABASE_ARCRECORD);
+  //////////////////////////////////////////////////////////////////////////
+  // database for arcaea player's info                                    //
+  //////////////////////////////////////////////////////////////////////////
+  const _database_arcplayer = 'arcplayer.db';
+  const _path_database_arcplayer = `${_path_to_databases}/${_database_arcplayer}`;
+  syslog.v(TAG, `Opening database => ${_path_database_arcplayer}`);
 
-      })
-      .catch((e) => { syslog.f(TAG, `${_database_arcrecord} => ${e.toString()}`); });
+  database.open(_path_database_arcplayer, database.OPEN_READWRITE | database.OPEN_CREATE)
+    .then((link) => {
+      Object.defineProperty(global, 'DATABASE_ARCPLAYER',
+        { value: link, writable: false, configurable: false });
+      Object.freeze(DATABASE_ARCPLAYER);
+    })
+    .then(() => { dbproc_arcplayer_init(); })
+    .then(() => { syslog.i(TAG, `${_database_arcplayer} => OK`); })
+    .catch((e) => { syslog.f(TAG, `${_database_arcplayer} => ${e.toString()}`); });
 
-  },
 
-  close: () => {
-    DATABASE_ARCBEST30.close();
-    DATABASE_ARCPLAYER.close();
-    DATABASE_ARCRECORD.close();
-  }
+  //////////////////////////////////////////////////////////////////////////
+  // database for arcaea player's record                                  //
+  //////////////////////////////////////////////////////////////////////////
+  const _database_arcrecord = 'arcrecord.db';
+  const _path_database_arcrecord = `${_path_to_databases}/${_database_arcrecord}`
+  syslog.v(TAG, `Opening database => ${_path_database_arcrecord}`);
+
+  database.open(_path_database_arcrecord, database.OPEN_READWRITE | database.OPEN_CREATE)
+    .then((link) => {
+      Object.defineProperty(global, 'DATABASE_ARCRECORD',
+        { value: link, writable: false, configurable: false });
+      Object.freeze(DATABASE_ARCRECORD);
+    })
+    .then(() => { dbproc_arcrecord_init(); })
+    .then(() => { syslog.i(TAG, `${_database_arcrecord} => OK`); })
+    .catch((e) => { syslog.f(TAG, `${_database_arcrecord} => ${e.toString()}`); });
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // database for arcaea songs                                            //
+  //////////////////////////////////////////////////////////////////////////
+  const _database_arcsong = 'arcsong.db';
+  const _path_database_arcsong = `${_path_to_databases}/${_database_arcsong}`
+  syslog.v(TAG, `Opening database => ${_path_database_arcsong}`);
+
+  database.open(_path_database_arcsong, database.OPEN_READWRITE | database.OPEN_CREATE)
+    .then((link) => {
+      Object.defineProperty(global, 'DATABASE_ARCSONG',
+        { value: link, writable: false, configurable: false });
+      Object.freeze(DATABASE_ARCSONG);
+    })
+    .then(() => { dbproc_arcsong_init(); })
+    .then(() => { syslog.i(TAG, `${_database_arcsong} => OK`); })
+    .catch((e) => { syslog.f(TAG, `${_database_arcsong} => ${e.toString()}`); });
+
 }
+
+const close = () => {
+  DATABASE_ARCACCOUNT.close();
+  DATABASE_ARCBEST30.close();
+  DATABASE_ARCPLAYER.close();
+  DATABASE_ARCRECORD.close();
+  DATABASE_ARCSONG.close();
+}
+
+// exports
+module.exports.close = close;
+module.exports.initDataBases = initDataBases;
