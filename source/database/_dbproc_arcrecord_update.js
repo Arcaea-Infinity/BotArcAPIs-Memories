@@ -1,8 +1,8 @@
-// filename : database/_dbproc_record_update.js
+// filename : database/_dbproc_arcrecord_update.js
 // author   : CirnoBakaBOT
 // date     : 04/10/2020
 
-const TAG = 'database/_dbproc_record_update.js';
+const TAG = 'database/_dbproc_arcrecord_update.js';
 
 module.exports = (userid, records) => {
   return new Promise((reslove, reject) => {
@@ -35,7 +35,7 @@ module.exports = (userid, records) => {
       }
 
       const _sqlbinding = {
-        player: userid,
+        uid: userid,
         score: element.score,
         health: element.health,
         rating: parseInt(element.rating * 10000),

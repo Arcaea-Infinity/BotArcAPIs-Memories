@@ -1,8 +1,8 @@
-// filename : /database/_dbproc_userinfo_byusercode.js
+// filename : /database/_dbproc_arcplayer_byusercode.js
 // author   : CirnoBakaBOT
 // date     : 04/10/2020
 
-const TAG = 'database/_dbproc_userinfo_byusercode.js';
+const TAG = 'database/_dbproc_arcplayer_byusercode.js';
 
 module.exports = async (user_code) => {
   let _return_template = {

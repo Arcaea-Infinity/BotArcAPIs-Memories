@@ -1,8 +1,8 @@
-// filename : database/_dbproc_userinfo_update.js
+// filename : database/_dbproc_arcplayer_update.js
 // author   : CirnoBakaBOT
 // date     : 04/10/2020
 
-const TAG = 'database/_dbproc_userinfo_update.js';
+const TAG = 'database/_dbproc_arcplayer_update.js';
 
 module.exports = (userinfo) => {
   return new Promise((reslove, reject) => {
@@ -22,16 +22,16 @@ module.exports = (userinfo) => {
     }
 
     const _sqlbinding = {
-      user_id: userinfo.user_id,
-      join_date: userinfo.join_date,
+      uid: userinfo.user_id,
+      code: userinfo.code,
       name: userinfo.name,
-      rating: userinfo.rating,
-      code: userinfo.code
+      ptt: userinfo.rating,
+      join_date: userinfo.join_date,
     };
 
     // this user ptt is hidden
     if (userinfo.rating == -1)
-      delete _sqlbinding.rating;
+      delete _sqlbinding.ptt;
 
     const _sql =
       `INSERT OR REPLACE INTO ` +

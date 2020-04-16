@@ -9,7 +9,7 @@ module.exports = () => {
 
     const _sql =
       'CREATE TABLE IF NOT EXISTS `records` (' +
-      '`player` INTEGER NOT NULL,' +
+      '`uid` INTEGER NOT NULL,' +
       '`score` INTEGER NOT NULL,' +
       '`health` INTEGER NOT NULL,' +
       '`rating` INTEGER NOT NULL,' +
@@ -22,7 +22,7 @@ module.exports = () => {
       '`near_count` INTEGER NOT NULL,' +
       '`miss_count` INTEGER NOT NULL,' +
       '`perfect_count` INTEGER NOT NULL,' +
-      '`shiny_perfect_count` INTEGER NOT NULL );';
+      '`shiny_perfect_count` INTEGER NOT NULL);';
 
     // execute sql
     DATABASE_ARCRECORD.exec(_sql)

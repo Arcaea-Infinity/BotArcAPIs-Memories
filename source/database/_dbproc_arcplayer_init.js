@@ -9,12 +9,12 @@ module.exports = () => {
 
     const _sql =
       'CREATE TABLE IF NOT EXISTS `players` (' +
-      '`id` INTEGER NOT NULL,' +        // user id
-      '`code` TEXT NOT NULL,' +         // user code
-      '`name` TEXT NOT NULL,' +         // user name
-      '`ptt` INTEGER DEFAULT -1,' +     // user ptt
-      '`join_date` INTEGER NOT NULL,' + // join date
-      'PRIMARY KEY (`id` ASC));';
+      '`uid`  INTEGER NOT NULL,' +       // user id
+      '`code` TEXT NOT NULL,' +          // user code
+      '`name` TEXT NOT NULL,' +          // user name
+      '`ptt`  INTEGER DEFAULT -1,' +     // user ptt
+      '`join_date` INTEGER NOT NULL,' +  // join date
+      'PRIMARY KEY (`uid` ASC));';
 
     // execute sql
     DATABASE_ARCPLAYER.exec(_sql)

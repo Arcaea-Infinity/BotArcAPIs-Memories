@@ -9,12 +9,12 @@ module.exports = () => {
 
     const _sql =
       'CREATE TABLE IF NOT EXISTS `cache` (' +
-      '`id`           INTEGER NOT NULL,' +
+      '`uid`          INTEGER NOT NULL,' +
       '`last_played`  INTEGER NOT NULL DEFAULT 0,' +
       '`best30_avg`   INTEGER NOT NULL DEFAULT 0,' +
       '`recent10_avg` INTEGER NOT NULL DEFAULT 0,' +
       '`best30_list`  TEXT DEFAULT "",' +
-      'PRIMARY KEY (`id` ASC));';
+      'PRIMARY KEY (`uid` ASC));';
 
     // execute sql
     DATABASE_ARCBEST30.exec(_sql)

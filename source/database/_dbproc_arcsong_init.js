@@ -9,8 +9,8 @@ module.exports = () => {
 
     // execute sql
     const _sql =
-      'CREATE TABLE IF NOT EXISTS `song`(' +
-      '`id`       TEXT NOT NULL,' +                // song id
+      'CREATE TABLE IF NOT EXISTS `song` (' +
+      '`sid`       TEXT NOT NULL,' +               // song id
 
       '`name_en`  TEXT NOT NULL DEFAULT "",' +     // english name
       '`name_jp`  TEXT DEFAULT "",' +              // japanese name
@@ -43,7 +43,7 @@ module.exports = () => {
       '`jacket_designer_prs` TEXT DEFAULT "",' +  // jacket designer present
       '`jacket_designer_ftr` TEXT DEFAULT "",' +  // jacket designer future
 
-      'PRIMARY KEY ("id" ASC))';
+      'PRIMARY KEY ("sid" ASC))';
 
     // execute sql
     DATABASE_ARCSONG.exec(_sql)
