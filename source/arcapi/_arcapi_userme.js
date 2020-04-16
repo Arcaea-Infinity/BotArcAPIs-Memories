@@ -14,7 +14,7 @@ module.exports = async (account) => {
     // construct remote request
     const _remote_request =
       new ArcAPIRequest('GET', 'user/me', {
-        deviceid: account.deviceid,
+        deviceid: account.device,
         usertoken: account.token
       });
 

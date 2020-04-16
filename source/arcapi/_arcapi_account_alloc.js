@@ -10,14 +10,15 @@ module.exports = () => {
     // request an arc account from global ARCACCOUNT
     // ** pretend to be a queue =(:3) z)_ **
 
-    if (typeof ARCACCOUNT == 'undefined') { syslog.e(''); return reject(); }
+    if (typeof ARCACCOUNT == 'undefined')
+      return reject(new Error('ARCACCOUNT is undefined?'));
     if (!ARCACCOUNT.length)
-      return reject();
+      return reject(new Error('ARCACCOUNT length is 0, no arc accounts'));
 
     // grab an account from queue
     const _element = ARCACCOUNT.shift(1);
     if (typeof _element == 'undefined')
-      return reject();
+      return reject('Element is undefined?');
 
     reslove(_element);
     syslog.i(TAG, `Allocated arc account => ${_element.name} ${_element.token}`);

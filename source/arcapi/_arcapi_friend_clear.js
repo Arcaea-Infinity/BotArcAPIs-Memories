@@ -8,7 +8,7 @@ const TAG = 'arcapi/_arcapi_friend_clear.js';
 const arcapi_userme = require('./_arcapi_userme');
 const arcapi_friend_delete = require('./_arcapi_friend_delete');
 
-module.exports = (account, friends = []) => {
+module.exports = async (account, friends = []) => {
 
   // fetch friend list
   const do_fetch_friend = async (x) => {
@@ -21,16 +21,16 @@ module.exports = (account, friends = []) => {
   }
 
   // clear friend list
-  const do_clear_friend = async (x, index = 0) => {
-    if (index > x.length - 1)
+  const do_clear_friend = async (friends, index = 0) => {
+    if (index > friends.length - 1)
       return;
-    await arcapi_friend_delete(account, x[index].user_id);
-    await do_clear_friend(x, index + 1);
+    await arcapi_friend_delete(account, friends[index].user_id)
+    await do_clear_friend(friends, index + 1);
   }
 
   // execute promise chain
   return Promise.resolve(friends)
-    .then((x) => do_fetch_friend(x))
-    .then((x) => do_clear_friend(x))
-    .catch((e) => { syslog.e(TAG, e.stack); return reject(e); });
+    .then((friends) => do_fetch_friend(friends))
+    .then((friends) => do_clear_friend(friends))
+    .catch((error) => { syslog.e(TAG, error.stack); return reject(error); });
 }
