@@ -13,6 +13,7 @@ const __loader__ = require('./source/__loader__');
 
 // initialize config first
 config.loadMacros();
+process.title = `BotArcAPI ${BOTARCAPI_VERSTR}`;
 
 // initialize system log
 syslog.startLogging();

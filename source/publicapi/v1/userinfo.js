@@ -1,6 +1,6 @@
 // filename : v1/userinfo.js
 // author   : CirnoBakaBOT
-// date     : 04/16/2020
+// date     : 04/17/2020
 // comment  : api for arcuser information
 
 const TAG = 'v1/userinfo.js\t';
@@ -31,7 +31,7 @@ module.exports = (argument) => {
       // request an arc account
       try {
         _arc_account = await arcapi_account_alloc();
-      } catch (e) { throw new APIError(-2, 'request an arc account from pool failed'); }
+      } catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
 
       try {
 
@@ -87,7 +87,7 @@ module.exports = (argument) => {
       if (e instanceof APIError)
         return reject(e);
 
-      syslog.d(e.stack);
+      syslog.e(TAG, e.stack);
       return reject(new APIError(-233, 'unknown error occurred'));
     }
   });
