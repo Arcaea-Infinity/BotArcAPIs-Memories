@@ -22,7 +22,8 @@ module.exports = () => {
       '`near_count` INTEGER NOT NULL,' +
       '`miss_count` INTEGER NOT NULL,' +
       '`perfect_count` INTEGER NOT NULL,' +
-      '`shiny_perfect_count` INTEGER NOT NULL);';
+      '`shiny_perfect_count` INTEGER NOT NULL, ' +
+      'PRIMARY KEY ("uid" ASC, "song_id" ASC, "time_played" ASC));';
 
     // execute sql
     DATABASE_ARCRECORD.exec(_sql)

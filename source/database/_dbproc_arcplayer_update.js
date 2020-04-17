@@ -1,6 +1,6 @@
 // filename : database/_dbproc_arcplayer_update.js
 // author   : CirnoBakaBOT
-// date     : 04/10/2020
+// date     : 04/17/2020
 
 const TAG = 'database/_dbproc_arcplayer_update.js';
 
@@ -12,37 +12,49 @@ module.exports = (userinfo) => {
       return reject(new Error(`Invalid database? DATABASE_ARCPLAYER => ${JSON.stringify(DATABASE_ARCPLAYER)}`));
     }
 
-    // check data valid
-    if (typeof userinfo.user_id != 'number' ||
-      typeof userinfo.join_date != 'number' ||
-      typeof userinfo.name != 'string' ||
-      typeof userinfo.rating != 'number' ||
-      typeof userinfo.code != 'string') {
-      return reject(`Invalid input data? userinfo => ${JSON.stringify(userinfo)}`);
-    }
+    // always pack object to array
+    let _wrapper = null;
+    if (userinfo instanceof Array)
+      _wrapper = userinfo;
+    else
+      _wrapper = [userinfo];
 
-    const _sqlbinding = {
-      uid: userinfo.user_id,
-      code: userinfo.code,
-      name: userinfo.name,
-      ptt: userinfo.rating,
-      join_date: userinfo.join_date,
-    };
+    // enum data and insert them
+    _wrapper.forEach((element, index) => {
+      // check data valid
+      if (typeof element.user_id != 'number' ||
+        typeof element.join_date != 'number' ||
+        typeof element.name != 'string' ||
+        typeof element.rating != 'number' ||
+        typeof element.code != 'string') {
+        return reject(`Invalid input data? userinfo => ${JSON.stringify(userinfo)}`);
+      }
 
-    // this user ptt is hidden
-    if (userinfo.rating == -1)
-      delete _sqlbinding.ptt;
+      const _sqlbinding = {
+        uid: element.user_id,
+        code: element.code,
+        name: element.name,
+        ptt: element.rating,
+        join_date: element.join_date,
+      };
 
-    const _sql =
-      `INSERT OR REPLACE INTO ` +
-      `\`players\`(${Object.keys(_sqlbinding).join()}) ` +
-      `VALUES(${new Array(Object.keys(_sqlbinding).length).fill('?').join(',')});`;
-    syslog.v(TAG, _sql);
+      // this user ptt is hidden
+      if (element.rating == -1)
+        delete _sqlbinding.ptt;
 
-    // execute sql
-    DATABASE_ARCPLAYER.run(_sql, Object.values(_sqlbinding))
-      .then(reslove())
-      .catch((e) => { syslog.e(TAG, e.stack); reject(e); })
+      const _sql =
+        `INSERT OR REPLACE INTO ` +
+        `\`players\`(${Object.keys(_sqlbinding).join()}) ` +
+        `VALUES(${new Array(Object.keys(_sqlbinding).length).fill('?').join(',')});`;
+      syslog.v(TAG, _sql);
 
+      // execute sql
+      DATABASE_ARCPLAYER.run(_sql, Object.values(_sqlbinding))
+        .then(() => {
+          if (index == _wrapper.length - 1)
+            reslove();
+        })
+        .catch((e) => { syslog.e(TAG, e.stack); reject(e); })
+    });
   });
 }
