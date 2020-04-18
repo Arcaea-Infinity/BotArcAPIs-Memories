@@ -5,7 +5,7 @@
 const TAG = 'database/_dbproc_arcplayer_update.js';
 
 module.exports = (userinfo) => {
-  return new Promise((reslove, reject) => {
+  return new Promise((resolve, reject) => {
 
     // check database valid
     if (!DATABASE_ARCPLAYER) {
@@ -52,7 +52,7 @@ module.exports = (userinfo) => {
       DATABASE_ARCPLAYER.run(_sql, Object.values(_sqlbinding))
         .then(() => {
           if (index == _wrapper.length - 1)
-            reslove();
+            resolve();
         })
         .catch((e) => { syslog.e(TAG, e.stack); reject(e); })
     });

@@ -5,7 +5,7 @@
 const TAG = 'database/_dbproc_arcrecord_update.js';
 
 module.exports = (userid, record) => {
-  return new Promise((reslove, reject) => {
+  return new Promise((resolve, reject) => {
 
     // check database valid
     if (!DATABASE_ARCRECORD) {
@@ -68,7 +68,7 @@ module.exports = (userid, record) => {
       DATABASE_ARCRECORD.run(_sql, Object.values(_sqlbinding))
         .then(() => {
           if (index == _wrapper.length - 1)
-            reslove();
+            resolve();
         })
         .catch((e) => { syslog.e(TAG, e.stack); reject(e); })
 
