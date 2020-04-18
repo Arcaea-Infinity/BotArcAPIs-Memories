@@ -15,6 +15,7 @@ const dbproc_arcbest30_init = require('../database/_dbproc_arcbest30_init');
 const dbproc_arcrecord_init = require('../database/_dbproc_arcrecord_init');
 const dbproc_arcplayer_init = require('../database/_dbproc_arcplayer_init');
 const dbproc_arcsong_init = require('../database/_dbproc_arcsong_init');
+const _dbproc_arcsong_update_from_songlist = require('../database/_dbproc_arcsong_update_from_songlist');
 
 const initDataBases = () => {
 
@@ -50,7 +51,7 @@ const initDataBases = () => {
       // preload all arc account to queue
       dbproc_arcaccount_loadall()
         .then((result) => {
-          
+
           // no arc account in the database
           if (!result.length) {
             syslog.w(TAG, `${_database_arcaccount} => There\'s no arc account in the database`);
@@ -141,6 +142,29 @@ const initDataBases = () => {
       Object.freeze(DATABASE_ARCSONG);
     })
     .then(() => { return dbproc_arcsong_init(); })
+    .then(async () => {
+
+      // read song informations into database
+      // if songlist exists
+      const _path_to_songlist = `${_path_to_database}/songlist`;
+      if (file.existsSync(_path_to_songlist)) {
+        syslog.i(TAG, 'songlist file detected... updating database');
+
+        await file.promises.readFile(_path_to_songlist)
+          .then(async (file) => {
+            let root = null;
+
+            // try parse songlist file
+            try {
+              root = JSON.parse(file);
+            } catch (e) { throw e; }
+
+            // update database
+            await _dbproc_arcsong_update_from_songlist(root);
+          })
+          .catch((e) => { throw e; });
+      }
+    })
     .then(() => { syslog.i(TAG, `${_database_arcsong} => OK`); })
     .catch((e) => { syslog.f(TAG, `${_database_arcsong} => ${e.toString()}`); });
 
