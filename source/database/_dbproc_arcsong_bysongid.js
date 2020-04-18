@@ -9,7 +9,7 @@ module.exports = (songid) => {
 
     // check data valid
     if (typeof songid != 'string')
-      reject('wtf? invalid spngid not string');
+      reject('wtf? invalid songid not string');
 
     const _sql = 'SELECT * FROM `songs` WHERE `sid` == ?';
     syslog.v(TAG, _sql);
