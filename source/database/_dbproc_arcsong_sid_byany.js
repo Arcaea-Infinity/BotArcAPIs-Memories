@@ -50,7 +50,7 @@ module.exports = (anystr) => {
       _array.forEach((x, y) => { _array[y] = _result[y].sid; });
       _result = _array;
 
-    } catch (e) { syslog.e(TAG, e.stack); reject(e); }
+    } catch (e) { syslog.e(TAG, e.stack); return reject(e); }
 
     // return all results
     return resolve(_result);
