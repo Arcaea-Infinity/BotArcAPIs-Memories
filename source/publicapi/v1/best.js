@@ -6,12 +6,16 @@
 const TAG = 'v1/userbest.js\t';
 
 const APIError = require('../../corefunc/error');
+const Utils = require('../../corefunc/utils');
+
 const arcapi_friend_add = require('../../arcapi/_arcapi_friend_add');
 const arcapi_friend_clear = require('../../arcapi/_arcapi_friend_clear');
 const arcapi_account_alloc = require('../../arcapi/_arcapi_account_alloc');
 const arcapi_account_release = require('../../arcapi/_arcapi_account_release');
 const arcapi_rank_friend = require('../../arcapi/_arcapi_rank_friend');
 
+const dbproc_arcsong_bysongid = require('../../database/_dbproc_arcsong_bysongid');
+const dbproc_arcsong_sid_byany = require('../../database/_dbproc_arcsong_sid_byany');
 const dbproc_arcrecord_update = require('../../database/_dbproc_arcrecord_update');
 const dbproc_arcplayer_update = require('../../database/_dbproc_arcplayer_update');
 
@@ -20,41 +24,60 @@ module.exports = (argument) => {
 
     try {
 
-      // /best?usercode=xxx&songid&difficulty=x
+      // /best?usercode=xxx&songname=xxx&difficulty=x
       // check for request arguments
       if (typeof argument.usercode == 'undefined')
         throw new APIError(-1, 'invalid usercode');
-      if (typeof argument.songid == 'undefined')
-        throw new APIError(-2, 'invalid songid');
+      if (typeof argument.songname == 'undefined')
+        throw new APIError(-2, 'invalid songname');
       if (typeof argument.difficulty == 'undefined')
         throw new APIError(-3, 'invalid difficulty');
 
+      let _arc_difficulty = Utils.arcMapDiffFormat(argument.difficulty, 0);
+      if (!_arc_difficulty)
+        throw new APIError(-4, 'invalid difficulty');
+
       let _arc_account = null;
+      let _arc_songid = null;
+      let _arc_songinfo = null;
       let _arc_friendlist = null;
       let _arc_friend = null;
       let _arc_ranklist = null;
       let _arc_rank = null;
 
+      // check songid valid
+      try {
+        _arc_songid = await dbproc_arcsong_sid_byany(argument.songname);
+      } catch (e) { syslog.e(e.stack); throw new APIError(-5, 'this song is not recorded in the database'); }
+
+      if (_arc_songid.length != 1)
+        throw new APIError(-6, 'too many records');
+      _arc_songid = _arc_songid[0];
+
+      try {
+        _arc_songinfo = await dbproc_arcsong_bysongid(_arc_songid);
+      } catch (e) { syslog.e(e.stack); throw new APIError(-7, 'internal error'); }
+
       // request an arc account
       try {
         _arc_account = await arcapi_account_alloc();
-      } catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
+      } catch (e) { syslog.e(e.stack); throw new APIError(-8, 'allocate an arc account failed'); }
 
       try {
 
         // clear friend list
         try {
           await arcapi_friend_clear(_arc_account);
-        } catch (e) { throw new APIError(-3, 'clear friend list failed'); }
+        } catch (e) { syslog.e(e.stack); throw new APIError(-9, 'clear friend list failed'); }
 
         // add friend
         try {
           _arc_friendlist = await arcapi_friend_add(_arc_account, argument.usercode);
-        } catch (e) { throw new APIError(-4, 'add friend failed'); }
+        } catch (e) { syslog.e(e.stack); throw new APIError(-10, 'add friend failed'); }
 
         // length must be 1
         if (_arc_friendlist.length != 1)
-          throw new APIError(-5, 'internal error occurred');
+          throw new APIError(-11, 'internal error occurred');
 
         // result of arcapi not include
         // user code anymore since v6
@@ -63,15 +86,18 @@ module.exports = (argument) => {
 
         // get rank result
         try {
-          _arc_ranklist = await arcapi_rank_friend(_arc_account, argument.songid, argument.difficulty, 0, 1);
-        } catch (e) { throw new APIError(-6, 'internal error occurred'); }
+          _arc_ranklist = await arcapi_rank_friend(_arc_account, _arc_songid, _arc_difficulty, 0, 1);
+        } catch (e) { syslog.e(e.stack); throw new APIError(-12, 'internal error occurred'); }
 
         if (!_arc_ranklist.length)
-          throw new APIError(-7, 'not played yet');
+          throw new APIError(-13, 'not played yet');
 
         // calculate song rating
         _arc_rank = _arc_ranklist[0];
-        _arc_rank.rating = 233;
+        _arc_rank.rating = Utils.arcCalcSongRating(
+          _arc_rank.score,
+          _arc_songinfo[`rating_${Utils.arcMapDiffFormat(argument.difficulty, 1)}`]
+        ) / 10;
 
         const _return = _arc_rank;
         delete _return.name;
