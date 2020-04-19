@@ -21,7 +21,7 @@ module.exports = (argument) => {
 
       // /userinfo?usercode=xxx[&hasrecent=true]
       // check for request arguments
-      if (typeof argument.usercode == 'undefined')
+      if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid argument');
 
       let _arc_account = null;

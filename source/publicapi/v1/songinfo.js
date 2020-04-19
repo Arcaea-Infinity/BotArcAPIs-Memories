@@ -17,7 +17,7 @@ module.exports = (argument) => {
 
       // /songinfo?songname=xxx
       // check for request arguments
-      if (typeof argument.songname == 'undefined')
+      if (typeof argument.songname == 'undefined' || argument.songname == '')
         throw new APIError(-1, 'invalid songname');
 
       let _arc_songid = null;

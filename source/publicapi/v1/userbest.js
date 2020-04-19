@@ -26,11 +26,11 @@ module.exports = (argument) => {
 
       // /best?usercode=xxx&songname=xxx&difficulty=x
       // check for request arguments
-      if (typeof argument.usercode == 'undefined')
+      if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid usercode');
-      if (typeof argument.songname == 'undefined')
+      if (typeof argument.songname == 'undefined' || argument.songname == '')
         throw new APIError(-2, 'invalid songname');
-      if (typeof argument.difficulty == 'undefined')
+      if (typeof argument.difficulty == 'undefined' || argument.difficulty == '')
         throw new APIError(-3, 'invalid difficulty');
 
       let _arc_difficulty = Utils.arcMapDiffFormat(argument.difficulty, 0);
