@@ -27,7 +27,7 @@ module.exports = (userinfo) => {
         typeof element.name != 'string' ||
         typeof element.rating != 'number' ||
         typeof element.code != 'string') {
-        return reject(`Invalid input data? userinfo => ${JSON.stringify(userinfo)}`);
+        return reject(new Error(`Invalid input data? userinfo => ${JSON.stringify(userinfo)}`));
       }
 
       const _sqlbinding = {

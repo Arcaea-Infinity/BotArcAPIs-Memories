@@ -60,7 +60,7 @@ module.exports = () => {
         const _sql =
           'CREATE TABLE IF NOT EXISTS `alias` (' +
           '`sid`    TEXT NOT NULL,' +
-          '`alias`  TEXT NOT NULL UNIQUE,' +
+          '`alias`  TEXT NOT NULL,' +
           'FOREIGN KEY(`sid`) REFERENCES `songs`(`sid`))';
 
         // execute sql

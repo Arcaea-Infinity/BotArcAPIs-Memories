@@ -9,9 +9,9 @@ module.exports = (songlist) => {
   return new Promise((resolve, reject) => {
 
     if (!(songlist instanceof Object))
-      return reject('wtf? invalid data: songlist is null or unefined');
+      return reject(new Error('wtf? invalid data: songlist is null or unefined'));
     if (!songlist.songs.length)
-      return reject('wtf? invalid data: there\'s no song in the songlist');
+      return reject(new Error('wtf? invalid data: there\'s no song in the songlist'));
 
     songlist.songs.forEach((element, index) => {
 

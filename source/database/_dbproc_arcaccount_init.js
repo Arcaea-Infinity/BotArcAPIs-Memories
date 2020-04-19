@@ -13,11 +13,11 @@ module.exports = () => {
       '`passwd` TEXT NOT NULL,' +
       '`device` TEXT NOT NULL DEFAULT (LOWER(HEX(RANDOMBLOB(8)))),' +
       '`uid`    INTEGER DEFAULT 0,' +
-      '`ucode`  TEXT DEFAULT "",' +
+      '`ucode`  TEXT DEFAULT "", ' +
       '`token`  TEXT DEFAULT "",' +
-      '`banned` TEXT NOT NULL DEFAULT "false",' +
+      '`banned` TEXT NOT NULL DEFAULT "false" CHECK(`banned` IN("true", "false")),' +
       'PRIMARY KEY (`name` ASC));';
-      
+
     // execute sql
     DATABASE_ARCACCOUNT.exec(_sql)
       .then(resolve())
