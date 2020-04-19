@@ -54,7 +54,6 @@ const handleIconRequest = async (response) => {
 
 const handleApiRequest = async (path, argument, response) => {
 
-  // make response body
   let _http_body = null;
   let _http_status = null;
   let _http_content_type = null;
