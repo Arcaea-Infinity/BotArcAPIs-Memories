@@ -26,7 +26,7 @@ module.exports = (songlist) => {
         side: element.side,
         date: element.date,
         world_unlock: element.world_unlock == true ? 'true' : 'false',
-        remote_download: element.world_unlock == true ? 'true' : 'false',
+        remote_download: element.remote_dl == true ? 'true' : 'false',
         difficultly_pst: element.difficulties[0].rating,
         difficultly_prs: element.difficulties[1].rating,
         difficultly_ftr: element.difficulties[2].rating,
