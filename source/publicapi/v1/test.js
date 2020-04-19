@@ -1,4 +1,4 @@
-// filename : /source/publicapi/test.js
+// filename : source/publicapi/test.js
 // author   : CirnoBakaBOT
 // date     : 04/09/2020
 // comment  : test api
@@ -29,23 +29,14 @@ module.exports = async (argument) => {
   // const arcapi_rankfriend = require('../../arcapi/_arcapi_rank_friend');
   // const _return = await arcapi_rankfriend({ token: '1234' }, 'gl', 2);
 
-  const arcapi_account_alloc = require('../../arcapi/_arcapi_account_alloc');
-  const arcapi_account_release = require('../../arcapi/_arcapi_account_release');
-  const arcapi_userme = require('../../arcapi/_arcapi_userme');
-  const arcapi_friend_add = require('../../arcapi/_arcapi_friend_add');
-  const arcapi_friend_clear = require('../../arcapi/_arcapi_friend_clear');
+  const dbproc_arcsong_byany = require('../../database/_dbproc_arcsong_sid_byany');
 
   let _return = null;
+  try {
+    _return = await dbproc_arcsong_byany('AB');
+  } catch (e) { syslog.d('fuckfuckfuckfuckfuckfuckfuck'); syslog.d(e.stack); }
+  syslog.d(_return);
 
-  _return = arcapi_account_alloc();
-  if (_return.success) {
-    const _arc_account = _return.account;
-    // _return = await arcapi_friend_clear(_return.account);
-    _return = await arcapi_friend_add(_arc_account, '636401085');
-    arcapi_account_release(_arc_account);
-
-    syslog.d(TAG, JSON.stringify(_return));
-  }
 
   // fill the template
   _response_template.status = 418;
