@@ -29,12 +29,12 @@ module.exports = (anystr) => {
     } catch (e) { syslog.e(TAG, e.stack); return reject(e); }
 
 
-    // not found? so fuzzy querying
+    // not found? then fuzzy querying
     // whole the database in 'name_en' 'name_jp' 'alias' 'songid'
     try {
       const _sql =
         'SELECT DISTINCT `sid` ' +
-        'FROM (SELECT * FROM `alias` JOIN `songs` USING (`sid`))' +
+        'FROM (SELECT `sid`,`name_en`,`name_jp`,`alias` FROM `songs` LEFT JOIN `alias` USING(`sid`))' +
         'WHERE' +
         '`sid` LIKE ? OR ' +
         '`name_en` LIKE ? OR ' +
