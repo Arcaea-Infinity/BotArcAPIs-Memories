@@ -31,7 +31,7 @@ const handleIconRequest = async (response) => {
 
   const file = require('fs');
   try {
-    await file.promises.readFile('./favicon.ico')
+    await file.promises.readFile('./image/favicon.ico')
       .then((data) => {
         _http_status = 200;
         _http_body = data;
