@@ -24,7 +24,7 @@ module.exports = (argument) => {
 
     try {
 
-      // /best?usercode=xxx&songname=xxx&difficulty=x
+      // /userbest?usercode=xxx&songname=xxx&difficulty=x
       // check for request arguments
       if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid usercode');

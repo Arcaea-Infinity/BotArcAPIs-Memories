@@ -22,7 +22,7 @@ module.exports = (argument) => {
       // /userinfo?usercode=xxx[&hasrecent=true]
       // check for request arguments
       if (typeof argument.usercode == 'undefined' || argument.usercode == '')
-        throw new APIError(-1, 'invalid argument');
+        throw new APIError(-1, 'invalid usercode');
 
       let _arc_account = null;
       let _arc_friends = null;
