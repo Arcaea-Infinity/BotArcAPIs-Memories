@@ -20,7 +20,9 @@ $ npm start
 ```
 
 ## 🐋 Docker
-Docker image will be support in the future.
+```bash
+$ docker-compose up -d
+```
 
 ## 💕 License
-Licensed by `WTFPL`.
+Licensed by `BSD 3-Clause License`.
