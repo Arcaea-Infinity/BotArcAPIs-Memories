@@ -37,11 +37,12 @@ const loadConfigs = () => {
 
   // load environment from docker containers
   // and overriding default configs =(:3) z)_
+  const _external_config = process.env.BOTARCAPI_CONFIG;
   try {
-    const _external_config = JSON.parse(process.env.BOTARCAPI_CONFIG);
-    for (v in _external_config)
-      CONFIGS[v] = _external_config[v];
-  } catch (e) { throw e; }
+    const _root = JSON.parse(_external_config);
+    for (v in _root)
+      CONFIGS[v] = _root[v];
+  } catch (e) { }
 
   // this is a hack to load
   // config macros into global space
