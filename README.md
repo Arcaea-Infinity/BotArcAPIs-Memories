@@ -3,7 +3,7 @@
 [![version](https://img.shields.io/static/v1?label=version&message=1.0.0&color=green&style=flat-square)](#)
 [![status](https://img.shields.io/static/v1?label=status&message=develop&color=red&style=flat-square)](#)
 
-An ArcAPI for bots running in NodeJS. <br/>
+An Arcaea API for bots running in NodeJS. <br/>
 
 ## 🤔 Dependences
 - node >= `12.16.0`
@@ -14,13 +14,20 @@ An ArcAPI for bots running in NodeJS. <br/>
 
 ## 🎉 Run directly
 ```bash
-$ npm i -g node-pre-gyp # optional
-$ npm i # initialize all node modules
+# optional
+$ npm i -g node-pre-gyp
+
+# initialize all node modules
+$ npm i
+
+# start service
 $ npm start
 ```
 
 ## 🐋 Docker
 ```bash
+# construct docker container from
+# compose file and start
 $ docker-compose up -d
 ```
 

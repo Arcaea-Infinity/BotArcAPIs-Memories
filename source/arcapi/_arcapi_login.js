@@ -1,4 +1,4 @@
-// filename : /arcapi/_arcapi_login.js
+// filename : arcapi/_arcapi_login.js
 // author   : TheSnowfield
 // date     : 04/12/2020
 // comment  : login
