@@ -13,9 +13,9 @@ An Arcaea API for bots running in NodeJS. <br/>
 - sqlite-async >= `1.0.12`
 
 ## 🌈 Guide for using
-- [Get Started](wiki/Get-Started)
-- [Get Started With Docker](wiki/Get-Started-With-Docker)
-- [API Reference v1](wiki/API-Reference-v1)
+- [Get Started](../../wiki/Get-Started)
+- [Get Started With Docker](../../wiki/Get-Started-With-Docker)
+- [API Reference v1](../../wiki/API-Reference-v1)
 
 ## 💕 License
 Licensed under `MIT License`.
