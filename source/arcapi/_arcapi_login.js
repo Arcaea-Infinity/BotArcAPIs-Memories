@@ -1,5 +1,5 @@
 // filename : /arcapi/_arcapi_login.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/12/2020
 // comment  : login
 

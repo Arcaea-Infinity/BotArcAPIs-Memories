@@ -1,5 +1,5 @@
 // filename : v1/songinfo.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/09/2020
 // comment  : api for arcsong information
 

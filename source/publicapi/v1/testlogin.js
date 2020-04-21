@@ -1,5 +1,5 @@
 // filename : publicapi/testlogin.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/13/2020
 // comment  : test api
 

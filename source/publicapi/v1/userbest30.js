@@ -1,5 +1,5 @@
 // filename : /v1/userbest30.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 02/10/2020
 // comment  : api for user best30
 

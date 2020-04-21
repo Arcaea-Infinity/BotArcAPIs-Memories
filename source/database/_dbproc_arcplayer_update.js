@@ -1,5 +1,5 @@
 // filename : database/_dbproc_arcplayer_update.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/17/2020
 
 const TAG = 'database/_dbproc_arcplayer_update.js';

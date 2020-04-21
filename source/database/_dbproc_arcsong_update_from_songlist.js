@@ -1,5 +1,5 @@
 // filename : database/_dbproc_arcsong_update_from_songlist.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/18/2020
 // comment  : update arcsong from data of 'songlist' file
 

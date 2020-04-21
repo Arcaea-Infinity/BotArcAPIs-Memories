@@ -1,8 +1,8 @@
 // filename : __loader__.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 02/09/2020
-// comment  : autoloader can handle api request and map to class methods,
-//            make api maintaining easily it's also global access entry
+// comment  : loader handles api requests and map to require files
+//            it's also a global access point
 
 const TAG = 'source/__loader__.js';
 

@@ -1,5 +1,5 @@
 // filename : utils.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 02/09/2020
 // comment  : some utility functions here
 

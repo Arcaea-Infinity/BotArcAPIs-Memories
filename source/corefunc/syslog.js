@@ -1,5 +1,5 @@
 // filename : corefunc/syslog.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/10/2020
 // comment  : log system
 

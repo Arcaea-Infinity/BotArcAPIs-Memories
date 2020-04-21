@@ -1,5 +1,5 @@
 // filename : /v1/userbest.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 02/17/2020
 // comment  : api for user best record
 

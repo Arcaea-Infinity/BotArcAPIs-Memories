@@ -1,5 +1,5 @@
 // filename : arcapi/_arcapi_friend_clear.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/11/2020
 // comment  : delete all friends from an arc account
 

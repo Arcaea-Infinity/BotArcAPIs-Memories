@@ -1,5 +1,4 @@
 // filename : v1/checkupdate.js
-// author   : CirnoBakaBOT
 // date     : 02/10/2020
 // comment  : checkupdate
 

@@ -1,5 +1,5 @@
 // filename : database/_dbproc_arcsong_sid_byany.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/19/2020
 
 const TAG = 'database/_dbproc_arcsong_sid_byany.js';
@@ -34,7 +34,7 @@ module.exports = (anystr) => {
     try {
       const _sql =
         'SELECT DISTINCT `sid` ' +
-        'FROM (SELECT `sid`,`name_en`,`name_jp`,`alias` FROM `songs` LEFT JOIN `alias` USING(`sid`))' +
+        'FROM (SELECT `sid`,`name_en`,`name_jp`,`alias` FROM `songs` LEFT JOIN `alias` USING (`sid`))' +
         'WHERE' +
         '`sid` LIKE ? OR ' +
         '`name_en` LIKE ? OR ' +

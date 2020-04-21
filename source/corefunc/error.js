@@ -1,5 +1,5 @@
 // filename : error.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/10/2020
 // comment  : error with status code
 

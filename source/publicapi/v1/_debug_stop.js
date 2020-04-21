@@ -1,5 +1,5 @@
 // filename : /publicapi/v1/_debug_stop.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/10/2020
 // comment  : stop and quit
 

@@ -1,5 +1,5 @@
 // filename : arcapi/_arcapi_account_release.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/11/2020
 // common   : release an arc account
 

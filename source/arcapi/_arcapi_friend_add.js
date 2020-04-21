@@ -1,5 +1,5 @@
-// filename : /source/arcapi/_arcapi_friend_add.js
-// author   : CirnoBakaBOT
+// filename : arcapi/_arcapi_friend_add.js
+// author   : TheSnowfield
 // date     : 04/10/2020
 // commont  : add friend
 

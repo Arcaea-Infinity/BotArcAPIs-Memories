@@ -1,5 +1,5 @@
 // filename : arcapi/_arcapi_account_alloc.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/14/2020
 // common   : request an arc account
 

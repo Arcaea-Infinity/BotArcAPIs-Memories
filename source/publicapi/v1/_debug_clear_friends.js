@@ -1,5 +1,5 @@
 // filename : /v1/_debug_clearfriends.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 02/14/2020
 // comment  : delete all friends (debug only)
 

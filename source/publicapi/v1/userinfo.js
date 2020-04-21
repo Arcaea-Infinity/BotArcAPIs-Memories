@@ -1,5 +1,5 @@
 // filename : v1/userinfo.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/17/2020
 // comment  : api for arcuser information
 

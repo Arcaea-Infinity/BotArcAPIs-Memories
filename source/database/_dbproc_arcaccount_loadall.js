@@ -1,5 +1,5 @@
 // filename : database/_dbproc_arcaccount_load.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/15/2020
 
 module.exports = () => {

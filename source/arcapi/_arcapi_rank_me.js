@@ -1,5 +1,5 @@
 // filename : arcapi/_arcapi_rank_me.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/13/2020
 
 const TAG = 'arcapi/_arcapi_rank_me.js';

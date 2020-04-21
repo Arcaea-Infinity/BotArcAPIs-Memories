@@ -1,5 +1,5 @@
 // filename : arcapi/_arcapi_rank_friend.js
-// author   : CirnoBakaBOT
+// author   : TheSnowfield
 // date     : 04/12/2020
 
 const TAG = 'arcapi/_arcapi_friend_delete.js';
