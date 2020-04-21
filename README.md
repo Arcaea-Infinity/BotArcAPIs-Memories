@@ -1,6 +1,6 @@
 # BotArcAPI [![image](image/favicon.png)](#)
 
-[![version](https://img.shields.io/static/v1?label=api&message=v1&color=green&style=flat-square)](#)
+[![version](https://img.shields.io/static/v1?label=api-ver&message=v1&color=green&style=flat-square)](#)
 [![status](https://img.shields.io/static/v1?label=status&message=develop&color=red&style=flat-square)](#)
 
 An Arcaea API for bots running in NodeJS. <br/>
@@ -12,24 +12,10 @@ An Arcaea API for bots running in NodeJS. <br/>
 - node-fetch >= `2.6.0`
 - sqlite-async >= `1.0.12`
 
-## 🎉 Run directly
-```bash
-# optional
-$ npm i -g node-pre-gyp
-
-# initialize all node modules
-$ npm i
-
-# start service
-$ npm start
-```
-
-## 🐋 Docker
-```bash
-# construct docker container from
-# compose file and start
-$ docker-compose up -d
-```
+## 🌈 Guide for using
+- [Get Started](wiki/Get-Started)
+- [Get Started With Docker](wiki/Get-Started-With-Docker)
+- [API Reference v1](wiki/API-Reference-v1)
 
 ## 💕 License
 Licensed under `MIT License`.
