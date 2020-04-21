@@ -7,3 +7,7 @@
 
 # logs
 [Ss]avelogs/
+
+# ignore test apis
+[Ss]ource/publicapi/v1/_*
+[Ss]ource/publicapi/v1/test*
