@@ -11,3 +11,4 @@
 # ignore test apis
 [Ss]ource/publicapi/v1/_*
 [Ss]ource/publicapi/v1/test*
+[Ss]ource/publicapi/v1/checkupdate.js
