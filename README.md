@@ -1,4 +1,4 @@
-# BotArcAPI [![image](image/favicon.png)](#)
+# BotArcAPI [![image](image/arcaeabots_32x32.png)](#)
 
 [![version](https://img.shields.io/static/v1?label=api-ver&message=v1&color=green&style=flat-square)](#)
 [![status](https://img.shields.io/static/v1?label=status&message=develop&color=red&style=flat-square)](#)
