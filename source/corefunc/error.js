@@ -7,8 +7,8 @@ class APIError extends Error {
 
   /**
    * An APIError
-   * @param {number} status 
-   * @param {string} notify 
+   * @param {number} status
+   * @param {string} notify
    */
   constructor(status, notify) {
     if (typeof status != 'number')

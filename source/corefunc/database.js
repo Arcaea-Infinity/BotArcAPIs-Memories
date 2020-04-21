@@ -171,11 +171,13 @@ const initDataBases = () => {
 }
 
 const close = () => {
-  DATABASE_ARCACCOUNT.close();
-  DATABASE_ARCBEST30.close();
-  DATABASE_ARCPLAYER.close();
-  DATABASE_ARCRECORD.close();
-  DATABASE_ARCSONG.close();
+  try {
+    DATABASE_ARCACCOUNT.close();
+    DATABASE_ARCBEST30.close();
+    DATABASE_ARCPLAYER.close();
+    DATABASE_ARCRECORD.close();
+    DATABASE_ARCSONG.close();
+  } catch (e) { /* do nothing */ }
 }
 
 // exports
