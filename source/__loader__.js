@@ -89,7 +89,7 @@ const handleApiRequest = async (path, argument, response) => {
   response.statusCode = _http_status;
   response.setHeader('Content-Type', _http_content_type);
   response.setHeader('Access-Control-Allow-Origin', '*');
-  response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
+  response.setHeader('Server', `${BOTARCAPI_VERSTR}`);
   response.end(_http_body);
 
   syslog.v(TAG, 'Send response back');

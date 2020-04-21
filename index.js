@@ -12,14 +12,14 @@ const database = require('./source/corefunc/database');
 const __loader__ = require('./source/__loader__');
 
 // initialize config first
-config.loadMacros();
-process.title = `BotArcAPI ${BOTARCAPI_VERSTR}`;
+config.loadConfigs();
+process.title = `${BOTARCAPI_VERSTR}`;
 
 // initialize system log
 syslog.startLogging();
 
 // print configs
-config.printMacros();
+config.printConfigs();
 
 // initialize database
 database.initDataBases();
@@ -54,13 +54,13 @@ process.on('SIGINT', () => {
 process.on('warning', (w) => {
   console.warn(`warning => ${w.message}`);
 });
-/*
+
 process.on('uncaughtException', (e, origin) => {
-  console.assert(`uncaughtException => ${e.message}`);
+  console.assert(`uncaughtException => ${e.stack}`);
   process.exit(1);
 });
 
 process.on('unhandledRejection', (reason, promise) => {
   console.assert(`unhandledRejection => ${reason}`);
+  process.exit(1);
 });
-*/

@@ -9,7 +9,7 @@ const CONFIGS = {
   'BOTARCAPI_MAJOR': 1,
   'BOTARCAPI_MINOR': 0,
   'BOTARCAPI_VERSION': 0,
-  'BOTARCAPI_VERSTR': 'v1.0.0',
+  'BOTARCAPI_VERSTR': 'BotArcAPI v1.0.0',
 
   // arcaea api config
   'ARCAPI_VERSION': 11,

@@ -6,18 +6,18 @@
 const TAG = 'arcapi/_arcapi_account_release.js';
 
 module.exports = (account) => {
-  return new Promise((reslove, reject) => {
+  return new Promise((resolve, reject) => {
 
     if (typeof ARCACCOUNT == 'undefined')
-      return reject();
+      return reject(new Error('ARCACCOUNT is undefined?'));
     if (typeof account == 'undefined')
-      return reject();
+      return reject(new Error('wtf? account is undefined?'));
 
     // push an account back to queue
     // ** pretend to be a queue =(:3) z)_ **
     ARCACCOUNT.push(account);
 
-    reslove();
+    resolve();
     syslog.i(TAG, `Released arc account => ${account.name} ${account.token}`);
   });
 }

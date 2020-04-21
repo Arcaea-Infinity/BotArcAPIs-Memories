@@ -6,7 +6,7 @@
 const TAG = 'arcapi/_arcapi_account_alloc.js';
 
 module.exports = () => {
-  return new Promise((reslove, reject) => {
+  return new Promise((resolve, reject) => {
     // request an arc account from global ARCACCOUNT
     // ** pretend to be a queue =(:3) z)_ **
 
@@ -18,9 +18,9 @@ module.exports = () => {
     // grab an account from queue
     const _element = ARCACCOUNT.shift(1);
     if (typeof _element == 'undefined')
-      return reject('Element is undefined?');
+      return reject(new Error('Element is undefined?'));
 
-    reslove(_element);
+    resolve(_element);
     syslog.i(TAG, `Allocated arc account => ${_element.name} ${_element.token}`);
   })
 }

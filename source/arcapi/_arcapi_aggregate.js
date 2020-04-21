@@ -2,6 +2,6 @@
 // author   : TheSnowfield
 // date     : 04/09/2020
 
-module.exports = async function (arcaccount) {
+module.exports = async (arcaccount) => {
 
 }

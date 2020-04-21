@@ -9,7 +9,7 @@ const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
 module.exports = (name, password, deviceid) => {
-  return new Promise((reslove, reject) => {
+  return new Promise((resolve, reject) => {
 
     // construct remote request
     const _remote_request =
@@ -22,7 +22,7 @@ module.exports = (name, password, deviceid) => {
 
     // send request
     arcfetch(_remote_request)
-      .then((root) => { return reslove(root.access_token); })
+      .then((root) => { return resolve(root.access_token); })
       .catch((e) => { return reject(e); })
   });
 }
