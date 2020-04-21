@@ -25,4 +25,4 @@ $ docker-compose up -d
 ```
 
 ## 💕 License
-Licensed by `BSD 3-Clause License`.
+Licensed by `MIT License`.
