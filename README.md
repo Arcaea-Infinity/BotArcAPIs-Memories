@@ -1,6 +1,6 @@
 # BotArcAPI [![image](image/favicon.png)](#)
 
-[![version](https://img.shields.io/static/v1?label=version&message=1.0.0&color=green&style=flat-square)](#)
+[![version](https://img.shields.io/static/v1?label=api&message=v1&color=green&style=flat-square)](#)
 [![status](https://img.shields.io/static/v1?label=status&message=develop&color=red&style=flat-square)](#)
 
 An Arcaea API for bots running in NodeJS. <br/>
