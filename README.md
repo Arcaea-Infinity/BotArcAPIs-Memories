@@ -32,4 +32,4 @@ $ docker-compose up -d
 ```
 
 ## 💕 License
-Licensed by `MIT License`.
+Licensed under `MIT License`.
