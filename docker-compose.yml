@@ -14,6 +14,7 @@ services:
       BOTARCAPI_CONFIG: |
         {
           SERVER_PORT: 80
+          BOTARCAPI_VERSTR: 'v1.0.0',
           ARCAPI_VERSION: 11,
           ARCAPI_APPVERSION: '2.6.1c',
           ARCAPI_USERAGENT: 'WeLoveArcaea (Linux; U; Android 2.3.3; BotArcAPI)',

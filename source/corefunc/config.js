@@ -4,7 +4,7 @@
 // comment  : global config
 
 const TAG = 'corefunc/config.js';
-const MACROS = {
+const CONFIGS = {
   // botarcapi version
   'BOTARCAPI_MAJOR': 1,
   'BOTARCAPI_MINOR': 0,
@@ -20,7 +20,7 @@ const MACROS = {
   'DATABASE_PATH': require.main.path + '/savedata/',
 
   // http server listening post
-  'SERVER_PORT': 8000,
+  'SERVER_PORT': 80,
 
   // log level
   // 3: Error, Fatal
@@ -33,25 +33,30 @@ const MACROS = {
   'LOG_PATH': require.main.path + '/savelogs/'
 }
 
-// < TODO >
-// try to load user config from external path
-// ** for docker image **
-// not implemented yet =(:3) z)_
+const loadConfigs = () => {
 
-// this is a hack to load
-// config macros into global space
+  // load environment from docker containers
+  // and overriding default configs =(:3) z)_
+  try {
+    const _external_config = JSON.parse(process.env.BOTARCAPI_CONFIG);
+    for (v in _external_config)
+      CONFIGS[v] = _external_config[v];
+  } catch (e) { throw e; }
 
-module.exports = {
-  loadMacros: () => {
-    for (let [k, v] of Object.entries(MACROS)) {
-      Object.defineProperty(global, k, { value: v, writable: false, configurable: false });
-    }
-  },
+  // this is a hack to load
+  // config macros into global space
+  for (let [k, v] of Object.entries(CONFIGS)) {
+    Object.defineProperty(global, k, { value: v, writable: false, configurable: false });
+  }
+  Object.freeze(CONFIGS);
+}
 
-  printMacros: () => {
-    syslog.v(TAG, 'Global Config');
-    for (let [k, v] of Object.entries(MACROS)) {
-      syslog.v(TAG, `  ${k} => ${v}`);
-    }
+const printConfigs = () => {
+  syslog.v(TAG, 'Global Config');
+  for (let [k, v] of Object.entries(CONFIGS)) {
+    syslog.v(TAG, `  ${k} => ${v}`);
   }
 }
+
+module.exports.loadConfigs = loadConfigs;
+module.exports.printConfigs = printConfigs;
