@@ -8,7 +8,7 @@ An Arcaea API for bots running in NodeJS. <br/>
 ## 🤔 Dependences
 - node >= `12.16.0`
 - npm >= `6.14.0`
-- btoa >= `1.2.1`
+- abab >= `2.0.3`
 - node-fetch >= `2.6.0`
 - sqlite-async >= `1.0.12`
 

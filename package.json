@@ -1,19 +1,15 @@
 {
   "name": "botarcapi",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "An ArcAPI for bots running in NodeJS.",
   "dependencies": {
-    "btoa": "^1.2.1",
+    "abab": "^2.0.3",
     "node-fetch": "^2.6.0",
     "sqlite-async": "^1.0.12"
   },
   "scripts": {
     "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://git.moezsoft.com:4333/konata-dev/botarcapi.git"
-  },
-  "author": "CirnoBakaBOT",
-  "license": "WTFPL"
+  "author": "TheSnowfield",
+  "license": "MIT"
 }

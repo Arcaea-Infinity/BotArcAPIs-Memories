@@ -3,7 +3,7 @@
 // date     : 04/12/2020
 'use strict'
 
-import btoa from 'btoa';
+import {btoa} from 'abab';
 import fetch from 'node-fetch';
 import arcapi_errcode from './arcerrors';
 import APIError from './error';

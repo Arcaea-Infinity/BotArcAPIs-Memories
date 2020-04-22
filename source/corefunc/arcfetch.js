@@ -6,7 +6,7 @@
 
 const TAG = 'corefunc/arcfetch.js';
 
-const btoa = require('btoa');
+const btoa = require('abab').btoa;
 const fetch = require('node-fetch');
 const Request = fetch.Request;
 const APIError = require('./error');
