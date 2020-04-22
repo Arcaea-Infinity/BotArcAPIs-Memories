@@ -44,7 +44,7 @@ module.exports = (anystr) => {
 
       _result = await DATABASE_ARCSONG.all(_sql, Array(4).fill(`%${anystr}%`));
       if (_result.length == 0)
-        return reject('no such record');
+        return reject(new Error('no such record'));
 
       // take out all data from object into array...
       // sucks.. wtf
