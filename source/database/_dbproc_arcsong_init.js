@@ -78,7 +78,7 @@ module.exports = () => {
         const _sql =
           'CREATE TABLE IF NOT EXISTS `charts` (' +
           '`sid`          TEXT NOT NULL,' +
-          '`rating_class` INTEGER NOT NULL CHECK(`class` IN (0, 1, 2)),' +
+          '`rating_class` INTEGER NOT NULL CHECK(`rating_class` IN (0, 1, 2)),' +
           '`rating_int`   INTEGER NOT NULL,' +
           '`rating_float` INTEGER NOT NULL,' +
           'FOREIGN KEY(`sid`) REFERENCES `songs`(`sid`))';
