@@ -18,7 +18,7 @@ module.exports = (songlist) => {
       const _sqlbinding = {
         sid: element.id,
         name_en: element.title_localized.en,
-        name_jp: element.title_localized.ja,
+        name_jp: !element.title_localized.ja ? '' : element.title_localized.ja,
         bpm: element.bpm,
         bpm_base: element.bpm_base,
         pakset: element.set,
@@ -38,9 +38,21 @@ module.exports = (songlist) => {
         jacket_designer_ftr: element.difficulties[2].jacketDesigner,
       };
 
-      const _sql = 'INSERT OR REPLACE INTO ' +
-        `\`songs\`(${Object.keys(_sqlbinding).join()}) ` +
-        `VALUES(${new Array(Object.keys(_sqlbinding).length).fill('?').join(',')});`;
+      const _binding_keys = Object.keys(_sqlbinding).join();
+      const _binding_vals = new Array(Object.keys(_sqlbinding).length).fill('?').join(',');
+      const _binding_conflicts = (() => {
+        let _array = [];
+        Object.keys(_sqlbinding).forEach((v, i) => {
+          if (v != 'sid')
+            _array.push(`${v} = excluded.${v}`);
+        });
+        return _array.join(', ');
+      })();
+
+      const _sql = 'INSERT INTO ' +
+        `\`songs\`(${_binding_keys}) VALUES(${_binding_vals})` +
+        `ON CONFLICT(\`sid\`) DO UPDATE SET ${_binding_conflicts}`
+
       syslog.v(TAG, _sql);
 
       // execute sql
