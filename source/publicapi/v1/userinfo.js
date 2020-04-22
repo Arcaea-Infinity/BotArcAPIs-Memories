@@ -62,6 +62,9 @@ module.exports = (argument) => {
         if (argument.hasrecent != 'true' || !_arc_friend.recent_score.length)
           delete _return.recent_score;
 
+        // delete usercode field
+        delete _return.code;
+
         resolve(_return);
 
       } catch (e) {
