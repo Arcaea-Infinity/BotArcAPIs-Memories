@@ -6,10 +6,9 @@
 const TAG = 'corefunc/config.js';
 const CONFIGS = {
   // botarcapi version
-  'BOTARCAPI_MAJOR': 1,
-  'BOTARCAPI_MINOR': 0,
-  'BOTARCAPI_VERSION': 0,
-  'BOTARCAPI_VERSTR': 'BotArcAPI v1.0.0',
+  'BOTARCAPI_MAJOR': 0,
+  'BOTARCAPI_VERSION': 1,
+  'BOTARCAPI_VERSTR': 'BotArcAPI v0.1',
 
   // arcaea api config
   'ARCAPI_VERSION': 11,
