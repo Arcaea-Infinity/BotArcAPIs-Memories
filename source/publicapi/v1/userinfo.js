@@ -19,13 +19,13 @@ module.exports = (argument) => {
 
     try {
 
-      // /userinfo?usercode=xxx[&hasrecent=true]
+      // /userinfo?usercode=xxx[&recent=true]
       // check for request arguments
       if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid usercode');
 
       let _arc_account = null;
-      let _arc_friends = null;
+      let _arc_friendlist = null;
       let _arc_friend = null;
 
       // request an arc account
@@ -42,16 +42,16 @@ module.exports = (argument) => {
 
         // add friend
         try {
-          _arc_friends = await arcapi_friend_add(_arc_account, argument.usercode);
+          _arc_friendlist = await arcapi_friend_add(_arc_account, argument.usercode);
         } catch (e) { throw new APIError(-4, 'add friend failed'); }
 
         // length must be 1
-        if (_arc_friends.length != 1)
+        if (_arc_friendlist.length != 1)
           throw new APIError(-5, 'internal error occurred');
 
         // result of arcapi not include
         // user code anymore since v6
-        _arc_friend = _arc_friends[0];
+        _arc_friend = _arc_friendlist[0];
         _arc_friend.code = argument.usercode;
 
         // must do deep copy
@@ -59,7 +59,7 @@ module.exports = (argument) => {
         _return.recent_score = _arc_friend.recent_score[0];
 
         // delete field if needn't recent data or not played yet
-        if (argument.hasrecent != 'true' || !_arc_friend.recent_score.length)
+        if (argument.recent != 'true' || !_arc_friend.recent_score.length)
           delete _return.recent_score;
 
         // delete usercode field
