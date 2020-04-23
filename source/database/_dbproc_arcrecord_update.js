@@ -66,12 +66,9 @@ module.exports = (userid, record) => {
 
       // execute sql
       DATABASE_ARCRECORD.run(_sql, Object.values(_sqlbinding))
-        .then(() => {
-          if (index == _wrapper.length - 1)
-            resolve();
-        })
         .catch((e) => { syslog.e(TAG, e.stack); reject(e); })
-
     });
+
+    resolve();
   });
 }
