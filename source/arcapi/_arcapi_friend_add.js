@@ -21,6 +21,6 @@ module.exports = (account, usercode) => {
     // send request
     arcfetch(_remote_request)
       .then((root) => { return resolve(root.value.friends); })
-      .catch((e) => { return reject(e); })
+      .catch((e) => { syslog.e(TAG, e.stack); return reject(e); })
   });
 }
