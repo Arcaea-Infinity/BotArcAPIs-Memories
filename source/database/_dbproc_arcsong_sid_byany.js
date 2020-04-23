@@ -58,4 +58,3 @@ module.exports = (anystr) => {
     return resolve(_result);
   });
 }
-
