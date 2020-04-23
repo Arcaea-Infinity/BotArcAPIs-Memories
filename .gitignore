@@ -9,6 +9,5 @@
 [Ss]avelogs/
 
 # ignore test apis
-[Ss]ource/publicapi/v1/_*
-[Ss]ource/publicapi/v1/test*
+[Ss]ource/publicapi/debug/
 [Ss]ource/publicapi/v1/checkupdate.js
