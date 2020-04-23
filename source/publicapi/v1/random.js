@@ -1,13 +1,12 @@
 // filename : v1/random.js
 // author   : TheSnowfield
 // date     : 04/23/2020
-// comment  : api for random song select
+// comment  : api for random song selection
 
 const TAG = 'v1/random.js\t';
 
 const APIError = require('../../corefunc/error');
 const dbproc_arcsong_random = require('../../database/_dbproc_arcsong_random');
-const dbproc_arcsong_bysongid = require('../../database/_dbproc_arcsong_bysongid');
 
 module.exports = (argument) => {
   return new Promise(async (resolve, reject) => {
@@ -37,7 +36,7 @@ module.exports = (argument) => {
       // select song
       try {
         _arc_song = await dbproc_arcsong_random(argument.start, argument.end);
-      } catch (e) { throw new APIError(-4, 'internal error'); }
+      } catch (e) { throw new APIError(-3, 'internal error'); }
 
       const _return = {
         id: _arc_song.sid,
