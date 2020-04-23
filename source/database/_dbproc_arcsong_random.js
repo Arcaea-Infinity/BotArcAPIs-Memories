@@ -15,7 +15,7 @@ module.exports = (start, end) => {
     }
 
     const _sql =
-      'SELECT `sid`, `difficultly` FROM `charts` AS c WHERE ' +
+      'SELECT `sid`, `rating_class` FROM `charts` AS c WHERE ' +
       `${end == 0 ? `c.difficultly == ${start}` : `c.difficultly>=${start} AND c.difficultly<=${end}`} ` +
       'ORDER BY RANDOM() LIMIT 1';
 

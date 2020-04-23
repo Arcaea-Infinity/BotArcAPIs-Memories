@@ -40,7 +40,7 @@ module.exports = (argument) => {
 
       const _return = {
         id: _arc_song.sid,
-        difficultly: _arc_song.difficultly
+        rating_class: _arc_song.rating_class
       };
 
       resolve(_return);
