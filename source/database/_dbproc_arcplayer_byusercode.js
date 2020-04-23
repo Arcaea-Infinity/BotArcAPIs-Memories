@@ -1,29 +1,26 @@
 // filename : database/_dbproc_arcplayer_byusercode.js
 // author   : TheSnowfield
-// date     : 04/10/2020
+// date     : 04/24/2020
 
 const TAG = 'database/_dbproc_arcplayer_byusercode.js';
 
-module.exports = async (user_code) => {
-  let _return_template = {
-    success: false,
-    user_info: null
-  };
+module.exports = (usercode) => {
+  return new Promise((resolve, reject) => {
 
-  // const database = require('sqlite-async');
-  // const DATABASE_ARCPLAYER = database.open('', 0);
+    // validate data
+    if (typeof usercode != 'string') {
+      syslog.e(TAG, `Input data error? usercode => ${usercode}`);
+      return reject(new Error('Invalid input data'));
+    }
 
-  // wait for promise
-  await Promise.all([
-    DATABASE_ARCPLAYER.get('SELECT * FROM `players` WHERE `code` == ?', [user_code])
-  ])
-    .then((data) => {
-      if (data.length) {
-        _return_template.success = true;
-        _return_template.user_info = data[0];
-      }
-    })
-    .catch((e) => { syslog.e(TAG, e) });
+    const _sql = 'SELECT * FROM `players` WHERE `code` == ?';
+    syslog.v(TAG, _sql);
 
-  return _return_template;
+    // execute sql
+    DATABASE_ARCPLAYER.get(_sql, [usercode])
+      .then((data) => { resolve(data); })
+      .catch((e) => { syslog.e(TAG, e.stack); reject(e); });
+
+    return _return_template;
+  });
 }
