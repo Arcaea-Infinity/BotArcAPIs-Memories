@@ -44,7 +44,7 @@ module.exports = (argument) => {
       } catch (e) { throw new APIError(-3, 'internal error'); }
 
       // return song info if need
-      if (argument.fullinfo == 'true') {
+      if (argument.info == 'true') {
         try {
           _arc_songinfo = await dbproc_arcsong_bysongid(_arc_song.sid);
           _return.song_info = {
