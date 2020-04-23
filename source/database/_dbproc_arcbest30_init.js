@@ -19,6 +19,6 @@ module.exports = () => {
     // execute sql
     DATABASE_ARCBEST30.exec(_sql)
       .then(resolve())
-      .catch((e) => { reject(e); });
+      .catch((e) => { syslog.e(TAG, e.stack); reject(e); });
   });
 }
