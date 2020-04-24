@@ -68,7 +68,6 @@ module.exports = (argument) => {
         // read best30 cache from database
         try {
           _arc_best30_cache = await dbproc_arcbest30_byuid(_arc_friend.user_id);
-          syslog.d(_arc_best30_cache);
         } catch (e) { throw new APIError(-7, 'internal error occurred'); }
 
         // confirm update cache is needed by compare last played time
@@ -197,7 +196,7 @@ const do_fetch_userbest30 = (account, userinfo) => {
           const _chartheap = [];
           const _endpoints = [];
           for (let i = 0; i < 5; ++i) {
-            if (_arc_chartlist.length != 0 &&
+            if (_arc_chartlist.length != 0 || _arc_chartuser.length == 0 &&
               _arc_chartuser[_arc_chartuser.length - 1].rating - 2 <= _arc_chartlist[0].rating) {
 
               // fill the endpoints and chartheap
@@ -246,9 +245,7 @@ const do_fetch_userbest30 = (account, userinfo) => {
         // sort the results by rating
         do_charts_sort(_arc_chartuser);
 
-      } catch (e) { return reject(new APIError(-13, 'querying best30 failed')) }
-
-      syslog.d(JSON.stringify(_arc_chartuser));
+      } catch (e) { syslog.e(TAG, e.stack); return reject(new APIError(-13, 'querying best30 failed')) }
 
       // calculate sum of best30
       let _best30_sum = 0;
