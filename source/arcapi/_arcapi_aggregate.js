@@ -2,7 +2,7 @@
 // author   : TheSnowfield
 // date     : 04/24/2020
 
-const TAG = 'arcapi/_arcapi_friend_add.js';
+const TAG = 'arcapi/_arcapi_aggregate.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
@@ -32,11 +32,11 @@ module.exports = (account, endpoints) => {
     // send request
     arcfetch(_remote_request)
       .then((root) => {
-
+        
         // teardown the object and pack data into array
         const _data = [];
         root.value.forEach((element) => {
-          _data[element.id] = element.value;
+          _data[element.id] = element.value[0];
         })
         
         resolve(_data);
