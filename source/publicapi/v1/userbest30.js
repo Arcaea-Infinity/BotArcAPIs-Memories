@@ -208,7 +208,7 @@ const do_fetch_userbest30 = (account, userinfo) => {
             } else break;
           }
 
-          // no chart to queue
+          // no chart to query
           if (!_endpoints.length)
             break;
 
@@ -226,15 +226,15 @@ const do_fetch_userbest30 = (account, userinfo) => {
             // calculate rating
             _result[i].rating = Utils.arcCalcSongRating(_result[i].score, _chartheap[i].rating);
 
-            // if chart does not full
-            // then pushback and resort
+            // pushback and resort when
+            // chart is not full
             if (_arc_chartuser.length < 30) {
               _arc_chartuser.push(_result[i]);
               do_charts_sort(_arc_chartuser);
             }
 
-            // else if current rating higher than last one
-            // then replace it and resort
+            // replace it and resort when
+            // the current rating is higher than last one
             else if (_result[i].rating > _arc_chartuser[_arc_chartuser.length - 1].rating) {
               _arc_chartuser[_arc_chartuser.length - 1] = _result[i];
               do_charts_sort(_arc_chartuser);
@@ -256,8 +256,8 @@ const do_fetch_userbest30 = (account, userinfo) => {
 
       syslog.d(_best30_sum, userinfo.rating);
 
-      // calculate best30 and recent10 average
-      // return zero when user rating is nagative
+      // calculate best30 and recent10 average value
+      // return zero when user ptt is negative
       const _best30_avg = _best30_sum / 30;
       const _recent10_avg = userinfo.rating == -1 ? 0 : (userinfo.rating / 100) * 4 - _best30_avg * 3;
 
