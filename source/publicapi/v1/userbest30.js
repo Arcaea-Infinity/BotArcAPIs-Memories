@@ -69,7 +69,7 @@ module.exports = (argument) => {
         try {
           _arc_best30_cache = await dbproc_arcbest30_byuid(_arc_friend.user_id);
           syslog.d(_arc_best30_cache);
-        } catch (e) { throw new APIError(-7, 'internal error'); }
+        } catch (e) { throw new APIError(-7, 'internal error occurred'); }
 
         // confirm update cache is needed by compare last played time
         if (!_arc_best30_cache ||
@@ -145,12 +145,12 @@ const do_fetch_userbest30 = (account, userinfo) => {
       // read all charts for best30 querying
       try {
         _arc_chartlist = await dbproc_arcsong_charts_all();
-      } catch (e) { throw new APIError(-8, 'internal error'); }
+      } catch (e) { throw new APIError(-8, 'internal error occurred'); }
 
       if (!_arc_chartlist) {
         syslog.f(TAG, 'Fatal error occured when read charts');
         syslog.f(TAG, 'Consider to update the song database?');
-        throw new APIError(-9, 'internal error');
+        throw new APIError(-9, 'internal error occurred');
       }
 
       // query 30 charts first
@@ -175,7 +175,7 @@ const do_fetch_userbest30 = (account, userinfo) => {
 
             const v = _chartheap[i * 5 + j];
             if (_result[j].song_id != v.sid || _result[j].difficulty != v.rating_class)
-              return reject(new APIError(-10, 'internal error'));
+              return reject(new APIError(-10, 'internal error occurred'));
 
             // calculate rating
             _result[j].rating = Utils.arcCalcSongRating(_result[j].score, v.rating);
@@ -221,7 +221,7 @@ const do_fetch_userbest30 = (account, userinfo) => {
 
             if (_result[i].song_id != _chartheap[i].sid ||
               _result[i].difficulty != _chartheap[i].rating_class)
-              return reject(new APIError(-12, 'internal error'));
+              return reject(new APIError(-12, 'internal error occurred'));
 
             // calculate rating
             _result[i].rating = Utils.arcCalcSongRating(_result[i].score, _chartheap[i].rating);
