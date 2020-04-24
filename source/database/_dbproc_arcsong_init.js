@@ -50,7 +50,7 @@ module.exports = () => {
         // execute sql
         DATABASE_ARCSONG.exec(_sql)
           .then(resolve())
-          .catch((e) => { reject(e); });
+          .catch((e) => { syslog.e(TAG, e.stack); reject(e); });
       });
     })
 
@@ -67,7 +67,7 @@ module.exports = () => {
         // execute sql
         DATABASE_ARCSONG.exec(_sql)
           .then(resolve())
-          .catch((e) => { reject(e); });
+          .catch((e) => { syslog.e(TAG, e.stack); reject(e); });
       });
     })
 
@@ -86,7 +86,7 @@ module.exports = () => {
         // execute sql
         DATABASE_ARCSONG.exec(_sql)
           .then(resolve())
-          .catch((e) => { reject(e); });
+          .catch((e) => { syslog.e(TAG, e.stack); reject(e); });
       });
     });
 }

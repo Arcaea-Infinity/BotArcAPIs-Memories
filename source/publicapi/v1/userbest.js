@@ -1,4 +1,4 @@
-// filename : /v1/userbest.js
+// filename : v1/userbest.js
 // author   : TheSnowfield
 // date     : 02/17/2020
 // comment  : api for user best record

@@ -9,7 +9,7 @@ module.exports = () => {
 
     // execute sql
     DATABASE_ARCACCOUNT.all(_sql)
-      .then((d) => { return resolve(d); })
+      .then((data) => { resolve(data); })
       .catch((e) => { reject(e); });
   });
 }
