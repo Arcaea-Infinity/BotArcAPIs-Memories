@@ -60,9 +60,7 @@ class ArcAPIRequest extends Request {
   }
 }
 
-function arcfetch(request) {
-  syslog.v(TAG, `Arcfetch => ${request.url}`);
-
+function do_fetch(request) {
   return new Promise(async (resolve, reject) => {
 
     // request origin arcapi
@@ -104,13 +102,14 @@ function arcfetch(request) {
  * fetch wrapper for arcapis
  * @param {ArcAPIRequest} request
  */
-const arcfetch_retry = async (request) => {
+const arcfetch = async (request) => {
+  syslog.v(TAG, `Arcfetch => ${request.url}`);
 
   let _retry = 0;
   while (true) {
 
     try {
-      return await arcfetch(request);
+      return await do_fetch(request);
     }
     catch (e) {
       _retry += 1;
@@ -123,6 +122,6 @@ const arcfetch_retry = async (request) => {
 }
 
 // exports
-module.exports = exports = arcfetch_retry;
+module.exports = exports = arcfetch;
 exports.default = exports;
 exports.ArcAPIRequest = ArcAPIRequest;
