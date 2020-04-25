@@ -5,12 +5,8 @@
 
 const TAG = 'corefunc/syslog.js';
 
-const _internal_log = console.log;
-const _internal_log_debug = console.debug;
-const _internal_log_info = console.info;
-const _internal_log_warn = console.warn;
-const _internal_log_error = console.error;
-const _internal_log_assert = console.assert;
+const path = require('path');
+const file = require('fs');
 
 const _level_table = ['V', 'I', 'W', 'E', 'F'];
 const _color_table = [
@@ -23,8 +19,15 @@ const _color_table = [
 
 class SystemLog {
 
+  static _internal_log = console.log;
+  static _internal_log_debug = console.debug;
+  static _internal_log_info = console.info;
+  static _internal_log_warn = console.warn;
+  static _internal_log_error = console.error;
+  static _internal_log_assert = console.assert;
+
   /**
-   * Base function for Logx, not recommend using directly.
+   * Base function for Logx, using directly is not recommend.
    * @param {number} level log level
    * @param {string} tag tag for code
    * @param {string} message print somthing
@@ -48,15 +51,16 @@ class SystemLog {
       `${String(_time.getSeconds()).padStart(2, '0')}]`;
 
     // print log string to screen
-    _internal_log(
-      `${_color_table[level]}${_time_string} ` +
-      `${_level_table[level]} ${tag}\t${message}`
-    );
+    const _log_content = `${_time_string} ` +
+      `${_level_table[level]} ${tag}\t${message}`;
+    this._internal_log(`${_color_table[level]}${_log_content}`);
 
-    // < TODO >
     // write to log file
-    // not implemented yet =(:3) z)_
-
+    const _log_file = LOG_PATH +
+      `${_time.getFullYear()}_` +
+      `${String(_time.getMonth() + 1).padStart(2, '0')}_` +
+      `${String(_time.getDate()).padStart(2, '0')}.log`;
+    file.promises.appendFile(_log_file, `${_log_content}\n`, { flag: 'a' })
   }
 
   /**
@@ -105,48 +109,58 @@ class SystemLog {
   }
 
   /**
+   * Log Debug (debug only)
+   * @param  {...any} args
+   */
+  static d(...args) {
+    this._internal_log(args);
+  }
+
+  /**
    * Overriding console object
    * @param {number} level
    * @param  {...any} args
    */
   static _console(level, ...args) {
     let _caller_name = !module.parent.filename ?
-      'unknwon' : module.parent.filename.replace(/\\/g, '/').split('/').slice(-2).join('/');
+      'unknown' : module.parent.filename.replace(/\\/g, '/').split('/').slice(-2).join('/');
     this.log(level, _caller_name, args);
   }
-
-  static d(...args) {
-    _internal_log(args);
-  }
 }
 
-// this is a hack to load
-// objects into global space
-module.exports = {
-  startLogging: () => {
-    Object.defineProperty(global, 'syslog',
-      { value: SystemLog, writable: false, configurable: false });
-    Object.defineProperty(console, 'log',
-      { value: (...args) => { syslog._console(0, args) }, writable: false, configurable: false });
-    Object.defineProperty(console, 'debug',
-      { value: (...args) => { syslog._console(0, args) }, writable: false, configurable: false });
-    Object.defineProperty(console, 'info',
-      { value: (...args) => { syslog._console(1, args) }, writable: false, configurable: false });
-    Object.defineProperty(console, 'warn',
-      { value: (...args) => { syslog._console(2, args) }, writable: false, configurable: false });
-    Object.defineProperty(console, 'error',
-      { value: (...args) => { syslog._console(3, args) }, writable: false, configurable: false });
-    Object.defineProperty(console, 'assert',
-      { value: (...args) => { syslog._console(4, args) }, writable: false, configurable: false });
+const startLogging = () => {
 
-    syslog.i(TAG, `System log started.`);
-    syslog.i(TAG, `Welcome to BotArcAPI (｡･∀･)ﾉﾞhi~`);
-    syslog.i(TAG, `Current version is ${BOTARCAPI_VERSTR}`);
-    syslog.i(TAG, '** Start Service **');
-  },
+  // create folder first
+  const _path_to_savelog = path.resolve(__dirname, LOG_PATH);
+  const _first_run = !file.existsSync(_path_to_savelog);
+  if (_first_run)
+    file.mkdirSync(_path_to_savelog);
 
-  stop: () => {
-    // < TODO >
-    // stop logging
-  }
+  // map object to global space
+  Object.defineProperty(global, 'syslog',
+    { value: SystemLog, writable: false, configurable: false });
+  Object.defineProperty(console, 'log',
+    { value: (...args) => { syslog._console(0, args) }, writable: false, configurable: false });
+  Object.defineProperty(console, 'debug',
+    { value: (...args) => { syslog._console(0, args) }, writable: false, configurable: false });
+  Object.defineProperty(console, 'info',
+    { value: (...args) => { syslog._console(1, args) }, writable: false, configurable: false });
+  Object.defineProperty(console, 'warn',
+    { value: (...args) => { syslog._console(2, args) }, writable: false, configurable: false });
+  Object.defineProperty(console, 'error',
+    { value: (...args) => { syslog._console(3, args) }, writable: false, configurable: false });
+  Object.defineProperty(console, 'assert',
+    { value: (...args) => { syslog._console(4, args) }, writable: false, configurable: false });
+
+  syslog.i(TAG, `System log started.`);
+  syslog.i(TAG, `Welcome to BotArcAPI (｡･∀･)ﾉﾞhi~`);
+  syslog.i(TAG, `Current version is ${BOTARCAPI_VERSTR}`);
+  syslog.i(TAG, '** Start Service **');
 }
+
+const stop = () => {
+  // do nothing
+}
+
+module.exports.stop = stop;
+module.exports.startLogging = startLogging;
