@@ -60,17 +60,13 @@ class ArcAPIRequest extends Request {
   }
 }
 
-/**
- * fetch wrapper for arcapis
- * @param {ArcAPIRequest} request
- */
 function arcfetch(request) {
   syslog.v(TAG, `Arcfetch => ${request.url}`);
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
 
     // request origin arcapi
-    fetch(request)
+    return await fetch(request)
       .then((response) => {
         return response.text();
       })
@@ -81,7 +77,7 @@ function arcfetch(request) {
         try {
           return JSON.parse(rawdata);
         } catch (e) {
-          syslog.d(rawdata);
+          syslog.e(TAG, rawdata);
           return reject(new APIError(-1, `Arcapi currently unavailable`));
         }
       })
@@ -91,7 +87,7 @@ function arcfetch(request) {
         if (root.success)
           return resolve(root);
         else {
-          syslog.d(JSON.stringify(root));
+          syslog.e(TAG, JSON.stringify(root));
           return reject(new APIError(root.error_code, 'Arcapi returns an error'
           ));
         }
@@ -104,7 +100,29 @@ function arcfetch(request) {
   });
 }
 
+/**
+ * fetch wrapper for arcapis
+ * @param {ArcAPIRequest} request
+ */
+const arcfetch_retry = async (request) => {
+
+  let _retry = 0;
+  while (true) {
+
+    try {
+      return await arcfetch(request);
+    }
+    catch (e) {
+      _retry += 1;
+      syslog.e(TAG, e.stack);
+      syslog.w(TAG, `Failed... retrying ${_retry}/${ARCAPI_RETRY}`);
+
+      if (_retry > ARCAPI_RETRY) throw e;
+    }
+  }
+}
+
 // exports
-module.exports = exports = arcfetch;
+module.exports = exports = arcfetch_retry;
 exports.default = exports;
 exports.ArcAPIRequest = ArcAPIRequest;

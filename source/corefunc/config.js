@@ -7,10 +7,12 @@ const TAG = 'corefunc/config.js';
 const CONFIGS = {
   // botarcapi version
   'BOTARCAPI_MAJOR': 0,
+  'BOTARCAPI_MINOR': 0,
   'BOTARCAPI_VERSION': 1,
-  'BOTARCAPI_VERSTR': 'BotArcAPI v0.1',
+  'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.1',
 
   // arcaea api config
+  'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 11,
   'ARCAPI_APPVERSION': '2.6.1c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
