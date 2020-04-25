@@ -5,7 +5,6 @@
 
 const TAG = 'corefunc/syslog.js';
 
-const path = require('path');
 const file = require('fs');
 
 const _level_table = ['V', 'I', 'W', 'E', 'F'];
@@ -56,11 +55,11 @@ class SystemLog {
     this._internal_log(`${_color_table[level]}${_log_content}`);
 
     // write to log file
-    const _log_file = LOG_PATH +
+    const _log_file = LOG_PATH + '/' +
       `${_time.getFullYear()}_` +
       `${String(_time.getMonth() + 1).padStart(2, '0')}_` +
       `${String(_time.getDate()).padStart(2, '0')}.log`;
-    file.promises.appendFile(_log_file, `${_log_content}\n`, { flag: 'a' })
+    file.promises.appendFile(_log_file, `${_log_content}\n`, { flag: 'a' });
   }
 
   /**
@@ -131,10 +130,8 @@ class SystemLog {
 const startLogging = () => {
 
   // create folder first
-  const _path_to_savelog = path.resolve(__dirname, LOG_PATH);
-  const _first_run = !file.existsSync(_path_to_savelog);
-  if (_first_run)
-    file.mkdirSync(_path_to_savelog);
+  if (!file.existsSync(LOG_PATH))
+    file.mkdirSync(LOG_PATH);
 
   // map object to global space
   Object.defineProperty(global, 'syslog',

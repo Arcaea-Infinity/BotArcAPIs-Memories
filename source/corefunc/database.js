@@ -6,7 +6,6 @@
 const TAG = 'corefunc/database.js';
 
 const file = require('fs');
-const path = require('path');
 const database = require('sqlite-async');
 
 const dbproc_arcaccount_init = require('../database/_dbproc_arcaccount_init');
@@ -19,23 +18,15 @@ const _dbproc_arcsong_update_from_songlist = require('../database/_dbproc_arcson
 
 const initDataBases = () => {
 
-  const _path_to_database = path.resolve(__dirname, DATABASE_PATH);
-  syslog.v(TAG, `Path to databases => ${_path_to_database}`);
-
-  const _first_run = !file.existsSync(_path_to_database);
-  syslog.v(TAG, `First run? => ${_first_run}`);
-
   // create folder first
-  // if database is first time creating
-  if (_first_run)
-    file.mkdirSync(_path_to_database);
-
+  if (!file.existsSync(DATABASE_PATH))
+    file.mkdirSync(DATABASE_PATH);
 
   //////////////////////////////////////////////////////////////////////////
   // database for arcaea accounts                                         //
   //////////////////////////////////////////////////////////////////////////
   const _database_arcaccount = 'arcaccount.db';
-  const _path_database_arcaccount = `${_path_to_database}/${_database_arcaccount}`;
+  const _path_database_arcaccount = `${DATABASE_PATH}/${_database_arcaccount}`;
   syslog.v(TAG, `Opening database => ${_path_database_arcaccount}`);
 
   database.open(_path_database_arcaccount, database.OPEN_READWRITE | database.OPEN_CREATE)
@@ -78,7 +69,7 @@ const initDataBases = () => {
   // database for arcaea best30 cache                                     //
   //////////////////////////////////////////////////////////////////////////
   const _database_arcbest30 = 'arcbest30.db';
-  const _path_database_arcbest30 = `${_path_to_database}/${_database_arcbest30}`;
+  const _path_database_arcbest30 = `${DATABASE_PATH}/${_database_arcbest30}`;
   syslog.v(TAG, `Opening database => ${_path_database_arcbest30}`);
 
   database.open(_path_database_arcbest30, database.OPEN_READWRITE | database.OPEN_CREATE)
@@ -96,7 +87,7 @@ const initDataBases = () => {
   // database for arcaea player's info                                    //
   //////////////////////////////////////////////////////////////////////////
   const _database_arcplayer = 'arcplayer.db';
-  const _path_database_arcplayer = `${_path_to_database}/${_database_arcplayer}`;
+  const _path_database_arcplayer = `${DATABASE_PATH}/${_database_arcplayer}`;
   syslog.v(TAG, `Opening database => ${_path_database_arcplayer}`);
 
   database.open(_path_database_arcplayer, database.OPEN_READWRITE | database.OPEN_CREATE)
@@ -114,7 +105,7 @@ const initDataBases = () => {
   // database for arcaea player's record                                  //
   //////////////////////////////////////////////////////////////////////////
   const _database_arcrecord = 'arcrecord.db';
-  const _path_database_arcrecord = `${_path_to_database}/${_database_arcrecord}`
+  const _path_database_arcrecord = `${DATABASE_PATH}/${_database_arcrecord}`
   syslog.v(TAG, `Opening database => ${_path_database_arcrecord}`);
 
   database.open(_path_database_arcrecord, database.OPEN_READWRITE | database.OPEN_CREATE)
@@ -132,7 +123,7 @@ const initDataBases = () => {
   // database for arcaea songs                                            //
   //////////////////////////////////////////////////////////////////////////
   const _database_arcsong = 'arcsong.db';
-  const _path_database_arcsong = `${_path_to_database}/${_database_arcsong}`
+  const _path_database_arcsong = `${DATABASE_PATH}/${_database_arcsong}`
   syslog.v(TAG, `Opening database => ${_path_database_arcsong}`);
 
   database.open(_path_database_arcsong, database.OPEN_READWRITE | database.OPEN_CREATE)
@@ -146,7 +137,7 @@ const initDataBases = () => {
 
       // read song informations into database
       // if songlist exists
-      const _path_to_songlist = `${_path_to_database}/songlist`;
+      const _path_to_songlist = `${DATABASE_PATH}/songlist`;
       if (file.existsSync(_path_to_songlist)) {
         syslog.i(TAG, 'songlist file detected... updating database');
 
