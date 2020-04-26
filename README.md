@@ -4,6 +4,9 @@
 [![status](https://img.shields.io/static/v1?label=status&message=develop&color=red)](#)
 [![Docker Image](https://github.com/TheSnowfield/BotArcAPI/workflows/Docker%20Compose/badge.svg)](#)
 
+[![NodeJS 12.x](https://github.com/TheSnowfield/BotArcAPI/workflows/NodeJS%2012.x/badge.svg)](#)
+[![NodeJS 10.x](https://github.com/TheSnowfield/BotArcAPI/workflows/NodeJS%2010.x/badge.svg)](#)
+
 An Arcaea API for bots running in NodeJS.  
 
 ## 🤔 Dependences
