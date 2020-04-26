@@ -20,16 +20,5 @@ jobs:
     - uses: actions/checkout@v2
 
     # Docker compose
-    - name: Test Docker compose
-      run: docker-compose up --no-start
-    
-  compose-windows:
-    runs-on: windows-latest
-    steps:
-
-    # Checkout the repo
-    - uses: actions/checkout@v2
-
-    # Docker compose
-    - name: Test Docker compose
+    - name: Test Docker Compose
       run: docker-compose up --no-start
