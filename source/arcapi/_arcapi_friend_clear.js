@@ -32,5 +32,5 @@ module.exports = async (account, friends = []) => {
   return Promise.resolve(friends)
     .then((friends) => do_fetch_friend(friends))
     .then((friends) => do_clear_friend(friends))
-    .catch((error) => { syslog.e(TAG, error.stack); return reject(error); });
+    .catch((error) => { syslog.e(TAG, error.stack); reject(error); });
 }

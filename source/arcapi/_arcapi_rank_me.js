@@ -24,7 +24,7 @@ module.exports = (account, songid, difficulty, start = 0, limit = 10) => {
 
     // send request
     arcfetch(_remote_request)
-      .then((root) => { return resolve(root.value); })
-      .catch((e) => { return reject(e); })
+      .then((root) => { resolve(root.value); })
+      .catch((e) => { reject(e); })
   });
 }

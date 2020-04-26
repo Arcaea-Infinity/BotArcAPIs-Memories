@@ -41,6 +41,6 @@ module.exports = (account, endpoints) => {
         
         resolve(_data);
       })
-      .catch((e) => { syslog.e(TAG, e.stack); return reject(e); })
+      .catch((e) => { syslog.e(TAG, e.stack); reject(e); })
   });
 }
