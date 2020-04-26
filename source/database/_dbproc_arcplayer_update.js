@@ -21,7 +21,7 @@ module.exports = (userinfo) => {
 
     // enum data and insert them
     _wrapper.forEach((element, index) => {
-      // check data valid
+      // validate data
       if (typeof element.user_id != 'number' ||
         typeof element.join_date != 'number' ||
         typeof element.name != 'string' ||
