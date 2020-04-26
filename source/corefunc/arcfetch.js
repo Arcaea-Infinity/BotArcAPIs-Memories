@@ -87,9 +87,12 @@ function do_fetch(request) {
         if (root.success)
           return resolve(root);
         else {
-          syslog.e(TAG, `Arcapi returns an error => ${root.error_code}`);
+          const _errcode =
+            root.error_code != undefined ? root.error_code : root.code;
+
+          syslog.e(TAG, `Arcapi returns an error => ${_errcode}`);
           syslog.e(TAG, JSON.stringify(root));
-          return reject(root.error_code);
+          return reject(_errcode);
         }
       })
 
@@ -115,15 +118,19 @@ const arcfetch = async (request) => {
     }
     catch (e) {
       _retry += 1;
-      syslog.e(TAG, e.stack);
+      syslog.w(TAG, `Failed... retrying ${_retry}/${ARCAPI_RETRY}`);
+
+      if (e instanceof Error)
+        syslog.e(TAG, e.stack);
 
       // do not retry when some error occurred
       // like has been banned or service not available or etc.
       // only do retry when like request timed out or etc.
-      if (typeof e == 'number' || e == 'UnauthorizedError')
+      else if (typeof e == 'number' || e == 'UnauthorizedError') {
         _retry = ARCAPI_RETRY;
+        syslog.w(TAG, `Retry canceled => errcode ${e}`);
+      }
 
-      syslog.w(TAG, `Failed... retrying ${_retry}/${ARCAPI_RETRY}`);
       if (_retry >= ARCAPI_RETRY) throw e;
     }
   }

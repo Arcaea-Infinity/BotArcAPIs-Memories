@@ -9,7 +9,7 @@ const file = require('fs');
 const database = require('sqlite-async');
 
 const dbproc_arcaccount_init = require('../database/_dbproc_arcaccount_init');
-const dbproc_arcaccount_loadall = require('../database/_dbproc_arcaccount_loadall');
+const dbproc_arcaccount_all = require('../database/_dbproc_arcaccount_all');
 const dbproc_arcbest30_init = require('../database/_dbproc_arcbest30_init');
 const dbproc_arcrecord_init = require('../database/_dbproc_arcrecord_init');
 const dbproc_arcplayer_init = require('../database/_dbproc_arcplayer_init');
@@ -35,12 +35,12 @@ const initDataBases = () => {
         { value: link, writable: false, configurable: false });
       Object.freeze(DATABASE_ARCACCOUNT);
     })
-    .then(() => { return dbproc_arcaccount_init(); })
+    .then(async () => { await dbproc_arcaccount_init(); })
     .then(() => {
       syslog.v(TAG, `${_database_arcaccount} => Loading arc accounts from database`);
 
       // preload all arc account to queue
-      dbproc_arcaccount_loadall()
+      dbproc_arcaccount_all()
         .then((result) => {
 
           // no arc account in the database
@@ -78,7 +78,7 @@ const initDataBases = () => {
         { value: link, writable: false, configurable: false });
       Object.freeze(DATABASE_ARCBEST30);
     })
-    .then(() => { return dbproc_arcbest30_init(); })
+    .then(async () => { await dbproc_arcbest30_init(); })
     .then(() => { syslog.i(TAG, `${_database_arcbest30} => OK`); })
     .catch((e) => { syslog.f(TAG, `${_database_arcbest30} => ${e.toString()}`); });
 
@@ -96,7 +96,7 @@ const initDataBases = () => {
         { value: link, writable: false, configurable: false });
       Object.freeze(DATABASE_ARCPLAYER);
     })
-    .then(() => { return dbproc_arcplayer_init(); })
+    .then(async () => { await dbproc_arcplayer_init(); })
     .then(() => { syslog.i(TAG, `${_database_arcplayer} => OK`); })
     .catch((e) => { syslog.f(TAG, `${_database_arcplayer} => ${e.toString()}`); });
 
@@ -114,7 +114,7 @@ const initDataBases = () => {
         { value: link, writable: false, configurable: false });
       Object.freeze(DATABASE_ARCRECORD);
     })
-    .then(() => { return dbproc_arcrecord_init(); })
+    .then(async () => { await dbproc_arcrecord_init(); })
     .then(() => { syslog.i(TAG, `${_database_arcrecord} => OK`); })
     .catch((e) => { syslog.f(TAG, `${_database_arcrecord} => ${e.toString()}`); });
 
@@ -132,7 +132,7 @@ const initDataBases = () => {
         { value: link, writable: false, configurable: false });
       Object.freeze(DATABASE_ARCSONG);
     })
-    .then(() => { return dbproc_arcsong_init(); })
+    .then(async () => { await dbproc_arcsong_init(); })
     .then(async () => {
 
       // read song informations into database
