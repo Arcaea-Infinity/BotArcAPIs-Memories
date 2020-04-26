@@ -1,8 +1,8 @@
 # BotArcAPI [![image](image/arcaeabots_32x32.png)](#)
 
-[![version](https://img.shields.io/static/v1?label=api-ver&message=v1&color=green&style=flat-square)](#)
-[![status](https://img.shields.io/static/v1?label=status&message=develop&color=red&style=flat-square)](#)
-[![Docker Image](https://github.com/TheSnowfield/BotArcAPI/workflows/Docker%20Image/badge.svg)](#)
+[![version](https://img.shields.io/static/v1?label=api-ver&message=v1&color=green)](#)
+[![status](https://img.shields.io/static/v1?label=status&message=develop&color=red)](#)
+[![Docker Image](https://github.com/TheSnowfield/BotArcAPI/workflows/Docker%20Compose/badge.svg)](#)
 
 An Arcaea API for bots running in NodeJS.  
 
