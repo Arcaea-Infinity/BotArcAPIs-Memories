@@ -49,7 +49,9 @@ const _errcode_table = {
   9906: "Sync failed due to conflicting data from another device. Please perform sync from Main Menu > Network.",
   9907: 'A problem occured updating data...',
   9908: 'There is a new version of Arcaea available.Please update.',
-  'UnauthorizedError': 'Bearer token invalid. Follow the oauth2-token link to get a valid one!'
+  'InvalidHeader': 'BasicAuth content is invalid.',
+  'UnauthorizedError': 'Bearer token invalid. Follow the oauth2-token link to get a valid one!',
+  'BadRequestError': 'Bearer token required. Follow the oauth2-token link to get a valid one!'
 };
 
 const _arc_errcodes = (errcode) => {
