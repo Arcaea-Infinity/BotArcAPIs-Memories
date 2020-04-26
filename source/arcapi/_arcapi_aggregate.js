@@ -43,7 +43,7 @@ module.exports = (account, endpoints) => {
       })
       .catch((e) => {
 
-        // if token is not available
+        // if token is invalid
         // just erase the token and wait for
         // auto login in next time allocating
         if (e == 'UnauthorizedError') {
