@@ -24,9 +24,8 @@ config.printConfigs();
 // initialize database
 database.initDataBases();
 
-// goto main entry ヾ(^▽^*)))
-const service = http.createServer(__loader__).listen(SERVER_PORT);
-console.info(`Http server started at 0.0.0.0:${SERVER_PORT}`);
+// test function
+setTimeout(() => process.exit(), 5000);
 
 // nodejs event handlers
 process.on('exit', (code) => {
@@ -63,6 +62,3 @@ process.on('unhandledRejection', (reason, promise) => {
   console.assert(`unhandledRejection => ${reason}`);
   process.exit(1);
 });
-
-// test function
-setTimeout(() => process.exit(), 5000);
