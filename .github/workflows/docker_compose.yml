@@ -12,8 +12,19 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
+  compose-linux:
     runs-on: ubuntu-latest
+    steps:
+
+    # Checkout the repo
+    - uses: actions/checkout@v2
+
+    # Docker compose
+    - name: Test Docker compose
+      run: docker-compose up --no-start
+    
+  compose-windows:
+    runs-on: windows-latest
     steps:
 
     # Checkout the repo
