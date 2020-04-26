@@ -259,8 +259,8 @@ const do_fetch_userbest30 = (account, userinfo) => {
       const _recent10_avg = userinfo.rating == -1 ? 0 : (userinfo.rating / 100) * 4 - _best30_avg * 3;
 
       const _return = {
-        best30_avg: _best30_avg,
-        recent10_avg: _recent10_avg,
+        best30_avg: _best30_avg.toFixed(4),
+        recent10_avg: _recent10_avg.toFixed(4),
         best30_list: _arc_chartuser,
       };
 
