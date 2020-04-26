@@ -21,6 +21,17 @@ module.exports = (account, usercode) => {
     // send request
     arcfetch(_remote_request)
       .then((root) => { resolve(root.value.friends); })
-      .catch((e) => { syslog.e(TAG, e.stack); reject(e); })
+      .catch((e) => {
+
+        // if token is not available
+        // just erase the token and wait for
+        // auto login in next time allocating
+        if (e == 'UnauthorizedError') {
+          account.token = '';
+          syslog.w(TAG, `Invalid token => ${account.name} ${account.token}`);
+        }
+
+        reject(e);
+      })
   });
 }

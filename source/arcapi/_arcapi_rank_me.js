@@ -25,6 +25,17 @@ module.exports = (account, songid, difficulty, start = 0, limit = 10) => {
     // send request
     arcfetch(_remote_request)
       .then((root) => { resolve(root.value); })
-      .catch((e) => { reject(e); })
+      .catch((e) => {
+
+        // if token is not available
+        // just erase the token and wait for
+        // auto login in next time allocating
+        if (e == 'UnauthorizedError') {
+          account.token = '';
+          syslog.w(TAG, `Invalid token => ${account.name} ${account.token}`);
+        }
+
+        reject(e);
+      })
   });
 }

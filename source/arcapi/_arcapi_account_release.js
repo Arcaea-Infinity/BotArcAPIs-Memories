@@ -11,7 +11,7 @@ module.exports = (account) => {
     if (typeof ARCACCOUNT == 'undefined')
       return reject(new Error('ARCACCOUNT is undefined?'));
     if (typeof account == 'undefined')
-      return reject(new Error('wtf? account is undefined?'));
+      return reject(new Error('account is undefined?'));
 
     // push an account back to queue
     // ** pretend to be a queue =(:3) z)_ **
