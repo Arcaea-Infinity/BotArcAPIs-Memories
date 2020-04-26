@@ -6,7 +6,6 @@
 import {btoa} from 'abab';
 import fetch from 'node-fetch';
 import arcapi_errcode from './arcerrors';
-import APIError from './error';
 
 export type ArcRestUrl = string;
 export type ArcAPIMethod = 'GET' | 'POST';

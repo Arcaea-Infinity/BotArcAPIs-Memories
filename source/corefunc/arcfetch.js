@@ -9,7 +9,6 @@ const TAG = 'corefunc/arcfetch.js';
 const btoa = require('abab').btoa;
 const fetch = require('node-fetch');
 const Request = fetch.Request;
-const APIError = require('./error');
 
 class ArcAPIRequest extends Request {
   constructor(method, resturl, init) {
@@ -75,8 +74,11 @@ function do_fetch(request) {
         try {
           return JSON.parse(rawdata);
         } catch (e) {
+          syslog.e(TAG, 'Arcapi currently unavailable');
           syslog.e(TAG, rawdata);
-          return reject(new APIError(-1, `Arcapi currently unavailable`));
+
+          // The Arcaea network is currently under maintenance.
+          return reject(9);
         }
       })
 
@@ -85,9 +87,9 @@ function do_fetch(request) {
         if (root.success)
           return resolve(root);
         else {
+          syslog.e(TAG, `Arcapi returns an error => ${root.error_code}`);
           syslog.e(TAG, JSON.stringify(root));
-          return reject(new APIError(root.error_code, 'Arcapi returns an error'
-          ));
+          return reject(root.error_code);
         }
       })
 
@@ -114,9 +116,15 @@ const arcfetch = async (request) => {
     catch (e) {
       _retry += 1;
       syslog.e(TAG, e.stack);
-      syslog.w(TAG, `Failed... retrying ${_retry}/${ARCAPI_RETRY}`);
 
-      if (_retry > ARCAPI_RETRY) throw e;
+      // do not retry when some error occurred
+      // like has been banned or service not available or etc.
+      // only do retry when like request timed out or etc.
+      if (typeof e == 'number' || e == 'UnauthorizedError')
+        _retry = ARCAPI_RETRY;
+
+      syslog.w(TAG, `Failed... retrying ${_retry}/${ARCAPI_RETRY}`);
+      if (_retry >= ARCAPI_RETRY) throw e;
     }
   }
 }
