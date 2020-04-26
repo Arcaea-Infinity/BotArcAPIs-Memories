@@ -31,10 +31,6 @@ setTimeout(() => process.exit(), 5000);
 process.on('exit', (code) => {
   console.info('** Stop Service **');
 
-  // stop http server
-  service.close();
-  console.info('Stop http server');
-
   // close databases
   database.close();
   console.info('Stop all database access');
