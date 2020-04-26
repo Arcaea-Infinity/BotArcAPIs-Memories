@@ -6,7 +6,6 @@ services:
   botarcapi:
     build: .
     restart: always
-    platform: linux
     container_name: 'botarcapi'
     environment:
 
