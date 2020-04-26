@@ -40,12 +40,12 @@ module.exports = () => {
         } catch (e) {
 
           // this account has been banned
-          if (e instanceof APIError && e.status == 106) {
+          if (e == 106) {
             _account.banned = true;
             syslog.w(TAG, `This account has been banned. remove from pool => ${_account.name}`);
           }
 
-          syslog.e(TAG, e);
+          syslog.e(TAG, e.stack);
 
         } finally {
 
