@@ -8,6 +8,7 @@
     "sqlite-async": "^1.0.12"
   },
   "scripts": {
+    "test": "node index_test.js",
     "start": "node index.js"
   },
   "repository": {
