@@ -22,7 +22,7 @@ module.exports = (name, password, deviceid) => {
 
     // send request
     arcfetch(_remote_request)
-      .then((root) => { return resolve(root.access_token); })
-      .catch((e) => { return reject(e); })
+      .then((root) => { resolve(root.access_token); })
+      .catch((e) => { reject(e); })
   });
 }

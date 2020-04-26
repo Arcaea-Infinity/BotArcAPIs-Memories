@@ -20,7 +20,7 @@ module.exports = (account, userid) => {
 
     // send request
     arcfetch(_remote_request)
-      .then((root) => { return resolve(root.value.friends); })
-      .catch((e) => { return reject(e); })
+      .then((root) => { resolve(root.value.friends); })
+      .catch((e) => { reject(e); })
   });
 }
