@@ -40,7 +40,7 @@ module.exports = () => {
         } catch (e) {
 
           // this account has been banned
-          if (e instanceof APIError && e.status == 601) {
+          if (e instanceof APIError && e.status == 106) {
             _account.banned = true;
             syslog.w(TAG, `This account has been banned. remove from pool => ${_account.name}`);
           }
