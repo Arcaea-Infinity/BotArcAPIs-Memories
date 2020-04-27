@@ -1,14 +1,14 @@
-// filename : arcapi/_arcapi_account_alloc.js
+// filename : arcmana/_arcmana_account_alloc.js
 // author   : TheSnowfield
 // date     : 04/14/2020
 // common   : request an arc account
 
-const TAG = 'arcapi/_arcapi_account_alloc.js';
+const TAG = 'arcmana/_arcmana_account_alloc.js';
 
 const APIError = require('../corefunc/error');
 
-const arcapi_login = require('./_arcapi_login');
-const arcapi_userme = require('./_arcapi_userme');
+const arcapi_login = require('../arcapi/_arcapi_login');
+const arcapi_userme = require('../arcapi/_arcapi_userme');
 const dbproc_arcaccount_update = require('../database/_dbproc_arcaccount_update');
 
 module.exports = () => {

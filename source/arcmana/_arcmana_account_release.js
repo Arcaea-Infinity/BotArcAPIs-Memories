@@ -1,9 +1,9 @@
-// filename : arcapi/_arcapi_account_release.js
+// filename : arcmana/_arcmana_account_release.js
 // author   : TheSnowfield
 // date     : 04/11/2020
 // common   : release an arc account
 
-const TAG = 'arcapi/_arcapi_account_release.js';
+const TAG = 'arcmana/_arcmana_account_release.js';
 
 module.exports = (account) => {
   return new Promise((resolve, reject) => {
