@@ -6,24 +6,14 @@
 
 const TAG = 'source/__loader__.js';
 
-
-const handleMain = async (request, response) => {
-
-  // process request url
-  const _api_url = new URL(`http://0.0.0.0${request.url}`);
-  const _api_path = _api_url.pathname;
-  const _api_arguments = Object.fromEntries(_api_url.searchParams);
-  syslog.i(TAG, `Accept request at => ${_api_path} ${JSON.stringify(_api_arguments)}`);
-
-  // handle favicon request
-  if (_api_path == '/favicon.ico')
-    return handleIconRequest(response);
-
-  // handle general api request
-  return handleApiRequest(_api_path, _api_arguments, response);
+const handler_request_notfound = async (response, message='') => {
+  response.statusCode = 404;
+  response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
+  response.end(message);
+  syslog.v(TAG, 'Send response back');
 }
 
-const handleIconRequest = async (response) => {
+const handler_request_favicon = async (response) => {
 
   let _http_body = null;
   let _http_status = null;
@@ -39,9 +29,7 @@ const handleIconRequest = async (response) => {
       });
   } catch (e) {
     syslog.e(e.stack);
-    _http_status = 404;
-    _http_body = '';
-    _http_content_type = '';
+    return handler_request_notfound(request);
   }
 
   // send result to client
@@ -52,7 +40,7 @@ const handleIconRequest = async (response) => {
   syslog.v(TAG, 'Send response back');
 }
 
-const handleApiRequest = async (path, argument, response) => {
+const handler_request_publicapi = async (response, path, header, argument, databody) => {
 
   let _http_body = null;
   let _http_status = null;
@@ -79,10 +67,7 @@ const handleApiRequest = async (path, argument, response) => {
   }
   catch (e) {
     syslog.e(TAG, e.stack);
-
-    _http_status = 404;
-    _http_body = 'request path notfound =(:3) z)_';
-    _http_content_type = 'text/html; charset=utf-8';
+    return handler_request_notfound('request path notfound =(:3) z)_');
   }
 
   // send result to client
@@ -95,4 +80,36 @@ const handleApiRequest = async (path, argument, response) => {
   syslog.v(TAG, 'Send response back');
 }
 
-module.exports = handleMain;
+const routine = async (request, response) => {
+
+  // process request url
+  const _api_url = new URL(`http://0.0.0.0${request.url}`);
+  const _api_path = _api_url.pathname;
+  const _api_headers = request.headers;
+  const _api_arguments = Object.fromEntries(_api_url.searchParams);
+  syslog.i(TAG, `Accept ${request.method} request at => ${_api_path} ${JSON.stringify(_api_arguments)}`);
+
+  let _rawdata = '';
+  request.on('data', (data) => { _rawdata += data; });
+  request.on('end', () => {
+    if (request.method == 'GET') {
+      // handle favicon request
+      if (_api_path == '/favicon.ico')
+        return handler_request_favicon(response);
+    }
+
+    // receive the body data for post requests
+    let _api_bodydata = null;
+    try { _api_bodydata = JSON.parse(_rawdata); }
+    catch (e) { syslog.e(e.stack); return handler_request_notfound(request); }
+
+    // handle general api request
+    return handler_request_publicapi(
+      response, _api_path, _api_headers, _api_arguments,
+      request.method == 'POST' ? _api_bodydata : null,
+    );
+
+  });
+}
+
+module.exports = routine;
