@@ -1,9 +1,9 @@
-// filename : arcmana/_arcmana_account_release.js
+// filename : arcmana/_arcmana_account_recycle.js
 // author   : TheSnowfield
 // date     : 04/11/2020
-// common   : release an arc account
+// common   : recycle an arc account
 
-const TAG = 'arcmana/_arcmana_account_release.js';
+const TAG = 'arcmana/_arcmana_account_recycle.js';
 
 module.exports = (account) => {
   return new Promise((resolve, reject) => {
@@ -18,6 +18,6 @@ module.exports = (account) => {
     ARCACCOUNT.push(account);
 
     resolve();
-    syslog.i(TAG, `Released arc account => ${account.name} ${account.token}`);
+    syslog.i(TAG, `Recycled arc account => ${account.name} ${account.token}`);
   });
 }
