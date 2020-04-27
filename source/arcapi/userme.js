@@ -1,24 +1,20 @@
-// filename : arcapi/_arcapi_rank_world.js
+// filename : arcapi/userme.js
 // author   : TheSnowfield
-// date     : 04/13/2020
+// date     : 04/12/2020
+// comment  : userme
 
-const TAG = '_arcapi_rank_world.js';
+const TAG = 'arcapi/userme.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = (account, songid, difficulty, start = 0, limit = 10) => {
+module.exports = async (account) => {
   return new Promise((resolve, reject) => {
 
     // construct remote request
     const _remote_request =
-      new ArcAPIRequest('GET', 'score/song?' +
-        new URLSearchParams({
-          'song_id': songid,
-          'difficulty': difficulty,
-          'start': start,
-          'limit': limit
-        }), {
+      new ArcAPIRequest('GET', 'user/me', {
+        deviceid: account.device,
         usertoken: account.token
       });
 

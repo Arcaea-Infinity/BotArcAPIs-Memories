@@ -1,8 +1,8 @@
-// filename : arcapi/_arcapi_rank_friend.js
+// filename : arcapi/rank_friend.js
 // author   : TheSnowfield
 // date     : 04/12/2020
 
-const TAG = 'arcapi/_arcapi_friend_delete.js';
+const TAG = 'arcapi/friend_delete.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;

@@ -1,26 +1,28 @@
-// filename : arcapi/_arcapi_userme.js
+// filename : arcapi/login.js
 // author   : TheSnowfield
 // date     : 04/12/2020
-// comment  : userme
+// comment  : login
 
-const TAG = 'arcapi/_arcapi_userme.js';
+const TAG = 'arcapi/login.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = async (account) => {
+module.exports = (name, password, deviceid) => {
   return new Promise((resolve, reject) => {
 
     // construct remote request
     const _remote_request =
-      new ArcAPIRequest('GET', 'user/me', {
-        deviceid: account.device,
-        usertoken: account.token
+      new ArcAPIRequest('POST', `auth/login`, {
+        username: name,
+        userpwd: password,
+        deviceid: deviceid,
+        postdata: new URLSearchParams({ 'grant_type': 'client_credentials' })
       });
 
     // send request
     arcfetch(_remote_request)
-      .then((root) => { resolve(root.value); })
+      .then((root) => { resolve(root.access_token); })
       .catch((e) => {
 
         // if token is invalid

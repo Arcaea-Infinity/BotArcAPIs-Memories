@@ -1,8 +1,8 @@
-// filename : arcapi/_arcapi_rank_me.js
+// filename : arcapi/rank_me.js
 // author   : TheSnowfield
 // date     : 04/13/2020
 
-const TAG = 'arcapi/_arcapi_rank_me.js';
+const TAG = 'arcapi/rank_me.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;

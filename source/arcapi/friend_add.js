@@ -1,21 +1,21 @@
-// filename : arcapi/_arcapi_friend_delete.js
+// filename : arcapi/friend_add.js
 // author   : TheSnowfield
-// date     : 04/12/2020
-// comment  : delete friend
+// date     : 04/10/2020
+// commont  : add friend
 
-const TAG = 'arcapi/_arcapi_friend_delete.js';
+const TAG = 'arcapi/friend_add.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = (account, userid) => {
+module.exports = (account, usercode) => {
   return new Promise((resolve, reject) => {
 
     // construct remote request
     const _remote_request =
-      new ArcAPIRequest('POST', 'friend/me/delete', {
+      new ArcAPIRequest('POST', 'friend/me/add', {
         usertoken: account.token,
-        postdata: new URLSearchParams({ 'friend_id': userid })
+        postdata: new URLSearchParams({ 'friend_code': usercode })
       });
 
     // send request

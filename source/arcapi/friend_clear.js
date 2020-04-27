@@ -1,12 +1,12 @@
-// filename : arcapi/_arcapi_friend_clear.js
+// filename : arcapi/friend_clear.js
 // author   : TheSnowfield
 // date     : 04/11/2020
 // comment  : delete all friends from an arc account
 
-const TAG = 'arcapi/_arcapi_friend_clear.js';
+const TAG = 'arcapi/friend_clear.js';
 
-const arcapi_userme = require('./_arcapi_userme');
-const arcapi_friend_delete = require('./_arcapi_friend_delete');
+const arcapi_userme = require('./userme');
+const arcapi_friend_delete = require('./friend_delete');
 
 module.exports = async (account, friends = []) => {
 

@@ -1,8 +1,8 @@
-// filename : arcapi/_arcapi_aggregate.js
+// filename : arcapi/aggregate.js
 // author   : TheSnowfield
 // date     : 04/24/2020
 
-const TAG = 'arcapi/_arcapi_aggregate.js';
+const TAG = 'arcapi/aggregate.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
