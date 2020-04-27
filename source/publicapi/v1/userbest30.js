@@ -8,11 +8,11 @@ const TAG = 'v1/userbest30.js\t';
 const APIError = require('../../corefunc/error');
 const Utils = require('../../corefunc/utils');
 
-const arcapi_friend_add = require('../../arcapi/_arcapi_friend_add');
-const arcapi_friend_clear = require('../../arcapi/_arcapi_friend_clear');
-const arcapi_account_alloc = require('../../arcapi/_arcapi_account_alloc');
-const arcapi_account_release = require('../../arcapi/_arcapi_account_release');
-const arcapi_aggregate = require('../../arcapi/_arcapi_aggregate');
+const arcapi_friend_add = require('../../arcapi/friend_add');
+const arcapi_friend_clear = require('../../arcapi/friend_clear');
+const arcapi_aggregate = require('../../arcapi/aggregate');
+const arcmana_account_alloc = require('../../arcmana/account_alloc');
+const arcmana_account_recycle = require('../../arcmana/account_recycle');
 
 const dbproc_arcrecord_update = require('../../database/_dbproc_arcrecord_update');
 const dbproc_arcplayer_update = require('../../database/_dbproc_arcplayer_update');
@@ -38,7 +38,7 @@ module.exports = (argument) => {
 
       // request an arc account
       try {
-        _arc_account = await arcapi_account_alloc();
+        _arc_account = await arcmana_account_alloc();
       } catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
 
       try {
@@ -107,13 +107,13 @@ module.exports = (argument) => {
       } catch (e) {
         // recycle the account when any error occurred
         if (_arc_account)
-          arcapi_account_release(_arc_account);
+          arcmana_account_recycle(_arc_account);
         // re-throw the error
         throw e;
       }
 
       // release account
-      arcapi_account_release(_arc_account)
+      arcmana_account_recycle(_arc_account)
         .catch((e) => { syslog.e(TAG, e.stack); });
       // update user info and recently played
       dbproc_arcplayer_update(_arc_friend)
