@@ -57,19 +57,19 @@ module.exports = (argument) => {
             ratingClass: 0,
             chartDesigner: _arc_songinfo.chart_designer_pst,
             jacketDesigner: _arc_songinfo.jacket_designer_pst,
-            rating: _arc_songinfo.rating_pst / 10
+            rating: _arc_songinfo.rating_pst
           },
           {
             ratingClass: 1,
             chartDesigner: _arc_songinfo.chart_designer_prs,
             jacketDesigner: _arc_songinfo.jacket_designer_prs,
-            rating: _arc_songinfo.rating_prs / 10
+            rating: _arc_songinfo.rating_prs
           },
           {
             ratingClass: 2,
             chartDesigner: _arc_songinfo.chart_designer_ftr,
             jacketDesigner: _arc_songinfo.jacket_designer_ftr,
-            rating: _arc_songinfo.rating_ftr / 10
+            rating: _arc_songinfo.rating_ftr
           }
         ]
       };
