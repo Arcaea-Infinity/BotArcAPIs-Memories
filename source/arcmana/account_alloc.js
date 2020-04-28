@@ -69,6 +69,6 @@ module.exports = () => {
     }
 
     resolve(_account);
-    syslog.i(TAG, `Allocated arc account => ${_account.name} ${_account.token}`);
+    syslog.i(TAG, `Allocated account => ${_account.name} ${_account.token}`);
   });
 }

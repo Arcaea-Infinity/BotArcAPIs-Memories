@@ -18,6 +18,6 @@ module.exports = (account) => {
     ARCACCOUNT.push(account);
 
     resolve();
-    syslog.i(TAG, `Recycled arc account => ${account.name} ${account.token}`);
+    syslog.i(TAG, `Recycled account => ${account.name} ${account.token}`);
   });
 }
