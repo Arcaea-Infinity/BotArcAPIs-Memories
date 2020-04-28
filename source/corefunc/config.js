@@ -8,8 +8,8 @@ const CONFIGS = {
   // botarcapi version
   'BOTARCAPI_MAJOR': 0,
   'BOTARCAPI_MINOR': 0,
-  'BOTARCAPI_VERSION': 1,
-  'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.1',
+  'BOTARCAPI_VERSION': 2,
+  'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.2',
 
   // useragent white list
   // if set '[]' will accept all requests
