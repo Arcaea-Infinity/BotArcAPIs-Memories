@@ -97,7 +97,7 @@ const routine = async (request, response) => {
   const _api_arguments = Object.fromEntries(_api_url.searchParams);
   syslog.i(TAG,
     `Accept ${_api_headers['user-agent']} ` +
-    `${request.method} request at => ` +
+    `request => ${request.method} ` +
     `${_api_path} ${JSON.stringify(_api_arguments)}`
   );
 
@@ -119,7 +119,7 @@ const routine = async (request, response) => {
       catch (e) {
         _api_bodydata = null;
         if (request.method == 'POST')
-          syslog.w(TAG, `Recived invalid POST data => ${_rawdata}`);
+          syslog.w(TAG, `Received invalid POST data => ${_rawdata}`);
       }
     }
 

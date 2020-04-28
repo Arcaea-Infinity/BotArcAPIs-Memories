@@ -1,9 +1,9 @@
-// filename : arcmana/_arcmana_account_recycle.js
+// filename : arcmana/account_recycle.js
 // author   : TheSnowfield
 // date     : 04/11/2020
 // common   : recycle an arc account
 
-const TAG = 'arcmana/_arcmana_account_recycle.js';
+const TAG = 'arcmana/account_recycle.js';
 
 module.exports = (account) => {
   return new Promise((resolve, reject) => {

@@ -50,9 +50,9 @@ module.exports = class {
     if (!BOTARCAPI_WHITELIST.length) return true;
 
     for (const v of BOTARCAPI_WHITELIST) {
-      if (ua.match(v)) return true;
+      if (new RegExp(v).test(ua)) return true;
     }
-
+    
     return false;
   }
 }
