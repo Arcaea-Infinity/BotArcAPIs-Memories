@@ -26,12 +26,12 @@ module.exports = (argument, method, path, header, databody) => {
       }
 
       // compatible with arcapi request format
-      else if (header['Authorization']) {
-        const _array = header['Authorization'].split(' ');
+      else if (header.authorization) {
+        const _array = header.authorization.split(' ');
         if (_array.length == 2 && _array[0] == 'Bearer')
           _access_token = _array[1];
 
-        delete header['Authorization'];
+        delete header.authorization;
       }
 
       // validate the token

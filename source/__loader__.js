@@ -138,14 +138,8 @@ const routine = async (request, response) => {
 
     // receive the body data for post requests
     let _api_bodydata = null;
-    if (request.method == 'POST') {
-      try { _api_bodydata = JSON.parse(_rawdata); }
-      catch (e) {
-        _api_bodydata = null;
-        if (request.method == 'POST')
-          syslog.w(TAG, `Received invalid POST data => ${_rawdata}`);
-      }
-    }
+    if (request.method == 'POST')
+      _api_bodydata = _rawdata;
 
     // handle public api request
     return handler_request_publicapi(
