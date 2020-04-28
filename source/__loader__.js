@@ -6,7 +6,7 @@
 
 const TAG = 'source/__loader__.js';
 
-const handler_request_notfound = async (response, message='') => {
+const handler_request_notfound = async (response, message = '') => {
   response.statusCode = 404;
   response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
   response.end(message);
@@ -50,7 +50,7 @@ const handler_request_publicapi = async (response, path, header, argument, datab
     // try invoke method
     const _api_entry = require(`./publicapi/${path}`);
     const _api_result = {};
-    await _api_entry(argument)
+    await _api_entry(argument, header, databody)
       .then((result) => {
         _api_result.status = 0;
         _api_result.content = result;
@@ -63,11 +63,10 @@ const handler_request_publicapi = async (response, path, header, argument, datab
     _http_status = 200;
     _http_body = JSON.stringify(_api_result);
     _http_content_type = 'application/json; charset=utf-8';
-
   }
   catch (e) {
     syslog.e(TAG, e.stack);
-    return handler_request_notfound('request path notfound =(:3) z)_');
+    return handler_request_notfound(response, 'request path notfound =(:3) z)_');
   }
 
   // send result to client
@@ -100,14 +99,18 @@ const routine = async (request, response) => {
 
     // receive the body data for post requests
     let _api_bodydata = null;
-    try { _api_bodydata = JSON.parse(_rawdata); }
-    catch (e) { syslog.e(e.stack); return handler_request_notfound(request); }
+    if (request.method == 'POST') {
+      try { _api_bodydata = JSON.parse(_rawdata); }
+      catch (e) {
+        _api_bodydata = null;
+        if (request.method == 'POST')
+          syslog.w(TAG, `Recived invalid POST data => ${_rawdata}`);
+      }
+    }
 
-    // handle general api request
+    // handle api request
     return handler_request_publicapi(
-      response, _api_path, _api_headers, _api_arguments,
-      request.method == 'POST' ? _api_bodydata : null,
-    );
+      response, _api_path, _api_headers, _api_arguments, _api_bodydata);
 
   });
 }
