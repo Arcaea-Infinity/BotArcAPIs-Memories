@@ -105,8 +105,8 @@ const handler_request_publicapi =
 const routine = async (request, response) => {
 
   // user-agent and client-agent
-  const _client_sign = request.headers['client-agent'];
-  if (!_client_sign) request.headers['user-agent'];
+  let _client_sign = request.headers['client-agent'];
+  if (!_client_sign) _client_sign = request.headers['user-agent'];
 
   // match useragent
   if (!Utils.httpMatchUserAgent(_client_sign)) {
