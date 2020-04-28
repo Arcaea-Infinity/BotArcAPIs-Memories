@@ -14,6 +14,7 @@ module.exports = (argument) => {
 
     try {
 
+      // /arc/recycle[token=xxx]
       // get token from GET parameters
       let _access_token = null;
       if (argument['token']) {

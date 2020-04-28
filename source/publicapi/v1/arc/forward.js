@@ -15,6 +15,7 @@ module.exports = (argument, method, path, header, databody) => {
 
     try {
 
+      // /arc/forward[/url/to/arcapi?foo=xx&bar=xx]
       // get token from GET parameters
       let _access_token = null;
       if (argument['token']) {
