@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcrecord_init.js
+// filename : procedures/arcrecord_init.js
 // author   : TheSnowfield
 // date     : 04/15/2020
 
-const TAG = 'database/_dbproc_arcrecord_init.js';
+const TAG = 'procedures/arcrecord_init.js';
 
 module.exports = () => {
   return new Promise((resolve, reject) => {

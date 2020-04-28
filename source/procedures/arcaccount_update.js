@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcaccount_load.js
+// filename : procedures/arcaccount_load.js
 // author   : TheSnowfield
 // date     : 04/26/2020
 
-const TAG = 'database/_dbproc_arcaccount_load.js';
+const TAG = 'procedures/arcaccount_load.js';
 
 module.exports = (account) => {
   return new Promise((resolve, reject) => {

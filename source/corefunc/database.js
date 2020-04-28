@@ -8,13 +8,13 @@ const TAG = 'corefunc/database.js';
 const file = require('fs');
 const database = require('sqlite-async');
 
-const dbproc_arcaccount_init = require('../database/_dbproc_arcaccount_init');
-const dbproc_arcaccount_all = require('../database/_dbproc_arcaccount_all');
-const dbproc_arcbest30_init = require('../database/_dbproc_arcbest30_init');
-const dbproc_arcrecord_init = require('../database/_dbproc_arcrecord_init');
-const dbproc_arcplayer_init = require('../database/_dbproc_arcplayer_init');
-const dbproc_arcsong_init = require('../database/_dbproc_arcsong_init');
-const _dbproc_arcsong_update_from_songlist = require('../database/_dbproc_arcsong_update_from_songlist');
+const dbproc_arcaccount_init = require('../procedures/arcaccount_init');
+const dbproc_arcaccount_all = require('../procedures/arcaccount_all');
+const dbproc_arcbest30_init = require('../procedures/arcbest30_init');
+const dbproc_arcrecord_init = require('../procedures/arcrecord_init');
+const dbproc_arcplayer_init = require('../procedures/arcplayer_init');
+const dbproc_arcsong_init = require('../procedures/arcsong_init');
+const _dbproc_arcsong_update_from_songlist = require('../procedures/arcsong_update_from_songlist');
 
 const initDataBases = () => {
 

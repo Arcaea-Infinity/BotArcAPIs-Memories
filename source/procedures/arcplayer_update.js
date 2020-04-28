@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcplayer_update.js
+// filename : procedures/arcplayer_update.js
 // author   : TheSnowfield
 // date     : 04/17/2020
 
-const TAG = 'database/_dbproc_arcplayer_update.js';
+const TAG = 'procedures/arcplayer_update.js';
 
 module.exports = (userinfo) => {
   return new Promise((resolve, reject) => {

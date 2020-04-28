@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcsong_random.js
+// filename : procedures/arcsong_random.js
 // author   : TheSnowfield
 // date     : 04/23/2020
 
-const TAG = 'database/_dbproc_arcsong_random.js';
+const TAG = 'procedures/arcsong_random.js';
 
 module.exports = (start, end) => {
   return new Promise(async (resolve, reject) => {

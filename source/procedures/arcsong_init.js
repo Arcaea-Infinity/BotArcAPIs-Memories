@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcsong_init.js
+// filename : procedures/arcsong_init.js
 // author   : TheSnowfield
 // date     : 04/15/2020
 
-const TAG = 'database/_dbproc_arcsong_init.js';
+const TAG = 'procedures/arcsong_init.js';
 
 module.exports = () => {
   return Promise.resolve()

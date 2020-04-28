@@ -14,10 +14,10 @@ const arcapi_rank_friend = require('../../arcapi/rank_friend');
 const arcmana_account_alloc = require('../../arcmana/account_alloc');
 const arcmana_account_recycle = require('../../arcmana/account_recycle');
 
-const dbproc_arcsong_bysongid = require('../../database/_dbproc_arcsong_bysongid');
-const dbproc_arcsong_sid_byany = require('../../database/_dbproc_arcsong_sid_byany');
-const dbproc_arcrecord_update = require('../../database/_dbproc_arcrecord_update');
-const dbproc_arcplayer_update = require('../../database/_dbproc_arcplayer_update');
+const dbproc_arcsong_bysongid = require('../../procedures/arcsong_bysongid');
+const dbproc_arcsong_sid_byany = require('../../procedures/arcsong_sid_byany');
+const dbproc_arcrecord_update = require('../../procedures/arcrecord_update');
+const dbproc_arcplayer_update = require('../../procedures/arcplayer_update');
 
 module.exports = (argument) => {
   return new Promise(async (resolve, reject) => {

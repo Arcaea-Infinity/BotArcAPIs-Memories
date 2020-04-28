@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcplayer_byuserid.js
+// filename : procedures/arcplayer_byuserid.js
 // author   : TheSnowfield
 // date     : 04/24/2020
 
-const TAG = 'database/_dbproc_arcplayer_byuserid.js';
+const TAG = 'procedures/arcplayer_byuserid.js';
 
 module.exports = (userid) => {
   return new Promise((resolve, reject) => {

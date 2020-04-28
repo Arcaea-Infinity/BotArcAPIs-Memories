@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcsong_sid_byany.js
+// filename : procedures/arcsong_sid_byany.js
 // author   : TheSnowfield
 // date     : 04/19/2020
 
-const TAG = 'database/_dbproc_arcsong_sid_byany.js';
+const TAG = 'procedures/arcsong_sid_byany.js';
 
 module.exports = (anystr) => {
   return new Promise(async (resolve, reject) => {

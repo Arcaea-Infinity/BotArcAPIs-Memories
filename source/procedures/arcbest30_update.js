@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcbest30_update.js
+// filename : procedures/arcbest30_update.js
 // author   : TheSnowfield
 // date     : 04/23/2020
 
-const TAG = 'database/_dbproc_arcbest30_update.js';
+const TAG = 'procedures/arcbest30_update.js';
 const btoa = require('abab').btoa;
 
 module.exports = (userid, last_played, best30) => {

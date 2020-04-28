@@ -7,8 +7,8 @@ const TAG = 'v1/songinfo.js';
 
 const APIError = require('../../corefunc/error');
 
-const dbproc_arcsong_bysongid = require('../../database/_dbproc_arcsong_bysongid');
-const dbproc_arcsong_sid_byany = require('../../database/_dbproc_arcsong_sid_byany');
+const dbproc_arcsong_bysongid = require('../../procedures/arcsong_bysongid');
+const dbproc_arcsong_sid_byany = require('../../procedures/arcsong_sid_byany');
 
 module.exports = (argument) => {
   return new Promise(async (resolve, reject) => {

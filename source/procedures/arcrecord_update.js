@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcrecord_update.js
+// filename : procedures/arcrecord_update.js
 // author   : TheSnowfield
 // date     : 04/10/2020
 
-const TAG = 'database/_dbproc_arcrecord_update.js';
+const TAG = 'procedures/arcrecord_update.js';
 
 module.exports = (userid, record) => {
   return new Promise((resolve, reject) => {

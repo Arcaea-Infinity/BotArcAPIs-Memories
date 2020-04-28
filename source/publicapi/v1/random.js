@@ -6,8 +6,8 @@
 const TAG = 'v1/random.js\t';
 
 const APIError = require('../../corefunc/error');
-const dbproc_arcsong_random = require('../../database/_dbproc_arcsong_random');
-const dbproc_arcsong_bysongid = require('../../database/_dbproc_arcsong_bysongid');
+const dbproc_arcsong_random = require('../../procedures/arcsong_random');
+const dbproc_arcsong_bysongid = require('../../procedures/arcsong_bysongid');
 
 module.exports = (argument) => {
   return new Promise(async (resolve, reject) => {

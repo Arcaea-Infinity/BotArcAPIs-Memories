@@ -14,11 +14,11 @@ const arcapi_aggregate = require('../../arcapi/aggregate');
 const arcmana_account_alloc = require('../../arcmana/account_alloc');
 const arcmana_account_recycle = require('../../arcmana/account_recycle');
 
-const dbproc_arcrecord_update = require('../../database/_dbproc_arcrecord_update');
-const dbproc_arcplayer_update = require('../../database/_dbproc_arcplayer_update');
-const dbproc_arcbest30_byuid = require('../../database/_dbproc_arcbest30_byuid');
-const dbproc_arcbest30_update = require('../../database/_dbproc_arcbest30_update');
-const dbproc_arcsong_charts_all = require('../../database/_dbproc_arcsong_charts_all');
+const dbproc_arcrecord_update = require('../../procedures/arcrecord_update');
+const dbproc_arcplayer_update = require('../../procedures/arcplayer_update');
+const dbproc_arcbest30_byuid = require('../../procedures/arcbest30_byuid');
+const dbproc_arcbest30_update = require('../../procedures/arcbest30_update');
+const dbproc_arcsong_charts_all = require('../../procedures/arcsong_charts_all');
 
 module.exports = (argument) => {
   return new Promise(async (resolve, reject) => {

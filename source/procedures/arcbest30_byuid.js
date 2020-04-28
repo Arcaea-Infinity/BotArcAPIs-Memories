@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcbest30_byuid.js
+// filename : procedures/arcbest30_byuid.js
 // author   : TheSnowfield
 // date     : 04/22/2020
 
-const TAG = 'database/_dbproc_arcbest30_byuid.js';
+const TAG = 'procedures/arcbest30_byuid.js';
 
 const atob = require('abab').atob;
 

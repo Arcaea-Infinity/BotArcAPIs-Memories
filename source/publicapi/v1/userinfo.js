@@ -12,8 +12,8 @@ const arcapi_friend_clear = require('../../arcapi/friend_clear');
 const arcmana_account_alloc = require('../../arcmana/account_alloc');
 const arcmana_account_recycle = require('../../arcmana/account_recycle');
 
-const dbproc_arcrecord_update = require('../../database/_dbproc_arcrecord_update');
-const dbproc_arcplayer_update = require('../../database/_dbproc_arcplayer_update');
+const dbproc_arcrecord_update = require('../../procedures/arcrecord_update');
+const dbproc_arcplayer_update = require('../../procedures/arcplayer_update');
 
 module.exports = (argument) => {
   return new Promise(async (resolve, reject) => {

@@ -9,7 +9,7 @@ const APIError = require('../corefunc/error');
 
 const arcapi_login = require('../arcapi/login');
 const arcapi_userme = require('../arcapi/userme');
-const dbproc_arcaccount_update = require('../database/_dbproc_arcaccount_update');
+const dbproc_arcaccount_update = require('../procedures/arcaccount_update');
 
 module.exports = () => {
   return new Promise(async (resolve, reject) => {

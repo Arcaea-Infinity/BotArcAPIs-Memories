@@ -1,8 +1,8 @@
-// filename : database/_dbproc_arcsong_charts_all.js
+// filename : procedures/arcsong_charts_all.js
 // author   : TheSnowfield
 // date     : 04/24/2020
 
-const TAG = 'database/_dbproc_arcsong_charts_all.js';
+const TAG = 'procedures/arcsong_charts_all.js';
 
 module.exports = () => {
   return new Promise((resolve, reject) => {

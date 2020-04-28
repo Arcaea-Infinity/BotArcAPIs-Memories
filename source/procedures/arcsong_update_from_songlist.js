@@ -1,9 +1,9 @@
-// filename : database/_dbproc_arcsong_update_from_songlist.js
+// filename : procedures/arcsong_update_from_songlist.js
 // author   : TheSnowfield
 // date     : 04/18/2020
 // comment  : update arcsong from 'songlist' file
 
-const TAG = 'database/_dbproc_arcsong_update_from_songlist.js';
+const TAG = 'procedures/arcsong_update_from_songlist.js';
 
 module.exports = (songlist) => {
   return Promise.resolve()
