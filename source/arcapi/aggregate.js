@@ -23,10 +23,10 @@ module.exports = (account, endpoints) => {
 
     // construct remote request
     const _remote_request =
-      new ArcAPIRequest('GET', 'compose/aggregate?' +
-        new URLSearchParams({ 'calls': JSON.stringify(_endpoints) }), {
+      new ArcAPIRequest('GET', 'compose/aggregate', {
         deviceid: account.device,
-        usertoken: account.token
+        usertoken: account.token,
+        data: new URLSearchParams({ 'calls': JSON.stringify(_endpoints) })
       });
 
     // send request

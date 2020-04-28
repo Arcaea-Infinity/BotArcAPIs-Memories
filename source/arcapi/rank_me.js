@@ -12,14 +12,14 @@ module.exports = (account, songid, difficulty, start = 0, limit = 10) => {
 
     // construct remote request
     const _remote_request =
-      new ArcAPIRequest('GET', 'score/song/me?' +
-        new URLSearchParams({
+      new ArcAPIRequest('GET', 'score/song/me', {
+        usertoken: account.token,
+        data: new URLSearchParams({
           'song_id': songid,
           'difficulty': difficulty,
           'start': start,
           'limit': limit
-        }), {
-        usertoken: account.token
+        })
       });
 
     // send request

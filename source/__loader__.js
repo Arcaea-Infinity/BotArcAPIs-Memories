@@ -43,44 +43,64 @@ const handler_request_favicon = async (response) => {
   syslog.v(TAG, 'Send response back');
 }
 
-const handler_request_publicapi = async (response, path, header, argument, databody) => {
 
-  let _http_body = null;
-  let _http_status = null;
-  let _http_content_type = null;
+const specific_routine = {
+  '/v1/arc/forward': /^\/v1\/arc\/forward\//
+};
+const handler_request_publicapi =
+  async (response, argument, method, path, header, databody) => {
 
-  try {
-    // try invoke method
-    const _api_entry = require(`./publicapi/${path}`);
-    const _api_result = {};
-    await _api_entry(argument, header, databody)
-      .then((result) => {
-        _api_result.status = 0;
-        _api_result.content = result;
-      })
-      .catch((error) => {
-        _api_result.status = error.status;
-        _api_result.message = error.notify;
-      })
+    let _http_body = null;
+    let _http_status = null;
+    let _http_content_type = null;
 
-    _http_status = 200;
-    _http_body = JSON.stringify(_api_result);
-    _http_content_type = 'application/json; charset=utf-8';
+    try {
+
+      let _api_entry = null;
+
+      // try match the specific routine
+      for (const v in specific_routine) {
+        if (new RegExp(specific_routine[v]).test(path)) {
+          _api_entry = require(`./publicapi/${v}`);
+          path = path.replace(specific_routine[v], '');
+          break;
+        }
+      }
+
+      // require directly if no match
+      if (!_api_entry)
+        _api_entry = require(`./publicapi/${path}`);
+
+      // try invoke method
+      const _api_result = {};
+      await _api_entry(argument, method, path, header, databody)
+        .then((result) => {
+          _api_result.status = 0;
+          _api_result.content = result;
+        })
+        .catch((error) => {
+          _api_result.status = error.status;
+          _api_result.message = error.notify;
+        })
+
+      _http_status = 200;
+      _http_body = JSON.stringify(_api_result);
+      _http_content_type = 'application/json; charset=utf-8';
+    }
+    catch (e) {
+      syslog.e(TAG, e.stack);
+      return handler_request_notfound(response, 'request path notfound =(:3) z)_');
+    }
+
+    // send result to client
+    response.statusCode = _http_status;
+    response.setHeader('Content-Type', _http_content_type);
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Server', `${BOTARCAPI_VERSTR}`);
+    response.end(_http_body);
+
+    syslog.v(TAG, 'Send response back');
   }
-  catch (e) {
-    syslog.e(TAG, e.stack);
-    return handler_request_notfound(response, 'request path notfound =(:3) z)_');
-  }
-
-  // send result to client
-  response.statusCode = _http_status;
-  response.setHeader('Content-Type', _http_content_type);
-  response.setHeader('Access-Control-Allow-Origin', '*');
-  response.setHeader('Server', `${BOTARCAPI_VERSTR}`);
-  response.end(_http_body);
-
-  syslog.v(TAG, 'Send response back');
-}
 
 const routine = async (request, response) => {
 
@@ -129,7 +149,9 @@ const routine = async (request, response) => {
 
     // handle public api request
     return handler_request_publicapi(
-      response, _api_path, _api_headers, _api_arguments, _api_bodydata);
+      response, _api_arguments, request.method, _api_path,
+      _api_headers, _api_bodydata
+    );
 
   });
 }

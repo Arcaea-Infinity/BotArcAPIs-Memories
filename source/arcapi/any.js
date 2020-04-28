@@ -1,30 +1,26 @@
-// filename : arcapi/rank_friend.js
+// filename : arcapi/any.js
 // author   : TheSnowfield
-// date     : 04/12/2020
+// date     : 04/10/2020
+// commont  : any request
 
-const TAG = 'arcapi/friend_delete.js';
+const TAG = 'arcapi/any.js';
 
 const arcfetch = require('../corefunc/arcfetch');
 const ArcAPIRequest = arcfetch.ArcAPIRequest;
 
-module.exports = (account, songid, difficulty, start = 0, limit = 10) => {
+module.exports = (account, method, path, databody) => {
   return new Promise((resolve, reject) => {
 
     // construct remote request
     const _remote_request =
-      new ArcAPIRequest('GET', 'score/song/friend', {
+      new ArcAPIRequest(method, path, {
         usertoken: account.token,
-        data: new URLSearchParams({
-          'song_id': songid,
-          'difficulty': difficulty,
-          'start': start,
-          'limit': limit
-        }),
+        data: databody
       });
 
     // send request
     arcfetch(_remote_request)
-      .then((root) => { resolve(root.value); })
+      .then((root) => { resolve(root); })
       .catch((e) => {
 
         // if token is invalid

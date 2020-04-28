@@ -54,6 +54,10 @@ const initDataBases = () => {
           Object.defineProperty(global, 'ARCACCOUNT',
             { value: result, writable: true, configurable: false });
 
+          // token list for persistent querying
+          Object.defineProperty(global, 'ARCPERSISTENT',
+            { value: [], writable: true, configurable: false });
+
           // verbose output
           for (let i = 0; i < result.length; ++i)
             syslog.v(TAG, `${_database_arcaccount} => ${result[i].name} ${result[i].token}`);

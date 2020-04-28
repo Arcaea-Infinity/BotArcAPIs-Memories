@@ -15,7 +15,7 @@ module.exports = (account, usercode) => {
     const _remote_request =
       new ArcAPIRequest('POST', 'friend/me/add', {
         usertoken: account.token,
-        postdata: new URLSearchParams({ 'friend_code': usercode })
+        data: new URLSearchParams({ 'friend_code': usercode })
       });
 
     // send request

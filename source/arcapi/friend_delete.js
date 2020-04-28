@@ -15,7 +15,7 @@ module.exports = (account, userid) => {
     const _remote_request =
       new ArcAPIRequest('POST', 'friend/me/delete', {
         usertoken: account.token,
-        postdata: new URLSearchParams({ 'friend_id': userid })
+        data: new URLSearchParams({ 'friend_id': userid })
       });
 
     // send request

@@ -24,8 +24,9 @@ export interface ArcAPIExtra {
   // will send deviceid headers
   deviceid?: string,
 
-  // POST only
-  postdata?: BodyInit
+  // GET method will convert URLSearchParams
+  // and append after the request url
+  data?: BodyInit | URLSearchParams
 }
 
 declare function arcfetch(request: ArcAPIRequest): Promise<string>;

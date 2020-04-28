@@ -20,7 +20,7 @@ class ArcAPIRequest extends Request {
       throw new TypeError('init cannot be null');
 
     // request url
-    const _request_url = `https://arcapi.lowiro.com/${ARCAPI_VERSION}/${resturl}`;
+    let _request_url = `https://arcapi.lowiro.com/${ARCAPI_VERSION}/${resturl}`;
 
     // standard http headers
     const _request_headers = {
@@ -46,10 +46,17 @@ class ArcAPIRequest extends Request {
       _request_headers['DeviceId'] = init.deviceid;
     }
 
-    // for POST forms
-    if (init.postdata && method == 'GET')
-      throw new TypeError('GET method not supported post data');
-    const _request_body = init.postdata;
+    // append init.data after url if method is GET
+    // otherwise it's post data
+    let _request_body = null;
+    if (init.data) {
+      if (method == 'GET' && init.data instanceof URLSearchParams) {
+        _request_url += '?' + init.data;
+      }
+      else if (method == 'POST') {
+        _request_body = init.data;
+      }
+    }
 
     super(_request_url, {
       method: method,

@@ -17,7 +17,7 @@ module.exports = (name, password, deviceid) => {
         username: name,
         userpwd: password,
         deviceid: deviceid,
-        postdata: new URLSearchParams({ 'grant_type': 'client_credentials' })
+        data: new URLSearchParams({ 'grant_type': 'client_credentials' })
       });
 
     // send request

@@ -9,11 +9,11 @@ const crypto = require('crypto');
 const arcmana_account_alloc = require('./account_alloc');
 const arcmana_account_recycleauto = require('./account_recycleauto');
 
-module.exports = (valid_sec) => {
+module.exports = (valid_time) => {
   return new Promise(async (resolve, reject) => {
 
     // validate data
-    if (valid_sec < 30 || valid_sec > 600)
+    if (valid_time < 30 || valid_time > 600)
       return reject(new Error('Invalid time'));
 
     // try to grab an account
@@ -31,7 +31,5 @@ module.exports = (valid_sec) => {
     }, valid_time * 1000);
 
     resolve(_token);
-
-    syslog.i(TAG, `Allocated account (${valid_time}s) => ${_account.name} ${_account.token}`);
   });
 }
