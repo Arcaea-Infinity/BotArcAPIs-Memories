@@ -43,4 +43,16 @@ module.exports = class {
     if (!_to_format) return false;
     return _to_format;
   }
+
+  // match client user agent
+  static httpMatchUserAgent(ua) {
+    if (typeof BOTARCAPI_WHITELIST != 'object') return true;
+    if (!BOTARCAPI_WHITELIST.length) return true;
+
+    for (const v of BOTARCAPI_WHITELIST) {
+      if (ua.match(v)) return true;
+    }
+
+    return false;
+  }
 }

@@ -6,9 +6,12 @@
 
 const TAG = 'source/__loader__.js';
 
+const Utils = require('./corefunc/utils');
+
 const handler_request_notfound = async (response, message = '') => {
   response.statusCode = 404;
-  response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
+  response.setHeader('Content-Type', 'text/html; charset=utf-8');
+  response.setHeader('Server', `${BOTARCAPI_VERSTR}`);
   response.end(message);
   syslog.v(TAG, 'Send response back');
 }
@@ -29,13 +32,13 @@ const handler_request_favicon = async (response) => {
       });
   } catch (e) {
     syslog.e(e.stack);
-    return handler_request_notfound(request);
+    return handler_request_notfound(response);
   }
 
   // send result to client
   response.statusCode = _http_status;
   response.setHeader('Content-Type', _http_content_type);
-  response.setHeader('Server', `BotArcAPI ${BOTARCAPI_VERSTR}`);
+  response.setHeader('Server', `${BOTARCAPI_VERSTR}`);
   response.end(_http_body);
   syslog.v(TAG, 'Send response back');
 }
@@ -81,16 +84,28 @@ const handler_request_publicapi = async (response, path, header, argument, datab
 
 const routine = async (request, response) => {
 
+  // match useragent
+  if (!Utils.httpMatchUserAgent(request.headers['user-agent'])) {
+    syslog.w(TAG, `Invalid user agent => ${request.headers['user-agent']}`);
+    return handler_request_notfound(response);
+  }
+
   // process request url
   const _api_url = new URL(`http://0.0.0.0${request.url}`);
   const _api_path = _api_url.pathname;
   const _api_headers = request.headers;
   const _api_arguments = Object.fromEntries(_api_url.searchParams);
-  syslog.i(TAG, `Accept ${request.method} request at => ${_api_path} ${JSON.stringify(_api_arguments)}`);
+  syslog.i(TAG,
+    `Accept ${_api_headers['user-agent']} ` +
+    `${request.method} request at => ` +
+    `${_api_path} ${JSON.stringify(_api_arguments)}`
+  );
 
   let _rawdata = '';
   request.on('data', (data) => { _rawdata += data; });
   request.on('end', () => {
+
+    // handle favicon request
     if (request.method == 'GET') {
       // handle favicon request
       if (_api_path == '/favicon.ico')
@@ -108,7 +123,7 @@ const routine = async (request, response) => {
       }
     }
 
-    // handle api request
+    // handle public api request
     return handler_request_publicapi(
       response, _api_path, _api_headers, _api_arguments, _api_bodydata);
 

@@ -11,6 +11,11 @@ const CONFIGS = {
   'BOTARCAPI_VERSION': 1,
   'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.1',
 
+  // useragent white list
+  // if set '[]' will accept all requests
+  // supported regex
+  'BOTARCAPI_WHITELIST': [],
+
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 11,
