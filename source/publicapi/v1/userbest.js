@@ -97,7 +97,7 @@ module.exports = (argument) => {
         _arc_rank.rating = Utils.arcCalcSongRating(
           _arc_rank.score,
           _arc_songinfo[`rating_${Utils.arcMapDiffFormat(argument.difficulty, 1)}`]
-        ) / 10;
+        );
 
         const _return = _arc_rank;
         delete _return.name;

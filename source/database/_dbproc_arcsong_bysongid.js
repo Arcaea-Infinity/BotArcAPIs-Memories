@@ -16,7 +16,14 @@ module.exports = (songid) => {
 
     // execute sql
     DATABASE_ARCSONG.get(_sql, [songid])
-      .then((data) => { resolve(data); })
+      .then((data) => {
+        if (data) {
+          data.rating_pst /= 10;
+          data.rating_prs /= 10;
+          data.rating_ftr /= 10;
+        }
+        resolve(data);
+      })
       .catch((e) => { syslog.e(TAG, e.stack); reject(e); })
   });
 }
