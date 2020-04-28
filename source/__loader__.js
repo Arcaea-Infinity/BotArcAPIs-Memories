@@ -84,9 +84,13 @@ const handler_request_publicapi = async (response, path, header, argument, datab
 
 const routine = async (request, response) => {
 
+  // user-agent and client-agent
+  const _client_sign = request.headers['client-agent'];
+  if (!_client_sign) request.headers['user-agent'];
+
   // match useragent
-  if (!Utils.httpMatchUserAgent(request.headers['user-agent'])) {
-    syslog.w(TAG, `Invalid user agent => ${request.headers['user-agent']}`);
+  if (!Utils.httpMatchUserAgent(_client_sign)) {
+    syslog.w(TAG, `Invalid user agent => ${_client_sign}`);
     return handler_request_notfound(response);
   }
 
@@ -96,7 +100,7 @@ const routine = async (request, response) => {
   const _api_headers = request.headers;
   const _api_arguments = Object.fromEntries(_api_url.searchParams);
   syslog.i(TAG,
-    `Accept ${_api_headers['user-agent']} ` +
+    `Accept ${_client_sign} ` +
     `request => ${request.method} ` +
     `${_api_path} ${JSON.stringify(_api_arguments)}`
   );
