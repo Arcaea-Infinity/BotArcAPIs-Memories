@@ -75,7 +75,7 @@ module.exports = (argument) => {
       };
 
       // remove empty field
-      if (_return.title_localized.ja == "")
+      if (_return.title_localized.ja == '')
         delete _return.title_localized.ja;
 
       resolve(_return);
