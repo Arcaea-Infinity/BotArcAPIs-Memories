@@ -47,7 +47,6 @@ module.exports = () => {
 
           'PRIMARY KEY ("sid" ASC))';
 
-        // execute sql
         DATABASE_ARCSONG.exec(_sql)
           .then(resolve())
           .catch((e) => { syslog.e(TAG, e.stack); reject(e); });
@@ -55,16 +54,15 @@ module.exports = () => {
     })
 
     // the 'alias' table
-    // song alias table
     .then(async () => {
       await new Promise((resolve, reject) => {
         const _sql =
           'CREATE TABLE IF NOT EXISTS `alias` (' +
           '`sid`    TEXT NOT NULL,' +
           '`alias`  TEXT NOT NULL,' +
+          'PRIMARY KEY(`sid` ASC, `alias` ASC), ' +
           'FOREIGN KEY(`sid`) REFERENCES `songs`(`sid`))';
 
-        // execute sql
         DATABASE_ARCSONG.exec(_sql)
           .then(resolve())
           .catch((e) => { syslog.e(TAG, e.stack); reject(e); });
@@ -72,7 +70,6 @@ module.exports = () => {
     })
 
     // the 'charts' table
-    // song rating table
     .then(async () => {
       await new Promise((resolve, reject) => {
         const _sql =
@@ -83,7 +80,6 @@ module.exports = () => {
           '`rating`       INTEGER NOT NULL,' +
           'FOREIGN KEY(`sid`) REFERENCES `songs`(`sid`))';
 
-        // execute sql
         DATABASE_ARCSONG.exec(_sql)
           .then(resolve())
           .catch((e) => { syslog.e(TAG, e.stack); reject(e); });
