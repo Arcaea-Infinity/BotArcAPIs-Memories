@@ -1,7 +1,7 @@
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
 
 export default
-  (name: string, password: string, deviceid: string) => {
+  (name: string, password: string, deviceid: string): Promise<string> => {
     return new Promise((resolve, reject) => {
 
       // construct remote request

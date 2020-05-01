@@ -1,9 +1,7 @@
-/// <reference path="arcapi.userme.d.ts"/>
-
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
 
 export default
-  (account: ArcAccount): Promise<ArcResponseUserMe> => {
+  (account: IArcAccount): Promise<IArcUserMe> => {
     return new Promise((resolve, reject) => {
 
       // construct remote request

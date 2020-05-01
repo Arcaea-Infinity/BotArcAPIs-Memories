@@ -1,6 +1,6 @@
 import crypto from 'crypto';
-import account_alloc from './arcaea.account.alloc';
-import account_recycleauto from './arcaea.account.recycle.auto';
+import account_alloc from './account.alloc';
+import account_recycleauto from './account.recycle.auto';
 
 export default
   (valid_time: number): Promise<string> => {
@@ -12,7 +12,7 @@ export default
         return reject(new Error('Invalid time'));
 
       // try to grab an account
-      let _account: ArcAccount;
+      let _account: IArcAccount;
       try {
         _account = await account_alloc();
       } catch (e) { return reject('Allocate account failed'); }

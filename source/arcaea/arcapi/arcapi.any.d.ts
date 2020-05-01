@@ -1,1 +1,0 @@
-declare interface ArcResponseAny { [key: string]: string }

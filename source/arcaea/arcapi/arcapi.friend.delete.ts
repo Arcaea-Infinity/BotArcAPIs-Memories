@@ -1,7 +1,7 @@
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
 
 export default
-  (account: ArcAccount, userid: number): Promise<Array<ArcFriend>> => {
+  (account: IArcAccount, userid: number): Promise<Array<IArcPlayer>> => {
     return new Promise((resolve, reject) => {
 
       // construct remote request

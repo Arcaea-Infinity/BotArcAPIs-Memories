@@ -1,4 +1,4 @@
-import arcaea_account_recycle from './arcaea.account.recycle';
+import arcaea_account_recycle from './account.recycle';
 
 export default (token: string): Promise<void> => {
   return new Promise(async (resolve, reject) => {

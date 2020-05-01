@@ -1,4 +1,4 @@
-export default (token: string): Promise<ArcAccount> => {
+export default (token: string): Promise<IArcAccount> => {
   return new Promise(async (resolve, reject) => {
 
     // validate data

@@ -22,5 +22,7 @@ declare var ARCPERSISTENT: { [key: string]: IArcAccount };
 declare var DATABASE_ARCACCOUNT: any;
 declare var DATABASE_ARCBEST30: any;
 declare var DATABASE_ARCSONG: any;
+declare var DATABASE_ARCRECORD: any;
+declare var DATABASE_ARCPLAYER: any;
 
 // declare var syslog : StstemLog;

@@ -1,7 +1,7 @@
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
 
 export default
-  (account: ArcAccount, method: ArcFetchMethod,
+  (account: IArcAccount, method: ArcFetchMethod,
     path: string, databody: string): Promise<any> => {
     return new Promise((resolve, reject) => {
 

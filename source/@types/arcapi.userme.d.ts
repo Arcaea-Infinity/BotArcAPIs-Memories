@@ -1,12 +1,12 @@
-declare interface ArcResponseUserMe {
-  friends: Array<ArcFriend>,
+declare interface IArcUserMe {
+  friends: Array<IArcPlayer>,
   user_id: number,
   name: string,
   user_code: string,
   display_name: string,
   character: number,
   is_skill_sealed: boolean,
-  recent_score: Array<ArcScore>,
+  recent_score: Array<IArcScore>,
   max_friend: number,
   rating: number,
   id: null,

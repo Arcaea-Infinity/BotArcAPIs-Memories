@@ -1,5 +1,4 @@
-
-const _errcode_table = {
+const _error_table: { [key: string]: string } = {
   0: 'An error occurred completing purchases. Please try restarting your device or Arcaea and ensuring that you\'re logged in to.',
   1: 'This item is currently unavailable to purchase.',
   2: 'All songs are already downloaded!',
@@ -50,8 +49,10 @@ const _errcode_table = {
   'BadRequestError': 'Bearer token required. Follow the oauth2-token link to get a valid one!'
 };
 
-const _arc_errcodes = (errcode) => {
-  if (typeof _errcode_table[errcode] == 'undefined')
-    return `An unknown error has occured. ${errcode}`;
-  return _errcode_table[errcode];
+const action = (code: string | number): string => {
+  if (typeof _error_table[code] == 'undefined')
+    return `An unknown error has occured. ${code}`;
+  return _error_table[code];
 }
+
+export default action;

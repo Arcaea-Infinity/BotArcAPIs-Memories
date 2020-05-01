@@ -1,3 +1,3 @@
-declare interface ArcAPIAggregate {
+declare interface IArcAPIAggregate {
   value: any
 }

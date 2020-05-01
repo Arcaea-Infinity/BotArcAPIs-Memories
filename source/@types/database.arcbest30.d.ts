@@ -1,7 +1,7 @@
 declare interface IArcBest30Result {
   best30_avg: number;
   recent10_avg: number;
-  best30_list: Array<ArcScore>;
+  best30_list: Array<IArcScore>;
 }
 
 declare interface IDatabaseArcBest30 {

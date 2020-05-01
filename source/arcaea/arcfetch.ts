@@ -1,5 +1,3 @@
-/// <reference path="arcfetch.d.ts"/>
-
 import { btoa } from 'abab';
 import fetch, { Request } from 'node-fetch';
 

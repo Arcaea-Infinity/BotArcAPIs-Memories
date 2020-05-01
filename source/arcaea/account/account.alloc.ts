@@ -1,25 +1,22 @@
 import arcapi_login from '../arcapi/arcapi.login';
 import arcapi_userme from '../arcapi/arcapi.userme';
-import dbproc_arcaccount_update from '../../procedures/arcaccount_update';
+import arcaccount_update from '../../database/database.arcaccount.update';
 
-export default (): Promise<ArcAccount> => {
+export default (): Promise<IArcAccount> => {
 
   return new Promise(async (resolve, reject) => {
 
-    if (typeof ARCACCOUNT == 'undefined')
-      reject(new Error('ARCACCOUNT is undefined?'));
-
-    let _account: ArcAccount;
+    let _account: IArcAccount | undefined;
 
     while (true) {
 
       if (!ARCACCOUNT.length)
-        reject(new Error('ARCACCOUNT length is zero'));
+        return reject(new Error('ARCACCOUNT length is zero'));
 
       // grab an account from queue
-      _account = ARCACCOUNT.shift(1);
+      _account = ARCACCOUNT.shift();
       if (typeof _account == 'undefined')
-        reject(new Error('Element is undefined?'));
+        return reject(new Error('Element is undefined?'));
 
       // if the account has no token
       if (_account.token == '') {
@@ -44,7 +41,7 @@ export default (): Promise<ArcAccount> => {
           }
 
           // update the database
-          dbproc_arcaccount_update(_account);
+          arcaccount_update(_account);
 
           // available account
           if (!_account.banned && _account.token != '')

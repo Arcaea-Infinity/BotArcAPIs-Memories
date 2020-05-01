@@ -1,7 +1,7 @@
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
 
 export default
-  (account: ArcAccount, songid: string,
+  (account: IArcAccount, songid: string,
     difficulty: number, start: number = 0, limit: number = 10) => {
 
     return new Promise((resolve, reject) => {

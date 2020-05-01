@@ -1,4 +1,4 @@
-declare interface ArcScore {
+declare interface IArcScore {
   rating: number,
   modifier: number,
   time_played: number,

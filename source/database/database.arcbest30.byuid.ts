@@ -13,6 +13,6 @@ export default (userid: string): Promise<IArcBest30Result | null> => {
         recent10_avg: data.recent10_avg / 10000,
         best30_list: JSON.parse(atob(data.best30_list) ?? '[]')
       } as IArcBest30Result : null;
-    })
+    });
 
 }

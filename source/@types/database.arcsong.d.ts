@@ -20,3 +20,15 @@ declare interface IDatabaseArcSong {
   jacket_designer_prs: string,
   jacket_designer_ftr: string
 }
+
+declare interface IDatabaseArcSongAlias {
+  sid: string,
+  alias: string
+}
+
+declare interface IDatabaseArcSongChart {
+  sid: string,
+  rating_class: number,
+  difficultly: number,
+  rating: number
+}

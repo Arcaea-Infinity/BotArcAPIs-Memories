@@ -1,7 +1,7 @@
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
 
 export default
-  (account: ArcAccount, endpoints: Array<string>) => {
+  (account: IArcAccount, endpoints: Array<string>) => {
     return new Promise((resolve, reject) => {
 
       // the maximum endpoints is 5

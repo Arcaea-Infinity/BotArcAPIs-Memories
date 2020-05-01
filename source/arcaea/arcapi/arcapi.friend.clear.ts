@@ -2,7 +2,7 @@ import arcapi_userme from './arcapi.userme';
 import arcapi_friend_delete from './arcapi.friend.delete';
 
 export default
-  async (account: ArcAccount, friends: Array<any>):Promise<void> => {
+  async (account: IArcAccount, friends: Array<any>):Promise<void> => {
 
     // fetch friend list
     const do_fetch_friend = async (x: any) => {
