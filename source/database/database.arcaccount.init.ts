@@ -11,7 +11,6 @@ export default (): Promise<void> => {
     '`banned` TEXT NOT NULL DEFAULT "false" CHECK(`banned` IN("true", "false")),' +
     'PRIMARY KEY (`name` ASC));';
 
-  // execute sql
   return DATABASE_ARCACCOUNT.exec(_sql);
 
 }
