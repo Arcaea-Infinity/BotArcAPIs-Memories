@@ -1,35 +1,25 @@
-// filename : arcmana/account_alloc.js
-// author   : TheSnowfield
-// date     : 04/14/2020
-// common   : request an arc account
+import arcapi_login from '../arcapi/arcapi.login';
+import arcapi_userme from '../arcapi/arcapi.userme';
+import dbproc_arcaccount_update from '../../procedures/arcaccount_update';
 
-const TAG = 'arcmana/account_alloc.js';
+export default (): Promise<ArcAccount> => {
 
-const APIError = require('../corefunc/error');
-
-const arcapi_login = require('../arcapi/login');
-const arcapi_userme = require('../arcapi/userme');
-const dbproc_arcaccount_update = require('../procedures/arcaccount_update');
-
-module.exports = () => {
   return new Promise(async (resolve, reject) => {
-    // request an arc account from global ARCACCOUNT
-    // ** pretend to be a queue =(:3) z)_ **
 
     if (typeof ARCACCOUNT == 'undefined')
-      return reject(new Error('ARCACCOUNT is undefined?'));
+      reject(new Error('ARCACCOUNT is undefined?'));
 
-    let _account = null;
+    let _account: ArcAccount;
 
     while (true) {
 
       if (!ARCACCOUNT.length)
-        return reject(new Error('ARCACCOUNT length is zero'));
+        reject(new Error('ARCACCOUNT length is zero'));
 
       // grab an account from queue
       _account = ARCACCOUNT.shift(1);
       if (typeof _account == 'undefined')
-        return reject(new Error('Element is undefined?'));
+        reject(new Error('Element is undefined?'));
 
       // if the account has no token
       if (_account.token == '') {
@@ -42,10 +32,7 @@ module.exports = () => {
           // this account has been banned
           if (e == 106) {
             _account.banned = true;
-            syslog.w(TAG, `This account has been banned. remove from pool => ${_account.name}`);
           }
-
-          syslog.e(TAG, e.stack);
 
         } finally {
 
@@ -69,6 +56,5 @@ module.exports = () => {
     }
 
     resolve(_account);
-    syslog.i(TAG, `Allocated account => ${_account.name} ${_account.token}`);
   });
 }

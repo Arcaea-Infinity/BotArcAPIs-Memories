@@ -1,0 +1,20 @@
+declare var BOTARCAPI_MAJOR: number;
+declare var BOTARCAPI_MINOR: number;
+declare var BOTARCAPI_VERSION: number;
+declare var BOTARCAPI_VERSTR: string;
+declare var BOTARCAPI_WHITELIST: Array<RegExp>;
+
+declare var ARCAPI_RETRY: number;
+declare var ARCAPI_VERSION: number;
+declare var ARCAPI_APPVERSION: string;
+declare var ARCAPI_USERAGENT: string;
+
+declare var DATABASE_PATH: string;
+declare var SERVER_PORT: number;
+
+declare var LOG_LEVEL: number;
+declare var LOG_PATH: string;
+
+
+declare var ARCACCOUNT: Array<ArcAccount>;
+declare var ARCPERSISTENT: { [key: string]: ArcAccount };

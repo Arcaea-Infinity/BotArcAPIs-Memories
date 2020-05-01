@@ -1,7 +1,3 @@
-// filename : corefunc/arcerrcode.js
-// author   : TheSnowfield
-// date     : 04/09/2020
-// comment  : arcapi errcode definitions
 
 const _errcode_table = {
   0: 'An error occurred completing purchases. Please try restarting your device or Arcaea and ensuring that you\'re logged in to.',
@@ -59,5 +55,3 @@ const _arc_errcodes = (errcode) => {
     return `An unknown error has occured. ${errcode}`;
   return _errcode_table[errcode];
 }
-
-module.exports = _arc_errcodes;
