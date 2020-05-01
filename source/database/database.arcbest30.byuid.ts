@@ -1,6 +1,6 @@
 import { atob } from 'abab';
 
-export default (userid: string): Promise<IArcBest30Result> => {
+export default (userid: string): Promise<IArcBest30Result | null> => {
 
   const _sql: string =
     'SELECT * FROM `cache` WHERE `uid` == ?';
