@@ -4,8 +4,9 @@
 // comment  : loader handles api requests and map to require files
 //            it's also a global access point
 
-const TAG = 'source/__loader__.js';
+const TAG = 'source/__loader__.ts';
 
+import syslog from './corefunc/syslog';
 import { Utils } from './corefunc/utils';
 import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http';
 
@@ -14,7 +15,7 @@ const handler_request_notfound = async (response: ServerResponse, message = '') 
   response.setHeader('Content-Type', 'text/html; charset=utf-8');
   response.setHeader('Server', `${BOTARCAPI_VERSTR}`);
   response.end(message);
-  SystemLog.v(TAG, 'Send response back');
+  syslog.v(TAG, 'Send response back');
 }
 
 const handler_request_favicon = async (response: ServerResponse) => {
@@ -32,7 +33,7 @@ const handler_request_favicon = async (response: ServerResponse) => {
         _http_content_type = 'image/x-icon';
       });
   } catch (e) {
-    SystemLog.e(e.stack);
+    syslog.e(e.stack);
     return handler_request_notfound(response);
   }
 
@@ -41,7 +42,7 @@ const handler_request_favicon = async (response: ServerResponse) => {
   response.setHeader('Content-Type', _http_content_type);
   response.setHeader('Server', `${BOTARCAPI_VERSTR}`);
   response.end(_http_body);
-  SystemLog.v(TAG, 'Send response back');
+  syslog.v(TAG, 'Send response back');
 }
 
 
@@ -58,12 +59,12 @@ const handler_request_publicapi =
 
     try {
 
-      let _api_entry = null;
+      let _api_entry: any;
 
       // try match the specific routine
       for (const v in specific_routine) {
         if (new RegExp(specific_routine[v]).test(path)) {
-          _api_entry = require(`./publicapi/${v}`);
+          _api_entry = await import(`./publicapi/${v}`);
           path = path.replace(specific_routine[v], '');
           break;
         }
@@ -71,10 +72,12 @@ const handler_request_publicapi =
 
       // require directly if no match
       if (!_api_entry)
-        _api_entry = require(`./publicapi/${path}`);
+        _api_entry = await import(`./publicapi/${path}`);
 
       // try invoke method
       const _api_result: any = {};
+      
+      _api_entry = _api_entry.default;
       await _api_entry(argument, method, path, header, databody)
         .then((result: any) => {
           _api_result.status = 0;
@@ -90,7 +93,7 @@ const handler_request_publicapi =
       _http_content_type = 'application/json; charset=utf-8';
     }
     catch (e) {
-      SystemLog.e(TAG, e.stack);
+      syslog.e(TAG, e.stack);
       return handler_request_notfound(response, 'request path notfound =(:3) z)_');
     }
 
@@ -101,7 +104,7 @@ const handler_request_publicapi =
     response.setHeader('Server', `${BOTARCAPI_VERSTR}`);
     response.end(_http_body);
 
-    SystemLog.v(TAG, 'Send response back');
+    syslog.v(TAG, 'Send response back');
   }
 
 const routine = async (request: IncomingMessage, response: ServerResponse) => {
@@ -115,7 +118,7 @@ const routine = async (request: IncomingMessage, response: ServerResponse) => {
 
   // match useragent
   if (!Utils.httpMatchUserAgent(_client_sign)) {
-    SystemLog.w(TAG, `Invalid user agent => ${_client_sign}`);
+    syslog.w(TAG, `Invalid user agent => ${_client_sign}`);
     return handler_request_notfound(response);
   }
 
@@ -124,7 +127,7 @@ const routine = async (request: IncomingMessage, response: ServerResponse) => {
   const _api_path = _api_url.pathname;
   const _api_headers = request.headers;
   const _api_arguments = Object.fromEntries(_api_url.searchParams);
-  SystemLog.i(TAG,
+  syslog.i(TAG,
     `Accept ${_client_sign} ` +
     `request => ${request.method} ` +
     `${_api_path} ${JSON.stringify(_api_arguments)}`

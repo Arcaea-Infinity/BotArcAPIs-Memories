@@ -1,4 +1,4 @@
-export default (songid: string): Promise<IArcSong> => {
+export default (songid: string): Promise<IDatabaseArcSong> => {
 
   const _sql: string =
     'SELECT * FROM `songs` WHERE `sid` == ?';
@@ -9,12 +9,11 @@ export default (songid: string): Promise<IArcSong> => {
 
       if (!data) return null;
 
-      const _song: any = data;
-      _song.rating_pst /= 10;
-      _song.rating_prs /= 10;
-      _song.rating_ftr /= 10;
+      data.difficultly_pst /= 10;
+      data.difficultly_prs /= 10;
+      data.difficultly_ftr /= 10;
 
-      return <IArcSong>_song;
+      return data;
 
     });
 

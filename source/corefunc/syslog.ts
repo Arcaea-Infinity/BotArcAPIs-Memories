@@ -19,6 +19,8 @@ class SystemLog {
     '\x1b[31m\x1b[1m'  // F FgRed
   ];
 
+  private constructor() { }
+
   public static startLogging() {
 
     // create folder first

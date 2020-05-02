@@ -4,7 +4,7 @@ import config from './corefunc/config';
 import database from './corefunc/database';
 import __loader__ from './__loader__';
 
-const TAG: string = 'index.ts\t';
+const TAG: string = 'source/index.ts';
 const main = ((): void => {
 
   // initialize config first
@@ -39,14 +39,14 @@ const main = ((): void => {
     syslog.stop();
   });
   process.on('SIGINT', () => {
-    console.warn(`You pressed ctrl + c`);
+    syslog.w(`You pressed ctrl + c`);
     process.exit(0);
   });
   process.on('warning', (w) => {
-    console.warn(`warning => ${w.message}`);
+    syslog.w(`warning => ${w.message}`);
   });
   process.on('unhandledRejection', (reason, promise) => {
-    console.assert(`unhandledRejection => ${reason}`);
+    syslog.f(`unhandledRejection => ${reason}`);
     process.exit(1);
   });
 

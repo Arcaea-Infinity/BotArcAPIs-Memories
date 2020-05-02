@@ -3,13 +3,14 @@
 // date     : 04/23/2020
 // comment  : api for random song selection
 
-const TAG = 'v1/random.js\t';
+const TAG = 'v1/random.ts\t';
 
-const APIError = require('../../corefunc/error');
-const dbproc_arcsong_random = require('../../procedures/arcsong_random');
-const dbproc_arcsong_bysongid = require('../../procedures/arcsong_bysongid');
+import syslog from '../../corefunc/syslog';
+import APIError from '../../corefunc/apierror';
+import arcsong_random from '../../database/database.arcsong.byrand';
+import arcsong_bysongid from '../../database/database.arcsong.bysongid';
 
-module.exports = (argument) => {
+export default (argument: any) => {
   return new Promise(async (resolve, reject) => {
 
     try {
@@ -32,13 +33,13 @@ module.exports = (argument) => {
       if (argument.end != 0 && (argument.end < argument.start || argument.end > 11))
         throw new APIError(-2, 'invalid range of end');
 
-      let _arc_song = null;
-      let _arc_songinfo = null;
-      let _return = {};
+      let _arc_song: any = null;
+      let _arc_songinfo: IDatabaseArcSong = <IDatabaseArcSong>{};
+      let _return: any = {};
 
       // select song
       try {
-        _arc_song = await dbproc_arcsong_random(argument.start, argument.end);
+        _arc_song = await arcsong_random(argument.start, argument.end);
         _return.id = _arc_song.sid;
         _return.rating_class = _arc_song.rating_class;
       } catch (e) { throw new APIError(-3, 'internal error'); }
@@ -46,7 +47,7 @@ module.exports = (argument) => {
       // return song info if need
       if (argument.info == 'true') {
         try {
-          _arc_songinfo = await dbproc_arcsong_bysongid(_arc_song.sid);
+          _arc_songinfo = await arcsong_bysongid(_arc_song.sid);
           _return.song_info = {
             id: _arc_songinfo.sid,
             title_localized: {
@@ -67,22 +68,23 @@ module.exports = (argument) => {
                 ratingClass: 0,
                 chartDesigner: _arc_songinfo.chart_designer_pst,
                 jacketDesigner: _arc_songinfo.jacket_designer_pst,
-                rating: _arc_songinfo.rating_pst / 10
+                rating: _arc_songinfo.difficultly_pst
               },
               {
                 ratingClass: 1,
                 chartDesigner: _arc_songinfo.chart_designer_prs,
                 jacketDesigner: _arc_songinfo.jacket_designer_prs,
-                rating: _arc_songinfo.rating_prs / 10
+                rating: _arc_songinfo.difficultly_prs
               },
               {
                 ratingClass: 2,
                 chartDesigner: _arc_songinfo.chart_designer_ftr,
                 jacketDesigner: _arc_songinfo.jacket_designer_ftr,
-                rating: _arc_songinfo.rating_ftr / 10
+                rating: _arc_songinfo.difficultly_ftr
               }
             ]
           };
+          
           // remove empty field
           if (_return.song_info.title_localized.ja == "")
             delete _return.song_info.title_localized.ja;

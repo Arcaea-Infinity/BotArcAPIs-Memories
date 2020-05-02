@@ -6,6 +6,7 @@ declare interface IDatabaseArcSong {
   bpm_base: number,
   pakset: string,
   artist: string,
+  time: number,
   side: number,
   date: number,
   world_unlock: 'true' | 'false',
