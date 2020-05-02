@@ -1,7 +1,7 @@
 class APIError extends Error {
 
-  private status: number;
-  private notify: string;
+  public status: number;
+  public notify: string;
 
   /**
    * make an error with status code

@@ -59,7 +59,7 @@ const initDataBases = (): void => {
           SystemLog.i(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
         })
         .then(() => { SystemLog.i(TAG, `${_database_arcaccount} => OK`); })
-        .catch((e: any) => { reject(e) });
+        .catch((e: any) => { Promise.reject(e) });
     })
     .catch((e: any) => { SystemLog.f(TAG, `${_database_arcaccount} => ${e.toString()}`); });
 
@@ -141,12 +141,12 @@ const initDataBases = (): void => {
         SystemLog.i(TAG, 'songlist file detected... updating database');
 
         await file.promises.readFile(_path_to_songlist)
-          .then(async (file) => {
+          .then(async (file: Buffer) => {
             let root = null;
 
             // try parse songlist file
             try {
-              root = JSON.parse(file);
+              root = JSON.parse(file.toString());
             } catch (e) { throw e; }
 
             // update database
@@ -160,7 +160,7 @@ const initDataBases = (): void => {
 
 }
 
-const close = () => {
+const close = (): void => {
   try {
     DATABASE_ARCACCOUNT.close();
     DATABASE_ARCBEST30.close();
@@ -170,5 +170,4 @@ const close = () => {
   } catch (e) { /* do nothing */ }
 }
 
-// exports
-export default initDataBases;
+export default { initDataBases, close };

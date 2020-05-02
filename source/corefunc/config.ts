@@ -1,3 +1,5 @@
+const TAG = 'corefunc/config.ts';
+
 const _default_config: any = {
   // botarcapi version
   'BOTARCAPI_MAJOR': 0,
@@ -36,7 +38,7 @@ const _default_config: any = {
 /**
  * load config to global space
  */
-const configs_loadall = (): void => {
+const loadConfigs = (): void => {
 
   // load environment from docker containers
   // and overriding default configs =(:3) z)_
@@ -59,5 +61,13 @@ const configs_loadall = (): void => {
 
 }
 
+const printConfigs = (): void => {
 
-export default configs_loadall;
+  SystemLog.v(TAG, 'Global Config');
+
+  for (let [k, v] of Object.entries(_default_config)) {
+    SystemLog.v(TAG, `  ${k} => ${v}`);
+  }
+}
+
+export default { loadConfigs, printConfigs };
