@@ -25,4 +25,4 @@ declare var DATABASE_ARCSONG: any;
 declare var DATABASE_ARCRECORD: any;
 declare var DATABASE_ARCPLAYER: any;
 
-// declare var syslog : StstemLog;
+declare var syslog: SystemLog;

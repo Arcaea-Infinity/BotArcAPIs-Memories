@@ -1,0 +1,22 @@
+{
+  "name": "botarcapi",
+  "version": "0.0.3",
+  "description": "A fastly and conveniently Arcaea API for your bot.",
+  "dependencies": {
+    "@types/node-fetch": "^2.5.7",
+    "@types/sqlite3": "^3.1.6",
+    "abab": "^2.0.3",
+    "node-fetch": "^2.6.0",
+    "sqlite-async": "^1.0.12"
+  },
+  "scripts": {
+    "test": "node index_test.js",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheSnowfield/BotArcAPI"
+  },
+  "author": "TheSnowfield",
+  "license": "MIT"
+}
