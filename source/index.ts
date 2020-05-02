@@ -1,8 +1,10 @@
 import http from 'http';
+import syslog from './corefunc/syslog';
 import config from './corefunc/config';
 import database from './corefunc/database';
 import __loader__ from './__loader__';
 
+const TAG: string = 'index.ts\t';
 const main = ((): void => {
 
   // initialize config first
@@ -10,7 +12,7 @@ const main = ((): void => {
   process.title = `${BOTARCAPI_VERSTR}`;
 
   // initialize system log
-  SystemLog.startLogging();
+  syslog.startLogging();
 
   // print configs
   config.printConfigs();
@@ -25,16 +27,16 @@ const main = ((): void => {
 
   // nodejs event handlers
   process.on('exit', (code) => {
-    console.info('** Stop Service **');
+    syslog.i(TAG, '** Stop Service **');
     // stop http server
     service.close();
-    console.info('Stop http server');
+    syslog.i(TAG, 'Stop http server');
     // close databases
     database.close();
-    console.info('Stop all database access');
+    syslog.i(TAG, 'Stop all database access');
     // stop syslog
-    console.info('Stop logging');
-    SystemLog.stop();
+    syslog.i(TAG, 'Stop logging');
+    syslog.stop();
   });
   process.on('SIGINT', () => {
     console.warn(`You pressed ctrl + c`);

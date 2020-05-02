@@ -2,6 +2,7 @@ const TAG = 'corefunc/database.ts';
 
 import file from 'fs';
 import database from 'sqlite-async';
+import syslog from './syslog';
 
 import dbproc_arcaccount_init from '../database/database.arcaccount.init';
 import dbproc_arcaccount_all from '../database/database.arcaccount.all';
@@ -22,7 +23,7 @@ const initDataBases = (): void => {
   //////////////////////////////////////////////////////////////////////////
   const _database_arcaccount = 'arcaccount.db';
   const _path_database_arcaccount = `${DATABASE_PATH}/${_database_arcaccount}`;
-  SystemLog.v(TAG, `Opening database => ${_path_database_arcaccount}`);
+  syslog.v(TAG, `Opening database => ${_path_database_arcaccount}`);
 
   database.open(_path_database_arcaccount, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link: any) => {
@@ -32,7 +33,7 @@ const initDataBases = (): void => {
     })
     .then(async () => { await dbproc_arcaccount_init(); })
     .then(() => {
-      SystemLog.v(TAG, `${_database_arcaccount} => Loading arc accounts from database`);
+      syslog.v(TAG, `${_database_arcaccount} => Loading arc accounts from database`);
 
       // preload all arc account to queue
       dbproc_arcaccount_all()
@@ -40,8 +41,8 @@ const initDataBases = (): void => {
 
           // no arc account in the database
           if (!result.length) {
-            SystemLog.w(TAG, `${_database_arcaccount} => There\'s no arc account in the database`);
-            SystemLog.w(TAG, `${_database_arcaccount} => You must add ATLEAST ONE account to the database`);
+            syslog.w(TAG, `${_database_arcaccount} => There\'s no arc account in the database`);
+            syslog.w(TAG, `${_database_arcaccount} => You must add ATLEAST ONE account to the database`);
           }
           // map to global space
           // and pretended to be a queue
@@ -55,13 +56,13 @@ const initDataBases = (): void => {
 
           // verbose output
           for (let i = 0; i < result.length; ++i)
-            SystemLog.v(TAG, `${_database_arcaccount} => ${result[i].name} ${result[i].token}`);
-          SystemLog.i(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
+            syslog.v(TAG, `${_database_arcaccount} => ${result[i].name} ${result[i].token}`);
+          syslog.i(TAG, `${_database_arcaccount} => Arc account(s) loaded: ${result.length}`);
         })
-        .then(() => { SystemLog.i(TAG, `${_database_arcaccount} => OK`); })
+        .then(() => { syslog.i(TAG, `${_database_arcaccount} => OK`); })
         .catch((e: any) => { Promise.reject(e) });
     })
-    .catch((e: any) => { SystemLog.f(TAG, `${_database_arcaccount} => ${e.toString()}`); });
+    .catch((e: any) => { syslog.f(TAG, `${_database_arcaccount} => ${e.toString()}`); });
 
 
   //////////////////////////////////////////////////////////////////////////
@@ -69,7 +70,7 @@ const initDataBases = (): void => {
   //////////////////////////////////////////////////////////////////////////
   const _database_arcbest30 = 'arcbest30.db';
   const _path_database_arcbest30 = `${DATABASE_PATH}/${_database_arcbest30}`;
-  SystemLog.v(TAG, `Opening database => ${_path_database_arcbest30}`);
+  syslog.v(TAG, `Opening database => ${_path_database_arcbest30}`);
 
   database.open(_path_database_arcbest30, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link: any) => {
@@ -78,8 +79,8 @@ const initDataBases = (): void => {
       Object.freeze(DATABASE_ARCBEST30);
     })
     .then(async () => { await dbproc_arcbest30_init(); })
-    .then(() => { SystemLog.i(TAG, `${_database_arcbest30} => OK`); })
-    .catch((e: any) => { SystemLog.f(TAG, `${_database_arcbest30} => ${e.toString()}`); });
+    .then(() => { syslog.i(TAG, `${_database_arcbest30} => OK`); })
+    .catch((e: any) => { syslog.f(TAG, `${_database_arcbest30} => ${e.toString()}`); });
 
 
   //////////////////////////////////////////////////////////////////////////
@@ -87,7 +88,7 @@ const initDataBases = (): void => {
   //////////////////////////////////////////////////////////////////////////
   const _database_arcplayer = 'arcplayer.db';
   const _path_database_arcplayer = `${DATABASE_PATH}/${_database_arcplayer}`;
-  SystemLog.v(TAG, `Opening database => ${_path_database_arcplayer}`);
+  syslog.v(TAG, `Opening database => ${_path_database_arcplayer}`);
 
   database.open(_path_database_arcplayer, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link: any) => {
@@ -96,8 +97,8 @@ const initDataBases = (): void => {
       Object.freeze(DATABASE_ARCPLAYER);
     })
     .then(async () => { await dbproc_arcplayer_init(); })
-    .then(() => { SystemLog.i(TAG, `${_database_arcplayer} => OK`); })
-    .catch((e: any) => { SystemLog.f(TAG, `${_database_arcplayer} => ${e.toString()}`); });
+    .then(() => { syslog.i(TAG, `${_database_arcplayer} => OK`); })
+    .catch((e: any) => { syslog.f(TAG, `${_database_arcplayer} => ${e.toString()}`); });
 
 
   //////////////////////////////////////////////////////////////////////////
@@ -105,7 +106,7 @@ const initDataBases = (): void => {
   //////////////////////////////////////////////////////////////////////////
   const _database_arcrecord = 'arcrecord.db';
   const _path_database_arcrecord = `${DATABASE_PATH}/${_database_arcrecord}`
-  SystemLog.v(TAG, `Opening database => ${_path_database_arcrecord}`);
+  syslog.v(TAG, `Opening database => ${_path_database_arcrecord}`);
 
   database.open(_path_database_arcrecord, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link: any) => {
@@ -114,8 +115,8 @@ const initDataBases = (): void => {
       Object.freeze(DATABASE_ARCRECORD);
     })
     .then(async () => { await dbproc_arcrecord_init(); })
-    .then(() => { SystemLog.i(TAG, `${_database_arcrecord} => OK`); })
-    .catch((e: any) => { SystemLog.f(TAG, `${_database_arcrecord} => ${e.toString()}`); });
+    .then(() => { syslog.i(TAG, `${_database_arcrecord} => OK`); })
+    .catch((e: any) => { syslog.f(TAG, `${_database_arcrecord} => ${e.toString()}`); });
 
 
   //////////////////////////////////////////////////////////////////////////
@@ -123,7 +124,7 @@ const initDataBases = (): void => {
   //////////////////////////////////////////////////////////////////////////
   const _database_arcsong = 'arcsong.db';
   const _path_database_arcsong = `${DATABASE_PATH}/${_database_arcsong}`
-  SystemLog.v(TAG, `Opening database => ${_path_database_arcsong}`);
+  syslog.v(TAG, `Opening database => ${_path_database_arcsong}`);
 
   database.open(_path_database_arcsong, database.OPEN_READWRITE | database.OPEN_CREATE)
     .then((link: any) => {
@@ -138,7 +139,7 @@ const initDataBases = (): void => {
       // if songlist exists
       const _path_to_songlist = `${DATABASE_PATH}/songlist`;
       if (file.existsSync(_path_to_songlist)) {
-        SystemLog.i(TAG, 'songlist file detected... updating database');
+        syslog.i(TAG, 'songlist file detected... updating database');
 
         await file.promises.readFile(_path_to_songlist)
           .then(async (file: Buffer) => {
@@ -155,8 +156,8 @@ const initDataBases = (): void => {
           .catch((e: any) => { throw e; });
       }
     })
-    .then(() => { SystemLog.i(TAG, `${_database_arcsong} => OK`); })
-    .catch((e: any) => { SystemLog.f(TAG, `${_database_arcsong} => ${e.toString()}`); });
+    .then(() => { syslog.i(TAG, `${_database_arcsong} => OK`); })
+    .catch((e: any) => { syslog.f(TAG, `${_database_arcsong} => ${e.toString()}`); });
 
 }
 

@@ -140,10 +140,8 @@ class SystemLog {
    * @param  {...any} args
    */
   private static _console(level: number, ...args: Array<any>): void {
-    this.log(level, 'unknown', args);
+    this.log(level, 'unknown\t\t', args);
   }
 }
 
-
-
-export default { SystemLog };
+export default SystemLog;
