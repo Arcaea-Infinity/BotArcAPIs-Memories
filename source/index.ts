@@ -24,7 +24,6 @@ const main = ((): void => {
   const service = http.createServer(__loader__).listen(SERVER_PORT);
   console.info(`Http server started at 0.0.0.0:${SERVER_PORT}`);
 
-
   // nodejs event handlers
   process.on('exit', (code) => {
     syslog.i(TAG, '** Stop Service **');

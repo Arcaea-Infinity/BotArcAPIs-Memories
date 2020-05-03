@@ -46,7 +46,6 @@ const handler_request_favicon = async (response: ServerResponse) => {
   syslog.v(TAG, 'Send response back');
 }
 
-
 const specific_routine: { [key: string]: RegExp } = {
   '/v1/arc/forward': /^\/v1\/arc\/forward\//
 };
@@ -87,7 +86,7 @@ const handler_request_publicapi =
         .catch((error: APIError) => {
           _api_result.status = error.status;
           _api_result.message = error.notify;
-        })
+        });
 
       _http_status = 200;
       _http_body = JSON.stringify(_api_result);
@@ -106,6 +105,7 @@ const handler_request_publicapi =
     response.end(_http_body);
 
     syslog.v(TAG, 'Send response back');
+    
   }
 
 const routine = async (request: IncomingMessage, response: ServerResponse) => {
@@ -156,6 +156,7 @@ const routine = async (request: IncomingMessage, response: ServerResponse) => {
     );
 
   });
+  
 }
 
 export default routine;
