@@ -1,4 +1,7 @@
+import syslog from '../../corefunc/syslog';
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
+
+const TAG: string = 'arcapi.aggregate.ts';
 
 export default
   (account: IArcAccount, endpoints: Array<string>) => {
@@ -42,10 +45,13 @@ export default
           // auto login in next time allocating
           if (e == 'UnauthorizedError') {
             account.token = '';
-            // syslog.w(TAG, `Invalid token => ${account.name} ${account.token}`);
+            syslog.w(TAG, `Invalid token => ${account.name} ${account.token}`);
           }
 
           reject(e);
-        })
+
+        });
+
     });
+
   }

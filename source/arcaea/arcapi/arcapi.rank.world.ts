@@ -1,4 +1,7 @@
+import syslog from '../../corefunc/syslog';
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
+
+const TAG: string = 'arcapi.rank.world.ts';
 
 export default
   (account: IArcAccount, songid: string,
@@ -22,10 +25,16 @@ export default
       arcfetch(_remote_request)
         .then((root) => { resolve(root.value); })
         .catch((e) => {
+
           if (e == 'UnauthorizedError') {
             account.token = '';
+            syslog.w(TAG, `Invalid token => ${account.name} ${account.token}`);
           }
+
           reject(e);
-        })
+
+        });
+
     });
+
   }

@@ -1,4 +1,7 @@
+import syslog from '../../corefunc/syslog';
 import arcfetch, { ArcFetchRequest } from '../arcfetch';
+
+const TAG: string = 'arcapi.friend.delete.ts';
 
 export default
   (account: IArcAccount, userid: number): Promise<Array<IArcPlayer>> => {
@@ -16,14 +19,15 @@ export default
         .then((root) => { resolve(root.value.friends); })
         .catch((e) => {
 
-          // if token is invalid
-          // just erase the token and wait for
-          // auto login in next time allocating
           if (e == 'UnauthorizedError') {
             account.token = '';
+            syslog.w(TAG, `Invalid token => ${account.name} ${account.token}`);
           }
 
           reject(e);
-        })
+
+        });
+
     });
+
   }
