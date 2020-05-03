@@ -1,7 +1,10 @@
 import { btoa } from 'abab';
+import syslog from '../corefunc/syslog';
 import fetch, { Request } from 'node-fetch';
 
+const TAG: string = 'corefunc/arcfetch.ts';
 class ArcFetchRequest extends Request {
+
   constructor(method: ArcFetchMethod, resturl: ArcFetchRestUrl, init: ArcFetchExtra) {
 
     // request url
@@ -49,7 +52,9 @@ class ArcFetchRequest extends Request {
       headers: _request_headers,
       body: _request_body
     });
+
   }
+
 }
 
 const do_fetch = (request: ArcFetchRequest): Promise<any> => {
@@ -67,6 +72,9 @@ const do_fetch = (request: ArcFetchRequest): Promise<any> => {
         try {
           return JSON.parse(rawdata);
         } catch (e) {
+          syslog.e(TAG, 'Arcapi currently unavailable');
+          syslog.e(TAG, rawdata);
+
           // The Arcaea network is currently under maintenance.
           return reject(9);
         }
@@ -77,8 +85,13 @@ const do_fetch = (request: ArcFetchRequest): Promise<any> => {
         if (root.success)
           return resolve(root);
         else {
+
           const _errcode =
             root.error_code != undefined ? root.error_code : root.code;
+
+          syslog.e(TAG, `Arcapi returns an error => ${_errcode}`);
+          syslog.e(TAG, JSON.stringify(root));
+
           return reject(_errcode);
         }
       })
@@ -87,7 +100,9 @@ const do_fetch = (request: ArcFetchRequest): Promise<any> => {
       .catch((e) => {
         return reject(e);
       });
+
   });
+
 }
 
 /**
@@ -95,7 +110,7 @@ const do_fetch = (request: ArcFetchRequest): Promise<any> => {
  * @param {ArcFetchRequest} request
  */
 const arcfetch = async (request: ArcFetchRequest): Promise<any> => {
- 
+
   let _retry = 0;
   while (true) {
 
@@ -104,19 +119,26 @@ const arcfetch = async (request: ArcFetchRequest): Promise<any> => {
     }
     catch (e) {
       _retry += 1;
+      syslog.w(TAG, `Failed... retrying ${_retry}/${ARCAPI_RETRY}`);
 
-      if (e instanceof Error) { }
+      if (e instanceof Error)
+        syslog.e(TAG, e.stack);
+
 
       // do not retry when some error occurred
       // like has been banned or service not available or etc.
       // only do retry when like request timed out or etc.
       else if (typeof e == 'number' || e == 'UnauthorizedError') {
         _retry = ARCAPI_RETRY;
+        syslog.w(TAG, `Retry canceled => errcode ${e}`);
       }
 
       if (_retry >= ARCAPI_RETRY) throw e;
+
     }
+
   }
+
 }
 
 export default arcfetch;
