@@ -51,7 +51,10 @@ module.exports = (argument, method, path, header, databody) => {
           _account, method,
           path + '?' + new URLSearchParams(argument), databody);
       }
-      catch (e) { /* do nothing */ }
+      catch (e) {
+        _return.error_code = e;
+        _return.success = 'false';
+      }
 
       resolve(_return);
 
