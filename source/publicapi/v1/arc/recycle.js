@@ -9,7 +9,7 @@ const APIError = require('../../../corefunc/error');
 
 const arcmana_account_recycleauto = require('../../../arcmana/account_recycleauto');
 
-module.exports = (argument) => {
+module.exports = (argument, method, path, header, databody) => {
   return new Promise(async (resolve, reject) => {
 
     try {
