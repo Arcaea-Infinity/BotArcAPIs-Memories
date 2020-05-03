@@ -47,6 +47,19 @@ class Utils {
 
   }
 
+
+  // instead of Object.fromEntries
+  static httpGetAllParams(searchParams: URLSearchParams): any {
+    if (!(searchParams instanceof URLSearchParams))
+      return null;
+
+    const _return: any = {};
+
+    searchParams.forEach((v, k) => { _return[k] = v; });
+
+    return _return;
+  }
+
   // match client user agent
   static httpMatchUserAgent(ua: string): boolean {
 

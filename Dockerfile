@@ -7,7 +7,11 @@ COPY . botarcapi
 RUN apk --update add nodejs npm
 
 # initialize the node modules
-RUN cd /botarcapi && npm i
+# and compile the project
+RUN cd /botarcapi \
+  && npm i \
+  && npm i -g typescript \
+  && tsc --build tsconfig.json
 
 # start service
 WORKDIR /botarcapi

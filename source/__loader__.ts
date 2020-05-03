@@ -127,7 +127,7 @@ const routine = async (request: IncomingMessage, response: ServerResponse) => {
   const _api_url = new URL(`http://0.0.0.0${request.url}`);
   const _api_path = _api_url.pathname;
   const _api_headers = request.headers;
-  const _api_arguments = Object.fromEntries(_api_url.searchParams);
+  const _api_arguments = Utils.httpGetAllParams(_api_url.searchParams);
   syslog.i(TAG,
     `Accept ${_client_sign} ` +
     `request => ${request.method} ` +

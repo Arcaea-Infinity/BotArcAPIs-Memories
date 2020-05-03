@@ -5,7 +5,7 @@ export default (songid: string): Promise<IDatabaseArcSong> => {
 
   // execute sql
   return DATABASE_ARCSONG.get(_sql, [songid])
-    .then((data: IDatabaseArcSong | null) => {
+    .then((data: any | null) => {
 
       if (!data) return null;
 
@@ -13,7 +13,7 @@ export default (songid: string): Promise<IDatabaseArcSong> => {
       data.rating_prs /= 10;
       data.rating_ftr /= 10;
 
-      return data;
+      return <IDatabaseArcSong>data;
 
     });
 
