@@ -13,8 +13,7 @@ module.exports = (argument, method, path, header, databody) => {
   return new Promise(async (resolve, reject) => {
 
     try {
-      syslog.d(header);
-
+      
       // /arc/recycle[token=xxx]
       // get token from GET parameters
       let _access_token = null;
