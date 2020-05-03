@@ -35,7 +35,8 @@ module.exports = (valid_time, clear = false) => {
 
     // timed out to auto recycle the account
     setTimeout(() => {
-      arcmana_account_recycleauto(_token);
+      arcmana_account_recycleauto(_token)
+        .catch((e) => { /* do nothing */ });
     }, valid_time * 1000);
 
     resolve(_token);
