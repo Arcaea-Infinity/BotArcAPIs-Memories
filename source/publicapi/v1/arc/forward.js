@@ -44,8 +44,6 @@ module.exports = (argument, method, path, header, databody) => {
       try { _account = await arcmana_account_fromtoken(_access_token); }
       catch (e) { throw new APIError(-2, 'invalid token'); }
 
-      syslog.d(_account, method, path, databody);
-
       // request arcapi
       let _return = {};
       try {
