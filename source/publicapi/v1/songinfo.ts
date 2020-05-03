@@ -1,16 +1,11 @@
-// filename : v1/songinfo.js
-// author   : TheSnowfield
-// date     : 04/09/2020
-// comment  : api for arcsong information
+import syslog from '../../corefunc/syslog';
+import APIError from '../../corefunc/apierror';
+import arcsong_sid_byany from '../../database/database.arcsong.sid.byany';
+import arcsong_bysongid from '../../database/database.arcsong.bysongid';
 
-const TAG = 'v1/songinfo.js';
+const TAG = 'v1/songinfo.ts\t';
+export default (argument: any): Promise<any> => {
 
-const APIError = require('../../corefunc/error');
-
-const dbproc_arcsong_bysongid = require('../../procedures/arcsong_bysongid');
-const dbproc_arcsong_sid_byany = require('../../procedures/arcsong_sid_byany');
-
-module.exports = (argument) => {
   return new Promise(async (resolve, reject) => {
 
     try {
@@ -25,7 +20,7 @@ module.exports = (argument) => {
 
       // query songid by any string
       try {
-        _arc_songid = await dbproc_arcsong_sid_byany(argument.songname);
+        _arc_songid = await arcsong_sid_byany(argument.songname);
       } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-2, 'this song is not recorded in the database'); }
 
       if (_arc_songid.length > 1)
@@ -34,7 +29,7 @@ module.exports = (argument) => {
 
       // get song information by songid
       try {
-        _arc_songinfo = await dbproc_arcsong_bysongid(_arc_songid);
+        _arc_songinfo = await arcsong_bysongid(_arc_songid);
       } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-4, 'internal error'); }
 
       const _return = {
@@ -81,11 +76,15 @@ module.exports = (argument) => {
       resolve(_return);
 
     } catch (e) {
+
       if (e instanceof APIError)
         return reject(e);
 
       syslog.e(TAG, e.stack);
       return reject(new APIError(-233, 'unknown error occurred'));
+
     }
+
   });
+
 }

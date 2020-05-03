@@ -9,9 +9,9 @@ export default (songid: string): Promise<IDatabaseArcSong> => {
 
       if (!data) return null;
 
-      data.difficultly_pst /= 10;
-      data.difficultly_prs /= 10;
-      data.difficultly_ftr /= 10;
+      data.rating_pst /= 10;
+      data.rating_prs /= 10;
+      data.rating_ftr /= 10;
 
       return data;
 

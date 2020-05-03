@@ -1,7 +1,7 @@
 {
   "name": "botarcapi",
   "version": "0.0.3",
-  "description": "A fastly and conveniently Arcaea API for your bot.",
+  "description": "A fast and convenient Arcaea API for your bot.",
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
     "@types/sqlite3": "^3.1.6",
@@ -10,8 +10,7 @@
     "sqlite-async": "^1.0.12"
   },
   "scripts": {
-    "test": "node index_test.js",
-    "start": "node index.js"
+    "start": "node build/source/index.js"
   },
   "repository": {
     "type": "git",

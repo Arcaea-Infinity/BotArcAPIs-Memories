@@ -1,21 +1,15 @@
-// filename : v1/userinfo.js
-// author   : TheSnowfield
-// date     : 04/17/2020
-// comment  : api for arcuser information
+import syslog from '../../corefunc/syslog';
+import APIError from '../../corefunc/apierror';
+import arcapi_friend_add from '../../arcaea/arcapi/arcapi.friend.add';
+import arcapi_friend_clear from '../../arcaea/arcapi/arcapi.friend.clear';
+import account_alloc from '../../arcaea/account/account.alloc';
+import account_recycle from '../../arcaea/account/account.recycle';
+import arcrecord_update from '../../database/database.arcrecord.update';
+import arcplayer_update from '../../database/database.arcplayer.update';
 
-const TAG = 'v1/userinfo.js\t';
+const TAG = 'v1/userinfo.ts\t';
+export default (argument: any): Promise<any> => {
 
-const APIError = require('../../corefunc/error');
-
-const arcapi_friend_add = require('../../arcapi/friend_add');
-const arcapi_friend_clear = require('../../arcapi/friend_clear');
-const arcmana_account_alloc = require('../../arcmana/account_alloc');
-const arcmana_account_recycle = require('../../arcmana/account_recycle');
-
-const dbproc_arcrecord_update = require('../../procedures/arcrecord_update');
-const dbproc_arcplayer_update = require('../../procedures/arcplayer_update');
-
-module.exports = (argument) => {
   return new Promise(async (resolve, reject) => {
 
     try {
@@ -31,7 +25,7 @@ module.exports = (argument) => {
 
       // request an arc account
       try {
-        _arc_account = await arcmana_account_alloc();
+        _arc_account = await account_alloc();
       } catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
 
       try {
@@ -71,28 +65,33 @@ module.exports = (argument) => {
       } catch (e) {
         // recycle account when any error occurred
         if (_arc_account)
-          arcmana_account_recycle(_arc_account);
+          account_recycle(_arc_account);
         // re-throw the error
         throw e;
       }
 
       // release account
-      arcmana_account_recycle(_arc_account)
-        .catch((error) => { syslog.e(error.stack); });
+      account_recycle(_arc_account);
+
       // update user info and recently played
-      dbproc_arcplayer_update(_arc_friend)
+      arcplayer_update(_arc_friend)
         .catch((error) => { syslog.e(error.stack); });
+
       // insert new record into database
       if (_arc_friend.recent_score.length)
-        dbproc_arcrecord_update(_arc_friend.user_id, _arc_friend.recent_score)
+        arcrecord_update(_arc_friend.user_id, _arc_friend.recent_score)
           .catch((error) => { syslog.e(error.stack); });
 
     } catch (e) {
+
       if (e instanceof APIError)
         return reject(e);
 
       syslog.e(TAG, e.stack);
       return reject(new APIError(-233, 'unknown error occurred'));
+
     }
+
   });
+
 }

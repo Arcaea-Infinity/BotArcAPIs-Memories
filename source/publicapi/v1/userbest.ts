@@ -1,31 +1,27 @@
-// filename : v1/userbest.js
-// author   : TheSnowfield
-// date     : 02/17/2020
-// comment  : api for user best record
+import Utils from '../../corefunc/utils';
+import syslog from '../../corefunc/syslog';
+import APIError from '../../corefunc/apierror';
 
-const TAG = 'v1/userbest.js\t';
+import arcapi_friend_add from '../../arcaea/arcapi/arcapi.friend.add';
+import arcapi_friend_clear from '../../arcaea/arcapi/arcapi.friend.clear';
+import arcapi_rank_friend from '../../arcaea/arcapi/arcapi.rank.friend';
+import account_alloc from '../../arcaea/account/account.alloc';
+import account_recycle from '../../arcaea/account/account.recycle';
 
-const APIError = require('../../corefunc/error');
-const Utils = require('../../corefunc/utils');
+import arcsong_bysongid from '../../database/database.arcsong.bysongid';
+import arcsong_sid_byany from '../../database/database.arcsong.sid.byany';
+import arcrecord_update from '../../database/database.arcrecord.update';
+import arcplayer_update from '../../database/database.arcplayer.update';
 
-const arcapi_friend_add = require('../../arcapi/friend_add');
-const arcapi_friend_clear = require('../../arcapi/friend_clear');
-const arcapi_rank_friend = require('../../arcapi/rank_friend');
-const arcmana_account_alloc = require('../../arcmana/account_alloc');
-const arcmana_account_recycle = require('../../arcmana/account_recycle');
+const TAG = 'v1/userbest.ts\t';
+export default (argument: any): Promise<any> => {
 
-const dbproc_arcsong_bysongid = require('../../procedures/arcsong_bysongid');
-const dbproc_arcsong_sid_byany = require('../../procedures/arcsong_sid_byany');
-const dbproc_arcrecord_update = require('../../procedures/arcrecord_update');
-const dbproc_arcplayer_update = require('../../procedures/arcplayer_update');
-
-module.exports = (argument) => {
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve, reject): Promise<any> => {
 
     try {
 
       // /userbest?usercode=xxx&songname=xxx&difficulty=x
-      // check for request arguments
+      // validate request arguments
       if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid usercode');
       if (typeof argument.songname == 'undefined' || argument.songname == '')
@@ -33,21 +29,21 @@ module.exports = (argument) => {
       if (typeof argument.difficulty == 'undefined' || argument.difficulty == '')
         throw new APIError(-3, 'invalid difficulty');
 
-      let _arc_difficulty = Utils.arcMapDiffFormat(argument.difficulty, 0);
+      let _arc_difficulty: any = Utils.arcMapDiffFormat(argument.difficulty, 0);
       if (!_arc_difficulty)
         throw new APIError(-4, 'invalid difficulty');
 
-      let _arc_account = null;
-      let _arc_songid = null;
-      let _arc_songinfo = null;
-      let _arc_friendlist = null;
-      let _arc_friend = null;
-      let _arc_ranklist = null;
-      let _arc_rank = null;
+      let _arc_account: any = null;
+      let _arc_songid: any = null;
+      let _arc_songinfo: any = null;
+      let _arc_friendlist: any = null;
+      let _arc_friend: any = null;
+      let _arc_ranklist: any = null;
+      let _arc_rank: any = null;
 
       // check songid valid
       try {
-        _arc_songid = await dbproc_arcsong_sid_byany(argument.songname);
+        _arc_songid = await arcsong_sid_byany(argument.songname);
       } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-5, 'this song is not recorded in the database'); }
 
       if (_arc_songid.length > 1)
@@ -55,12 +51,12 @@ module.exports = (argument) => {
       _arc_songid = _arc_songid[0];
 
       try {
-        _arc_songinfo = await dbproc_arcsong_bysongid(_arc_songid);
+        _arc_songinfo = await arcsong_bysongid(_arc_songid);
       } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-7, 'internal error'); }
 
       // request an arc account
       try {
-        _arc_account = await arcmana_account_alloc();
+        _arc_account = await account_alloc();
       } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-8, 'allocate an arc account failed'); }
 
       try {
@@ -112,31 +108,37 @@ module.exports = (argument) => {
       } catch (e) {
         // recycle account when any error occurred
         if (_arc_account)
-          arcmana_account_recycle(_arc_account);
+          account_recycle(_arc_account);
         // re-throw the error
         throw e;
       }
 
       // release account
-      arcmana_account_recycle(_arc_account)
-        .catch((error) => { syslog.e(error.stack); });
+      account_recycle(_arc_account);
+
       // update user info and recently played
-      dbproc_arcplayer_update(_arc_friend)
+      arcplayer_update(_arc_friend)
         .catch((error) => { syslog.e(error.stack); });
+
       // insert new record into database
       if (_arc_friend.recent_score.length)
-        dbproc_arcrecord_update(_arc_friend.user_id, _arc_friend.recent_score)
+        arcrecord_update(_arc_friend.user_id, _arc_friend.recent_score)
           .catch((error) => { syslog.e(error.stack); });
+
       // insert new record into database
-      dbproc_arcrecord_update(_arc_friend.user_id, _arc_rank)
+      arcrecord_update(_arc_friend.user_id, _arc_rank)
         .catch((error) => { syslog.e(error.stack); });
 
     } catch (e) {
+
       if (e instanceof APIError)
         return reject(e);
 
       syslog.e(TAG, e.stack);
       return reject(new APIError(-233, 'unknown error occurred'));
+
     }
+
   });
+
 }

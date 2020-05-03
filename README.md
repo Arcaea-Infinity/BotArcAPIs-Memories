@@ -6,7 +6,7 @@
 [![NodeJS 12.x](https://github.com/TheSnowfield/BotArcAPI/workflows/NodeJS%2012.x/badge.svg)](#)
 [![NodeJS 10.x](https://github.com/TheSnowfield/BotArcAPI/workflows/NodeJS%2010.x/badge.svg)](#)
 
-A fastly and conveniently Arcaea API for your bot.  
+A fast and convenient Arcaea API for your bot.  
 
 ## 🤔 Dependences
 - node >= `12.16.0`

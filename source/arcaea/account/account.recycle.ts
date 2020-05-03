@@ -1,6 +1,9 @@
+import syslog from '../../corefunc/syslog';
+
+const TAG: string = 'account/account.recycle.ts';
 export default (account: IArcAccount) => {
-  return new Promise((resolve, reject) => {
-    ARCACCOUNT.push(account);
-    resolve();
-  });
+
+  ARCACCOUNT.push(account);
+  syslog.i(TAG, `Recycled account => ${account.name} ${account.token}`);
+
 }

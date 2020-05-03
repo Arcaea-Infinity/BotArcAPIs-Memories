@@ -1,29 +1,26 @@
-// filename : v1/arc/recycle.js
-// author   : TheSnowfield
-// date     : 04/27/2020
-// comment  : api for query persistent
-
 const TAG = 'v1/arc/recycle.js\t';
 
-const APIError = require('../../../corefunc/error');
+import APIError from '../../../corefunc/apierror';
+import syslog from '../../../corefunc/syslog';
+import account_recycleauto from '../../../arcaea/account/account.recycle.auto';
 
-const arcmana_account_recycleauto = require('../../../arcmana/account_recycleauto');
+export default (argument: any, method: ArcFetchMethod,
+  path: string, header: any, databody: any): Promise<any> => {
 
-module.exports = (argument, method, path, header, databody) => {
   return new Promise(async (resolve, reject) => {
 
     try {
-      
+
       // /arc/recycle[token=xxx]
       // get token from GET parameters
       let _access_token = null;
-      if (argument['token']) {
+      if (argument.token) {
         _access_token = argument.token;
       }
 
       // compatible with arcapi request format
-      else if (header['authorization']) {
-        const _array = header['authorization'].split(' ');
+      else if (header.authorization) {
+        const _array = header.authorization.split(' ');
         if (_array.length == 2 && _array[0] == 'Bearer')
           _access_token = _array[1];
       }
@@ -33,7 +30,7 @@ module.exports = (argument, method, path, header, databody) => {
         throw new APIError(-1, 'invalid token');
 
       // recycle the account
-      try { await arcmana_account_recycleauto(_access_token); }
+      try { await account_recycleauto(_access_token); }
       catch (e) { throw new APIError(-2, 'invalid token'); }
 
       resolve();
@@ -47,4 +44,5 @@ module.exports = (argument, method, path, header, databody) => {
     }
 
   });
+
 }

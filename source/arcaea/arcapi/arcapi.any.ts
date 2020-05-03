@@ -2,7 +2,7 @@ import arcfetch, { ArcFetchRequest } from '../arcfetch';
 
 export default
   (account: IArcAccount, method: ArcFetchMethod,
-    path: string, databody: string): Promise<any> => {
+    path: string, databody: any): Promise<any> => {
     return new Promise((resolve, reject) => {
 
       // construct remote request

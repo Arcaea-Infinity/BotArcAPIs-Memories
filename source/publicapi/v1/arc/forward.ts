@@ -1,24 +1,20 @@
-// filename : v1/arc/forward.js
-// author   : TheSnowfield
-// date     : 04/27/2020
-// comment  : forward request to arcapi
+import syslog from '../../../corefunc/syslog';
+import APIError from '../../../corefunc/apierror';
+import arcapi_any from '../../../arcaea/arcapi/arcapi.any';
+import account_fromtoken from '../../../arcaea/account/account.fromtoken';
 
 const TAG = 'v1/arc/forward.js\t';
+export default (argument: any, method: ArcFetchMethod,
+  path: string, header: any, databody: any): Promise<any> => {
 
-const APIError = require('../../../corefunc/error');
-
-const arcapi_any = require('../../../arcapi/any');
-const arcmana_account_fromtoken = require('../../../arcmana/account_fromtoken');
-
-module.exports = (argument, method, path, header, databody) => {
   return new Promise(async (resolve, reject) => {
 
     try {
 
       // /arc/forward[/url/to/arcapi?foo=xx&bar=xx]
       // get token from GET parameters
-      let _access_token = null;
-      if (argument['token']) {
+      let _access_token: string | null = null;
+      if (argument.token) {
         _access_token = argument.token;
 
         // delete access token from parameters
@@ -31,6 +27,7 @@ module.exports = (argument, method, path, header, databody) => {
         if (_array.length == 2 && _array[0] == 'Bearer')
           _access_token = _array[1];
 
+        // delete access token from header
         delete header.authorization;
       }
 
@@ -38,20 +35,21 @@ module.exports = (argument, method, path, header, databody) => {
       if (!_access_token)
         throw new APIError(-1, 'invalid token');
 
-
       // get account from token
       let _account = null;
-      try { _account = await arcmana_account_fromtoken(_access_token); }
+      try { _account = await account_fromtoken(_access_token); }
       catch (e) { throw new APIError(-2, 'invalid token'); }
 
       // request arcapi
-      let _return = {};
+      let _return: any = {};
       try {
-        _return = await arcapi_any(
-          _account, method,
+        _return = await arcapi_any(_account, method,
           path + '?' + new URLSearchParams(argument), databody);
       }
-      catch (e) { /* do nothing */ }
+      catch (e) {
+        _return.error_code = e;
+        _return.success = 'false';
+      }
 
       resolve(_return);
 
@@ -64,4 +62,5 @@ module.exports = (argument, method, path, header, databody) => {
     }
 
   });
+
 }

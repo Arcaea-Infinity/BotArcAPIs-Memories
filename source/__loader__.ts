@@ -6,8 +6,9 @@
 
 const TAG = 'source/__loader__.ts';
 
+import Utils from './corefunc/utils';
+import APIError from './corefunc/apierror';
 import syslog from './corefunc/syslog';
-import { Utils } from './corefunc/utils';
 import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http';
 
 const handler_request_notfound = async (response: ServerResponse, message = '') => {
@@ -139,7 +140,6 @@ const routine = async (request: IncomingMessage, response: ServerResponse) => {
 
     // handle favicon request
     if (request.method == 'GET') {
-      // handle favicon request
       if (_api_path == '/favicon.ico')
         return handler_request_favicon(response);
     }

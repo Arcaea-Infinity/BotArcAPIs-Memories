@@ -1,7 +1,9 @@
+import syslog from '../../corefunc/syslog';
 import arcapi_login from '../arcapi/arcapi.login';
 import arcapi_userme from '../arcapi/arcapi.userme';
 import arcaccount_update from '../../database/database.arcaccount.update';
 
+const TAG = 'account/account.alloc.ts';
 export default (): Promise<IArcAccount> => {
 
   return new Promise(async (resolve, reject) => {
@@ -29,7 +31,10 @@ export default (): Promise<IArcAccount> => {
           // this account has been banned
           if (e == 106) {
             _account.banned = true;
+            syslog.w(TAG, `This account has been banned. remove from pool => ${_account.name}`);
           }
+
+          syslog.e(TAG, e.stack);
 
         } finally {
 
@@ -50,8 +55,13 @@ export default (): Promise<IArcAccount> => {
         }
 
       } else break;
+
     }
 
     resolve(_account);
+
+    syslog.i(TAG, `Allocated account => ${_account.name} ${_account.token}`);
+
   });
+
 }

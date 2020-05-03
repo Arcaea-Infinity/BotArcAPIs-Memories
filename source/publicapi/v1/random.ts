@@ -1,16 +1,11 @@
-// filename : v1/random.js
-// author   : TheSnowfield
-// date     : 04/23/2020
-// comment  : api for random song selection
-
-const TAG = 'v1/random.ts\t';
-
 import syslog from '../../corefunc/syslog';
 import APIError from '../../corefunc/apierror';
 import arcsong_random from '../../database/database.arcsong.byrand';
 import arcsong_bysongid from '../../database/database.arcsong.bysongid';
 
-export default (argument: any) => {
+const TAG = 'v1/random.ts\t';
+export default (argument: any): Promise<any> => {
+  
   return new Promise(async (resolve, reject) => {
 
     try {
@@ -44,7 +39,7 @@ export default (argument: any) => {
         _return.rating_class = _arc_song.rating_class;
       } catch (e) { throw new APIError(-3, 'internal error'); }
 
-      // return song info if need
+      // return song info if needed
       if (argument.info == 'true') {
         try {
           _arc_songinfo = await arcsong_bysongid(_arc_song.sid);
@@ -68,23 +63,23 @@ export default (argument: any) => {
                 ratingClass: 0,
                 chartDesigner: _arc_songinfo.chart_designer_pst,
                 jacketDesigner: _arc_songinfo.jacket_designer_pst,
-                rating: _arc_songinfo.difficultly_pst
+                rating: _arc_songinfo.rating_pst
               },
               {
                 ratingClass: 1,
                 chartDesigner: _arc_songinfo.chart_designer_prs,
                 jacketDesigner: _arc_songinfo.jacket_designer_prs,
-                rating: _arc_songinfo.difficultly_prs
+                rating: _arc_songinfo.rating_prs
               },
               {
                 ratingClass: 2,
                 chartDesigner: _arc_songinfo.chart_designer_ftr,
                 jacketDesigner: _arc_songinfo.jacket_designer_ftr,
-                rating: _arc_songinfo.difficultly_ftr
+                rating: _arc_songinfo.rating_ftr
               }
             ]
           };
-          
+
           // remove empty field
           if (_return.song_info.title_localized.ja == "")
             delete _return.song_info.title_localized.ja;

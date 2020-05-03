@@ -1,11 +1,16 @@
-export default (token: string): Promise<IArcAccount> => {
-  return new Promise(async (resolve, reject) => {
+import syslog from '../../corefunc/syslog';
 
-    // validate data
+const TAG: string = 'account/account.fromtoken.ts';
+export default (token: string): Promise<IArcAccount> => {
+
+  return new Promise((resolve, reject) => {
+
+    // validate token
     if (!ARCPERSISTENT[token])
       return reject(new Error('Invalid token'));
 
     resolve(ARCPERSISTENT[token]);
 
   });
+
 }

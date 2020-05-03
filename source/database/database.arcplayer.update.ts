@@ -1,4 +1,4 @@
-module.exports = (userinfos: IArcPlayer): Promise<Array<void>> => {
+export default (userinfos: IArcPlayer): Promise<Array<void>> => {
 
   // always pack object to array
   let _wrapper: Array<IArcPlayer>;
@@ -31,7 +31,7 @@ module.exports = (userinfos: IArcPlayer): Promise<Array<void>> => {
 
       // execute sql
       return DATABASE_ARCPLAYER.run(_sql, Object.values(_sqlbinding));
-      
+
     });
 
   return Promise.all(_promises);
