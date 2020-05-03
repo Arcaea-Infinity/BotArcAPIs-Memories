@@ -9,11 +9,11 @@ const APIError = require('../../../corefunc/error');
 
 const arcmana_account_recycleauto = require('../../../arcmana/account_recycleauto');
 
-module.exports = (argument) => {
+module.exports = (argument, method, path, header, databody) => {
   return new Promise(async (resolve, reject) => {
 
     try {
-
+      
       // /arc/recycle[token=xxx]
       // get token from GET parameters
       let _access_token = null;
@@ -22,8 +22,8 @@ module.exports = (argument) => {
       }
 
       // compatible with arcapi request format
-      else if (header['Authorization']) {
-        const _array = header['Authorization'].split(' ');
+      else if (header['authorization']) {
+        const _array = header['authorization'].split(' ');
         if (_array.length == 2 && _array[0] == 'Bearer')
           _access_token = _array[1];
       }

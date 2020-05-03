@@ -13,9 +13,10 @@ module.exports = (argument) => {
 
     try {
 
-      // /arc/alloc[?time=xxx]
+      // /arc/alloc[?time=xxx][&clear=true]
       // check for request arguments
       argument.time = parseInt(argument.time);
+      argument.clear = argument.clear == 'true' ? true : false;
 
       // default time is 30 sec
       if (isNaN(argument.time))
@@ -26,7 +27,7 @@ module.exports = (argument) => {
         throw new APIError(-1, 'invalid time');
 
       let _token = null;
-      try { _token = await arcmana_account_allocauto(argument.time); }
+      try { _token = await arcmana_account_allocauto(argument.time, argument.clear); }
       catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
 
       const _return = {
