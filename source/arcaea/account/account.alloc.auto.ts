@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import account_alloc from './account.alloc';
 import account_recycleauto from './account.recycle.auto';
-import arcapi_friend_clear from '../arcapi/arcapi.friend.clear';
+import arcapi_friend_clear from '../../modules/arcaea/arcapi/arcapi.friend.clear';
 
 export default (valid_time: number, clear: boolean = false): Promise<string> => {
 

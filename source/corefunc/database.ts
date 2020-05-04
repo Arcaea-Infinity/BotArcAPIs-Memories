@@ -2,7 +2,7 @@ const TAG = 'corefunc/database.ts';
 
 import file from 'fs';
 import database from 'sqlite-async';
-import syslog from './syslog';
+import syslog from '@syslog';
 
 import dbproc_arcaccount_init from '../database/database.arcaccount.init';
 import dbproc_arcaccount_all from '../database/database.arcaccount.all';

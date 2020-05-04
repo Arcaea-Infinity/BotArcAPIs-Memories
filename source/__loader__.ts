@@ -8,7 +8,7 @@ const TAG = 'source/__loader__.ts';
 
 import Utils from './corefunc/utils';
 import APIError from './corefunc/apierror';
-import syslog from './corefunc/syslog';
+import syslog from '@syslog';
 import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http';
 
 const handler_request_notfound = async (response: ServerResponse, message = '') => {

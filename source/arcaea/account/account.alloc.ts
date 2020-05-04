@@ -1,6 +1,6 @@
-import syslog from '../../corefunc/syslog';
-import arcapi_login from '../arcapi/arcapi.login';
-import arcapi_userme from '../arcapi/arcapi.userme';
+import syslog from '@syslog';
+import arcapi_login from '../../modules/arcaea/arcapi/arcapi.login';
+import arcapi_userme from '../../modules/arcaea/arcapi/arcapi.userme';
 import arcaccount_update from '../../database/database.arcaccount.update';
 
 const TAG = 'account/account.alloc.ts';

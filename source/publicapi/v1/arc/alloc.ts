@@ -1,9 +1,8 @@
-const TAG = 'v1/arc/alloc.js\t';
-
+import syslog from '@syslog';
 import APIError from '../../../corefunc/apierror';
-import syslog from '../../../corefunc/syslog';
 import account_allocauto from '../../../arcaea/account/account.alloc.auto';
 
+const TAG = 'v1/arc/alloc.js\t';
 export default (argument: any): Promise<any> => {
 
   return new Promise(async (resolve, reject) => {

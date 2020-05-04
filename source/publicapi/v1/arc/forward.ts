@@ -1,6 +1,6 @@
-import syslog from '../../../corefunc/syslog';
+import syslog from '@syslog';
 import APIError from '../../../corefunc/apierror';
-import arcapi_any from '../../../arcaea/arcapi/arcapi.any';
+import arcapi_any from '../../../modules/arcaea/arcapi/arcapi.any';
 import account_fromtoken from '../../../arcaea/account/account.fromtoken';
 
 const TAG = 'v1/arc/forward.js\t';

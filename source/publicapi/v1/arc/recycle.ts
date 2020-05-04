@@ -1,9 +1,8 @@
-const TAG = 'v1/arc/recycle.js\t';
-
+import syslog from '@syslog';
 import APIError from '../../../corefunc/apierror';
-import syslog from '../../../corefunc/syslog';
 import account_recycleauto from '../../../arcaea/account/account.recycle.auto';
 
+const TAG = 'v1/arc/recycle.js\t';
 export default (argument: any, method: ArcFetchMethod,
   path: string, header: any, databody: any): Promise<any> => {
 

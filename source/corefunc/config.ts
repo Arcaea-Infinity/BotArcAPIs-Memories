@@ -1,4 +1,4 @@
-import syslog from './syslog';
+import syslog from '@syslog';
 
 const TAG = 'corefunc/config.ts';
 

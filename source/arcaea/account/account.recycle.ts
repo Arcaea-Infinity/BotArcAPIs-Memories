@@ -1,4 +1,4 @@
-import syslog from '../../corefunc/syslog';
+import syslog from '@syslog';
 
 const TAG: string = 'account/account.recycle.ts';
 export default (account: IArcAccount) => {

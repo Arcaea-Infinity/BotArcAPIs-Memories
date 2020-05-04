@@ -1,5 +1,5 @@
 import http from 'http';
-import syslog from './corefunc/syslog';
+import syslog from '@syslog';
 import config from './corefunc/config';
 import database from './corefunc/database';
 import __loader__ from './__loader__';
@@ -44,8 +44,12 @@ const main = ((): void => {
   process.on('warning', (w) => {
     syslog.w(`warning => ${w.message}`);
   });
+  process.on('uncaughtException', (reason) => {
+    syslog.f(`unhandledRejection => ${(<any>reason)?.stack ?? 'unknown'}`);
+    process.exit(1);
+  });
   process.on('unhandledRejection', (reason, promise) => {
-    syslog.f(`unhandledRejection => ${reason}`);
+    syslog.f(`unhandledRejection => ${(<any>reason)?.stack ?? 'unknown'}`);
     process.exit(1);
   });
 

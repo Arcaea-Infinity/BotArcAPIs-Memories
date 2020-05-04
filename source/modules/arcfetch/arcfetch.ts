@@ -1,5 +1,5 @@
 import { btoa } from 'abab';
-import syslog from '../corefunc/syslog';
+import syslog from '@syslog';
 import fetch, { Request } from 'node-fetch';
 
 const TAG: string = 'corefunc/arcfetch.ts';
@@ -58,50 +58,42 @@ class ArcFetchRequest extends Request {
 }
 
 const do_fetch = (request: ArcFetchRequest): Promise<any> => {
-  return new Promise(async (resolve, reject) => {
 
-    // request origin arcapi
-    return await fetch(request)
-      .then((response) => {
-        return response.text();
-      })
+  // request origin arcapi
+  return fetch(request)
+    .then((response) => {
+      return response.text();
+    })
 
-      // try parse json
-      // print rawdata when failing
-      .then((rawdata) => {
-        try {
-          return JSON.parse(rawdata);
-        } catch (e) {
-          syslog.e(TAG, 'Arcapi currently unavailable');
-          syslog.e(TAG, rawdata);
+    // try parse json
+    // print rawdata when failing
+    .then((rawdata) => {
+      try {
+        return JSON.parse(rawdata);
+      } catch (e) {
+        syslog.e(TAG, 'Arcapi currently unavailable');
+        syslog.e(TAG, rawdata);
 
-          // The Arcaea network is currently under maintenance.
-          return reject(9);
-        }
-      })
+        // The Arcaea network is currently under maintenance.
+        return Promise.reject(9);
+      }
+    })
 
-      // ensure it's a json
-      .then((root) => {
-        if (root.success)
-          return resolve(root);
-        else {
+    // ensure it's a json
+    .then((root) => {
+      if (root.success)
+        return root;
+      else {
 
-          const _errcode =
-            root.error_code != undefined ? root.error_code : root.code;
+        const _errcode =
+          root.error_code != undefined ? root.error_code : root.code;
 
-          syslog.e(TAG, `Arcapi returns an error => ${_errcode}`);
-          syslog.e(TAG, JSON.stringify(root));
+        syslog.e(TAG, `Arcapi returns an error => ${_errcode}`);
+        syslog.e(TAG, JSON.stringify(root));
 
-          return reject(_errcode);
-        }
-      })
-
-      // any errors
-      .catch((e) => {
-        return reject(e);
-      });
-
-  });
+        return Promise.reject(_errcode);
+      }
+    });
 
 }
 

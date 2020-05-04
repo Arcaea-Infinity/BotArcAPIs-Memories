@@ -1,22 +1,22 @@
-import syslog from '../../corefunc/syslog';
-import arcfetch, { ArcFetchRequest } from '../arcfetch';
+import syslog from '@syslog';
+import arcfetch, { ArcFetchRequest } from './arcfetch';
 
-const TAG: string = 'arcapi.rank.friend.ts';
-
+const TAG: string = 'arcapi.rank.me.ts';
 export default (account: IArcAccount, songid: string,
   difficulty: number, start: number = 0, limit: number = 10) => {
 
   return new Promise((resolve, reject) => {
+
     // construct remote request
     const _remote_request =
-      new ArcFetchRequest(ArcFetchMethod.GET, 'score/song/friend', {
+      new ArcFetchRequest(ArcFetchMethod.GET, 'score/song/me', {
         userToken: account.token,
         submitData: new URLSearchParams({
           'song_id': songid,
           'difficulty': difficulty,
           'start': start,
           'limit': limit
-        } as any),
+        } as any)
       });
 
     // send request

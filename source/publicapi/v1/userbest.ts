@@ -1,10 +1,10 @@
 import Utils from '../../corefunc/utils';
-import syslog from '../../corefunc/syslog';
+import syslog from '@syslog';
 import APIError from '../../corefunc/apierror';
 
-import arcapi_friend_add from '../../arcaea/arcapi/arcapi.friend.add';
-import arcapi_friend_clear from '../../arcaea/arcapi/arcapi.friend.clear';
-import arcapi_rank_friend from '../../arcaea/arcapi/arcapi.rank.friend';
+import arcapi_friend_add from '../../modules/arcaea/arcapi/arcapi.friend.add';
+import arcapi_friend_clear from '../../modules/arcaea/arcapi/arcapi.friend.clear';
+import arcapi_rank_friend from '../../modules/arcaea/arcapi/arcapi.rank.friend';
 import account_alloc from '../../arcaea/account/account.alloc';
 import account_recycle from '../../arcaea/account/account.recycle';
 

@@ -1,7 +1,7 @@
-import syslog from '../../corefunc/syslog';
+import syslog from '@syslog';
 import APIError from '../../corefunc/apierror';
-import arcapi_friend_add from '../../arcaea/arcapi/arcapi.friend.add';
-import arcapi_friend_clear from '../../arcaea/arcapi/arcapi.friend.clear';
+import arcapi_friend_add from '../../modules/arcaea/arcapi/arcapi.friend.add';
+import arcapi_friend_clear from '../../modules/arcaea/arcapi/arcapi.friend.clear';
 import account_alloc from '../../arcaea/account/account.alloc';
 import account_recycle from '../../arcaea/account/account.recycle';
 import arcrecord_update from '../../database/database.arcrecord.update';
@@ -19,9 +19,9 @@ export default (argument: any): Promise<any> => {
       if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid usercode');
 
-      let _arc_account = null;
-      let _arc_friendlist = null;
-      let _arc_friend = null;
+      let _arc_account: IArcAccount | null = null;
+      let _arc_friendlist: Array<IArcPlayer> | null = null;
+      let _arc_friend: IArcPlayer | null = null;
 
       // request an arc account
       try {
@@ -33,7 +33,7 @@ export default (argument: any): Promise<any> => {
         // clear friend list
         try {
           await arcapi_friend_clear(_arc_account);
-        } catch (e) { throw new APIError(-3, 'clear friend list failed'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-3, 'clear friend list failed'); }
 
         // add friend
         try {

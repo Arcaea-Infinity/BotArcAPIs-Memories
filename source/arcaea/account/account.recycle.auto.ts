@@ -1,4 +1,4 @@
-import syslog from '../../corefunc/syslog';
+import syslog from '@syslog';
 import arcaea_account_recycle from './account.recycle';
 
 const TAG: string = 'account/account.recycle.auto';

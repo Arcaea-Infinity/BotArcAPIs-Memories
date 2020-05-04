@@ -1,4 +1,4 @@
-import syslog from '../../corefunc/syslog';
+import syslog from '@syslog';
 
 const TAG: string = 'account/account.fromtoken.ts';
 export default (token: string): Promise<IArcAccount> => {

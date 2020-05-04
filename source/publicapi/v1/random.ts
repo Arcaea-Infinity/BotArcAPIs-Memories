@@ -1,4 +1,4 @@
-import syslog from '../../corefunc/syslog';
+import syslog from '@syslog';
 import APIError from '../../corefunc/apierror';
 import arcsong_random from '../../database/database.arcsong.byrand';
 import arcsong_bysongid from '../../database/database.arcsong.bysongid';
