@@ -1,5 +1,9 @@
+const TAG: string = 'arcapi.friend.clear.ts';
+
 import arcapi_userme from './arcapi.userme';
 import arcapi_friend_delete from './arcapi.friend.delete';
+import IArcAccount from './interfaces/IArcAccount';
+import IArcPlayer from './interfaces/IArcPlayer';
 
 export default async (account: IArcAccount,
   friends?: Array<IArcPlayer>): Promise<void> => {

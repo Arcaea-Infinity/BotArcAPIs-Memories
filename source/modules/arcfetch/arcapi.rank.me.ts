@@ -1,7 +1,9 @@
-import syslog from '@syslog';
-import arcfetch, { ArcFetchRequest } from './arcfetch';
-
 const TAG: string = 'arcapi.rank.me.ts';
+
+import syslog from '@syslog';
+import arcfetch, { ArcFetchRequest, ArcFetchMethod } from './arcfetch';
+import IArcAccount from './interfaces/IArcAccount';
+
 export default (account: IArcAccount, songid: string,
   difficulty: number, start: number = 0, limit: number = 10) => {
 

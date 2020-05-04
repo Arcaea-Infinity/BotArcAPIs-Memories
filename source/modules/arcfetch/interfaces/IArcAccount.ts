@@ -1,4 +1,4 @@
-declare interface IArcAccount {
+export default interface IArcAccount {
   uid: number,
   ucode: string,
   token: string,

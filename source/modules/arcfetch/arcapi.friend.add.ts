@@ -1,7 +1,10 @@
-import syslog from '@syslog';
-import arcfetch, { ArcFetchRequest } from './arcfetch';
-
 const TAG: string = 'arcapi.friend.add.ts';
+
+import syslog from '@syslog';
+import arcfetch, { ArcFetchRequest, ArcFetchMethod } from './arcfetch';
+import IArcAccount from './interfaces/IArcAccount';
+import IArcPlayer from './interfaces/IArcPlayer';
+
 export default (account: IArcAccount, usercode: string): Promise<Array<IArcPlayer>> => {
 
   return new Promise((resolve, reject) => {

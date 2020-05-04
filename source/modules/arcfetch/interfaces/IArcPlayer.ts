@@ -1,4 +1,6 @@
-declare interface IArcPlayer {
+import IArcScore from "./IArcScore";
+
+export default interface IArcPlayer {
   rating: number,
   join_date: number,
   character: number,

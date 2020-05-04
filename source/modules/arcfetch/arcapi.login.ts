@@ -1,4 +1,6 @@
-import arcfetch, { ArcFetchRequest } from './arcfetch';
+const TAG: string = 'arcapi.login.ts';
+
+import arcfetch, { ArcFetchRequest, ArcFetchMethod } from './arcfetch';
 
 export default (name: string, password: string, deviceid: string): Promise<string> => {
   

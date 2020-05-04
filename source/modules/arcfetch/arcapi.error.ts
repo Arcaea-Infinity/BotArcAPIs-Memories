@@ -1,3 +1,5 @@
+const TAG: string = 'arcapi.error.ts';
+
 const _error_table: { [key: string]: string } = {
   0: 'An error occurred completing purchases. Please try restarting your device or Arcaea and ensuring that you\'re logged in to.',
   1: 'This item is currently unavailable to purchase.',

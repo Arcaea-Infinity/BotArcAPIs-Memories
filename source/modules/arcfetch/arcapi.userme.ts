@@ -1,7 +1,9 @@
-import syslog from '@syslog';
-import arcfetch, { ArcFetchRequest } from './arcfetch';
-
 const TAG: string = 'arcapi.userme.ts';
+
+import syslog from '@syslog';
+import arcfetch, { ArcFetchRequest, ArcFetchMethod } from './arcfetch';
+import IArcAccount from './interfaces/IArcAccount';
+import { IArcUserMe } from './interfaces/IArcUserMe';
 
 export default (account: IArcAccount): Promise<IArcUserMe> => {
   

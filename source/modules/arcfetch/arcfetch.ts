@@ -1,8 +1,32 @@
+const TAG: string = 'corefunc/arcfetch.ts';
+
 import { btoa } from 'abab';
 import syslog from '@syslog';
 import fetch, { Request } from 'node-fetch';
 
-const TAG: string = 'corefunc/arcfetch.ts';
+declare interface ArcFetchHeaders { [key: string]: string; }
+
+declare type ArcFetchRestUrl = string;
+
+declare enum ArcFetchMethod {
+  'GET' = 'GET',
+  'POST' = 'POST'
+}
+
+declare interface ArcFetchExtra {
+  // will send authorization headers
+  userName?: string,
+  userPasswd?: string,
+  userToken?: string,
+
+  // will send deviceid headers
+  deviceId?: string,
+
+  // GET method will convert URLSearchParams
+  // and append after the request url
+  submitData?: BodyInit | URLSearchParams
+}
+
 class ArcFetchRequest extends Request {
 
   constructor(method: ArcFetchMethod, resturl: ArcFetchRestUrl, init: ArcFetchExtra) {
@@ -134,4 +158,4 @@ const arcfetch = async (request: ArcFetchRequest): Promise<any> => {
 }
 
 export default arcfetch;
-export { ArcFetchRequest };
+export { ArcFetchRequest, ArcFetchHeaders, ArcFetchRestUrl, ArcFetchMethod, ArcFetchExtra };

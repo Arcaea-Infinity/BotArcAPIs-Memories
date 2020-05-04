@@ -1,4 +1,4 @@
-declare interface IArcScore {
+export default interface IArcScore {
   rating: number,
   modifier: number,
   time_played: number,

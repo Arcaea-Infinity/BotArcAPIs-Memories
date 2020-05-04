@@ -1,4 +1,7 @@
-declare interface IArcUserMe {
+import IArcScore from "./IArcScore";
+import IArcPlayer from "./IArcPlayer";
+
+export interface IArcUserMe {
   friends: Array<IArcPlayer>,
   user_id: number,
   name: string,

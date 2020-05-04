@@ -1,7 +1,9 @@
-import syslog from '@syslog';
-import arcfetch, { ArcFetchRequest } from './arcfetch';
-
 const TAG: string = 'arcapi.any.ts';
+
+import syslog from '@syslog';
+import arcfetch, { ArcFetchRequest, ArcFetchMethod } from './arcfetch';
+import IArcAccount from './interfaces/IArcAccount';
+
 export default (account: IArcAccount, method: ArcFetchMethod,
   path: string, databody: any): Promise<any> => {
 
