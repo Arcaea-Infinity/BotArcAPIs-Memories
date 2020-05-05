@@ -1,7 +1,7 @@
 const TAG: string = 'database.arcaccount.all.ts';
 
 import syslog from "@syslog";
-import IArcAccount from "@modules/arcfetch/interfaces/IArcAccount";
+import IArcAccount from "@arcfetch/interfaces/IArcAccount";
 import IDatabaseArcAccount from "./interfaces/IDatabaseArcAccount";
 
 export default (): Promise<Array<IArcAccount> | null> => {
@@ -13,7 +13,7 @@ export default (): Promise<Array<IArcAccount> | null> => {
   // execute sql
   return DATABASE_ARCACCOUNT.all(_sql)
     .then((data: Array<IDatabaseArcAccount> | null) => {
-      
+
       if (!data) return null;
 
       let _account: Array<any> = data;

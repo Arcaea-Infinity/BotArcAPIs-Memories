@@ -1,4 +1,4 @@
-const TAG: string = 'database.arcbest30.byuid.ts';
+const TAG: string = 'database.arcbest30.init.ts';
 
 import syslog from "@syslog";
 

@@ -1,7 +1,7 @@
 const TAG: string = 'database.arcbest30.byuid.ts';
 
-import syslog from "@syslog";
 import { atob } from 'abab';
+import syslog from "@syslog";
 import IArcBest30Result from "./interfaces/IArcBest30Result";
 import IDatabaseArcBest30 from "./interfaces/IDatabaseArcBest30";
 
