@@ -29,6 +29,10 @@ jobs:
     - name: Initialize
       run: npm ci
 
+    # Compile the project
+    - Compile
+      run: npm i -g typescript && tsc --build tsconfig.json
+
     # Test run
     - name: Test Run
       run: npm test

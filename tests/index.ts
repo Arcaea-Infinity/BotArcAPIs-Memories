@@ -23,9 +23,8 @@ import IDatabaseArcSongChart from '../source/modules/database/interfaces/IDataba
   database.initDataBases();
 
   setTimeout(async () => {
-    const charts: Array<IDatabaseArcSongChart> = await databaseArcsongAllcharts();
-    console.log(JSON.stringify(charts[0]));
-  }, 500);
-
+    const charts: Array<IDatabaseArcSongChart> | null = await databaseArcsongAllcharts();
+    if (charts) console.log(JSON.stringify(charts[0]));
+  }, 1000);
 
 })();
