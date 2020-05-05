@@ -15,7 +15,8 @@ export default (): Promise<Array<IDatabaseArcSongChart> | null> => {
       if (!data) return null;
 
       return data.map((element) => {
-        return element.rating /= 10;
+        element.rating /= 10;
+        return element;
       });
 
     });
