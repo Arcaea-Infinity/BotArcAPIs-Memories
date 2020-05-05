@@ -1,6 +1,8 @@
-import syslog from '@syslog';
-
 const TAG: string = 'account/account.fromtoken.ts';
+
+import syslog from '@syslog';
+import IArcAccount from '@arcfetch/interfaces/IArcAccount';
+
 export default (token: string): Promise<IArcAccount> => {
 
   return new Promise((resolve, reject) => {

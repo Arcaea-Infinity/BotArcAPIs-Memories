@@ -1,7 +1,10 @@
+const TAG = 'account/account.alloc.auto.ts';
+
 import crypto from 'crypto';
 import account_alloc from './account.alloc';
 import account_recycleauto from './account.recycle.auto';
-import arcapi_friend_clear from '../../modules/arcaea/arcapi/arcapi.friend.clear';
+import arcapi_friend_clear from '@arcfetch/arcapi.friend.clear';
+import IArcAccount from '@arcfetch/interfaces/IArcAccount';
 
 export default (valid_time: number, clear: boolean = false): Promise<string> => {
 
@@ -15,7 +18,7 @@ export default (valid_time: number, clear: boolean = false): Promise<string> => 
     let _account: IArcAccount;
     try {
       _account = await account_alloc();
-    } catch (e) { return reject('Allocate account failed'); }
+    } catch (e) { return reject(new Error('Allocate account failed')); }
 
     // clear friends
     if (clear) {
@@ -37,5 +40,5 @@ export default (valid_time: number, clear: boolean = false): Promise<string> => 
     resolve(_token);
 
   });
-  
+
 }

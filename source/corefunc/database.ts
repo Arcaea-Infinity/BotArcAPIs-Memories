@@ -4,13 +4,13 @@ import file from 'fs';
 import database from 'sqlite-async';
 import syslog from '@syslog';
 
-import dbproc_arcaccount_init from '../database/database.arcaccount.init';
-import dbproc_arcaccount_all from '../database/database.arcaccount.all';
-import dbproc_arcbest30_init from '../database/database.arcbest30.init';
-import dbproc_arcrecord_init from '../database/database.arcrecord.init';
-import dbproc_arcplayer_init from '../database/database.arcplayer.init';
-import dbproc_arcsong_init from '../database/database.arcsong.init';
-import dbproc_arcsong_update_songlist from '../database/database.arcsong.update.songlist';
+import dbproc_arcaccount_init from '@database/database.arcaccount.init';
+import dbproc_arcaccount_all from '@database/database.arcaccount.all';
+import dbproc_arcbest30_init from '@database/database.arcbest30.init';
+import dbproc_arcrecord_init from '@database/database.arcrecord.init';
+import dbproc_arcplayer_init from '@database/database.arcplayer.init';
+import dbproc_arcsong_init from '@database/database.arcsong.init';
+import dbproc_arcsong_update_songlist from '@database/database.arcsong.update.songlist';
 
 const initDataBases = (): void => {
 

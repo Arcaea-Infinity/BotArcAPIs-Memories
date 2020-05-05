@@ -2,17 +2,21 @@ import syslog from '@syslog';
 import Utils from '../../corefunc/utils';
 import APIError from '../../corefunc/apierror';
 
-import arcapi_friend_add from '../../modules/arcaea/arcapi/arcapi.friend.add';
-import arcapi_friend_clear from '../../modules/arcaea/arcapi/arcapi.friend.clear';
-import arcapi_aggregate from '../../modules/arcaea/arcapi/arcapi.aggregate';
+import arcapi_friend_add from '@arcfetch/arcapi.friend.add';
+import arcapi_friend_clear from '@arcfetch/arcapi.friend.clear';
+import arcapi_aggregate from '@arcfetch/arcapi.aggregate';
 import account_alloc from '../../arcaea/account/account.alloc';
 import account_recycle from '../../arcaea/account/account.recycle';
 
-import arcrecord_update from '../../database/database.arcrecord.update';
-import arcplayer_update from '../../database/database.arcplayer.update';
-import arcbest30_byuid from '../../database/database.arcbest30.byuid';
-import arcbest30_update from '../../database/database.arcbest30.update';
-import arcsong_charts_all from '../../database/database.arcsong.allcharts';
+import arcrecord_update from '@database/database.arcrecord.update';
+import arcplayer_update from '@database/database.arcplayer.update';
+import arcbest30_byuid from '@database/database.arcbest30.byuid';
+import arcbest30_update from '@database/database.arcbest30.update';
+import arcsong_charts_all from '@database/database.arcsong.allcharts';
+
+import IArcAccount from '@arcfetch/interfaces/IArcAccount';
+import IArcPlayer from '@arcfetch/interfaces/IArcPlayer';
+import IArcBest30Result from '@database/interfaces/IArcBest30Result';
 
 const TAG = 'v1/userbest30.ts\t';
 export default (argument: any): Promise<any> => {

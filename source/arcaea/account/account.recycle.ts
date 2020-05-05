@@ -1,6 +1,8 @@
-import syslog from '@syslog';
-
 const TAG: string = 'account/account.recycle.ts';
+
+import syslog from '@syslog';
+import IArcAccount from '@arcfetch/interfaces/IArcAccount';
+
 export default (account: IArcAccount) => {
 
   ARCACCOUNT.push(account);
