@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "node build/source/index.js",
-    "testx": "node build/source/test.js"
+    "test": "node build/source/test.js"
   },
   "repository": {
     "type": "git",
