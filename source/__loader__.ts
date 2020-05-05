@@ -4,11 +4,11 @@
 // comment  : loader handles api requests and map to require files
 //            it's also a global access point
 
-const TAG = 'source/__loader__.ts';
+const TAG: string = 'source/__loader__.ts';
 
 import Utils from './corefunc/utils';
-import APIError from '@apierror';
-import syslog from '@syslog';
+import APIError from './modules/apierror/apierror';
+import syslog from './modules/syslog/syslog';
 import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http';
 
 const handler_request_notfound = async (response: ServerResponse, message = '') => {
@@ -76,7 +76,7 @@ const handler_request_publicapi =
 
       // try invoke method
       const _api_result: any = {};
-      
+
       _api_entry = _api_entry.default;
       await _api_entry(argument, method, path, header, databody)
         .then((result: any) => {
@@ -105,7 +105,7 @@ const handler_request_publicapi =
     response.end(_http_body);
 
     syslog.v(TAG, 'Send response back');
-    
+
   }
 
 const routine = async (request: IncomingMessage, response: ServerResponse) => {
@@ -156,7 +156,7 @@ const routine = async (request: IncomingMessage, response: ServerResponse) => {
     );
 
   });
-  
+
 }
 
 export default routine;

@@ -1,8 +1,8 @@
 const TAG: string = 'v1/arc/alloc.js\t';
 
-import syslog from '@syslog';
-import APIError from '@apierror';
-import account_alloc_auto from '@account/alloc.auto';
+import syslog from '../../../modules/syslog/syslog';
+import APIError from '../../../modules/apierror/apierror';
+import account_alloc_auto from '../../../modules/account/alloc.auto';
 
 export default (argument: any): Promise<any> => {
 

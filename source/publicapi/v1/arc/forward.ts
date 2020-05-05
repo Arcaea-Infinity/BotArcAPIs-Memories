@@ -1,10 +1,10 @@
 const TAG: string = 'v1/arc/forward.js\t';
 
-import syslog from '@syslog';
-import APIError from '@apierror';
-import arcapi_any from '@arcfetch/arcapi.any';
-import account_fromtoken from '@account/fromtoken';
-import { ArcFetchMethod } from '@arcfetch/arcfetch';
+import syslog from '../../../modules/syslog/syslog';
+import APIError from '../../../modules/apierror/apierror';
+import arcapi_any from '../../../modules/arcfetch/arcapi.any';
+import account_fromtoken from '../../../modules/account/fromtoken';
+import { ArcFetchMethod } from '../../../modules/arcfetch/arcfetch';
 
 export default (argument: any, method: ArcFetchMethod,
   path: string, header: any, databody: any): Promise<any> => {

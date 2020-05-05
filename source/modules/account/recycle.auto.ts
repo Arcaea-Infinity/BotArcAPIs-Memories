@@ -1,6 +1,6 @@
 const TAG: string = 'account/recycle.auto.ts';
 
-import syslog from '@syslog';
+import syslog from '../syslog/syslog';
 import account_recycle from './recycle';
 
 export default (token: string): Promise<void> => {

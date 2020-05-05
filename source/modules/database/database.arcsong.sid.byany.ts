@@ -1,6 +1,8 @@
 const TAG: string = 'database.arcsong.sid.byany.ts';
 
-import syslog from "@syslog";
+import syslog from "../syslog/syslog";
+import IDatabaseArcSongAlias from "./interfaces/IDatabaseArcSongAlias";
+import IDatabaseArcSong from "./interfaces/IDatabaseArcSong";
 
 export default (anystr: string): Promise<Array<string>> => {
 

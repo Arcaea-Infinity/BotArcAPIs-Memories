@@ -1,7 +1,7 @@
 const TAG: string = 'database.arcaccount.all.ts';
 
-import syslog from "@syslog";
-import IArcAccount from "@arcfetch/interfaces/IArcAccount";
+import syslog from "../syslog/syslog";
+import IArcAccount from "../arcfetch/interfaces/IArcAccount";
 import IDatabaseArcAccount from "./interfaces/IDatabaseArcAccount";
 
 export default (): Promise<Array<IArcAccount> | null> => {

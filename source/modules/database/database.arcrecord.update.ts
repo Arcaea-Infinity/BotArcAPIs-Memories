@@ -1,7 +1,7 @@
 const TAG: string = 'database.arcrecord.update.ts';
 
-import syslog from "@syslog";
-import IArcScore from "@modules/arcfetch/interfaces/IArcScore";
+import syslog from "../syslog/syslog";
+import IArcScore from "../arcfetch/interfaces/IArcScore";
 
 export default (userid: number,
   records: Array<IArcScore> | IArcScore): Promise<Array<void>> => {

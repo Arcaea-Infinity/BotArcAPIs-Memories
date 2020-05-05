@@ -1,6 +1,7 @@
 const TAG: string = 'database.arcsong.allcharts.ts';
 
-import syslog from "@syslog";
+import syslog from "../syslog/syslog";
+import IDatabaseArcSongChart from "./interfaces/IDatabaseArcSongChart";
 
 export default (): Promise<Array<IDatabaseArcSongChart> | null> => {
 

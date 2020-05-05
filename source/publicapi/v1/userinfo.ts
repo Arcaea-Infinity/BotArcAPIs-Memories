@@ -1,18 +1,18 @@
 const TAG: string = 'v1/userinfo.ts\t';
 
-import syslog from '@syslog';
-import APIError from '@apierror';
+import syslog from '../../modules/syslog/syslog';
+import APIError from '../../modules/apierror/apierror';
 
-import arcapi_friend_add from '@arcfetch/arcapi.friend.add';
-import arcapi_friend_clear from '@arcfetch/arcapi.friend.clear';
-import account_alloc from '@account/alloc';
-import account_recycle from '@account/recycle';
+import arcapi_friend_add from '../../modules/arcfetch/arcapi.friend.add';
+import arcapi_friend_clear from '../../modules/arcfetch/arcapi.friend.clear';
+import account_alloc from '../../modules/account/alloc';
+import account_recycle from '../../modules/account/recycle';
 
-import arcrecord_update from '@database/database.arcrecord.update';
-import arcplayer_update from '@database/database.arcplayer.update';
+import arcrecord_update from '../../modules/database/database.arcrecord.update';
+import arcplayer_update from '../../modules/database/database.arcplayer.update';
 
-import IArcAccount from '@arcfetch/interfaces/IArcAccount';
-import IArcPlayer from '@arcfetch/interfaces/IArcPlayer';
+import IArcAccount from '../../modules/arcfetch/interfaces/IArcAccount';
+import IArcPlayer from '../../modules/arcfetch/interfaces/IArcPlayer';
 
 export default (argument: any): Promise<any> => {
 

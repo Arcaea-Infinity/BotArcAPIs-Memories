@@ -1,7 +1,7 @@
 const TAG: string = 'corefunc/arcfetch.ts';
 
 import { btoa } from 'abab';
-import syslog from '@syslog';
+import syslog from '../syslog/syslog';
 import fetch, { Request } from 'node-fetch';
 
 declare interface ArcFetchHeaders { [key: string]: string; }

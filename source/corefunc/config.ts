@@ -1,6 +1,6 @@
 const TAG = 'corefunc/config.ts';
 
-import syslog from '@syslog';
+import syslog from '../modules/syslog/syslog';
 
 const _default_config: any = {
   // botarcapi version

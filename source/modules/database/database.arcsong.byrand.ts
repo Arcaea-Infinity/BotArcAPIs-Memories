@@ -1,6 +1,6 @@
 const TAG: string = 'database.arcsong.byrand.ts';
 
-import syslog from "@syslog";
+import syslog from "../syslog/syslog";
 
 export default (start: number, end: number): Promise<any> => {
 

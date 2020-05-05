@@ -1,6 +1,6 @@
 const TAG: string = 'arcapi.friend.add.ts';
 
-import syslog from '@syslog';
+import syslog from '../syslog/syslog';
 import arcfetch, { ArcFetchRequest, ArcFetchMethod } from './arcfetch';
 import IArcAccount from './interfaces/IArcAccount';
 import IArcPlayer from './interfaces/IArcPlayer';

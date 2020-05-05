@@ -1,7 +1,8 @@
 const TAG: string = 'database.arcplayer.update.ts';
 
-import syslog from "@syslog";
-import IArcPlayer from "@arcfetch/interfaces/IArcPlayer";
+import syslog from "../syslog/syslog";
+import IArcPlayer from "../arcfetch/interfaces/IArcPlayer";
+import IDatabaseArcPlayer from "./interfaces/IDatabaseArcPlayer";
 
 export default (userinfos: IArcPlayer): Promise<Array<void>> => {
 

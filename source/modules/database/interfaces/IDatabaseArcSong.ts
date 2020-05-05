@@ -1,4 +1,4 @@
-declare interface IDatabaseArcSong {
+export default interface IDatabaseArcSong {
   sid: string,
   name_en: string,
   name_jp: string,
@@ -23,16 +23,4 @@ declare interface IDatabaseArcSong {
   jacket_designer_pst: string,
   jacket_designer_prs: string,
   jacket_designer_ftr: string
-}
-
-declare interface IDatabaseArcSongAlias {
-  sid: string,
-  alias: string
-}
-
-declare interface IDatabaseArcSongChart {
-  sid: string,
-  rating_class: number,
-  difficultly: number,
-  rating: number
 }

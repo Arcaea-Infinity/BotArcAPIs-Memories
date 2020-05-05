@@ -1,4 +1,4 @@
-declare interface IDatabaseArcPlayer {
+export default interface IDatabaseArcPlayer {
   uid: number,
   code: string,
   name: string,

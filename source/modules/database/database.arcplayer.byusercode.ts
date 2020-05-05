@@ -1,6 +1,7 @@
 const TAG: string = 'database.arcplayer.byusercode.ts';
 
-import syslog from "@syslog";
+import syslog from "../syslog/syslog";
+import IDatabaseArcPlayer from "./interfaces/IDatabaseArcPlayer";
 
 export default (usercode: string): Promise<IDatabaseArcPlayer | null> => {
 

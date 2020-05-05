@@ -1,6 +1,6 @@
 const TAG: string = 'database.arcsong.init.ts';
 
-import syslog from "@syslog";
+import syslog from "../syslog/syslog";
 
 export default (): Promise<void> => {
 

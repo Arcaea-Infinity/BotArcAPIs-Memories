@@ -1,6 +1,6 @@
 import http from 'http';
-import syslog from '@syslog';
 import config from './corefunc/config';
+import syslog from './modules/syslog/syslog';
 import database from './corefunc/database';
 import __loader__ from './__loader__';
 

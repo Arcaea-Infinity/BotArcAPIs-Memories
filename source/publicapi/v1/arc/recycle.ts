@@ -1,9 +1,9 @@
 const TAG: string = 'v1/arc/recycle.js\t';
 
-import syslog from '@syslog';
-import APIError from '@apierror';
-import account_recycle_auto from '@account/recycle.auto';
-import { ArcFetchMethod } from '@arcfetch/arcfetch';
+import syslog from '../../../modules/syslog/syslog';
+import APIError from '../../../modules/apierror/apierror';
+import account_recycle_auto from '../../../modules/account/recycle.auto';
+import { ArcFetchMethod } from '../../../modules/arcfetch/arcfetch';
 
 export default (argument: any, method: ArcFetchMethod,
   path: string, header: any, databody: any): Promise<any> => {

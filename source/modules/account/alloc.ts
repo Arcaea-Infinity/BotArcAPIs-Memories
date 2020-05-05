@@ -1,10 +1,10 @@
 const TAG = 'account/alloc.ts';
 
-import syslog from '@syslog';
-import arcapi_login from '@arcfetch/arcapi.login';
-import arcapi_userme from '@arcfetch/arcapi.userme';
+import syslog from '../syslog/syslog';
+import arcapi_login from '../arcfetch/arcapi.login';
+import arcapi_userme from '../arcfetch/arcapi.userme';
 import arcaccount_update from '@database/database.arcaccount.update';
-import IArcAccount from '@arcfetch/interfaces/IArcAccount';
+import IArcAccount from '../arcfetch/interfaces/IArcAccount';
 
 export default (): Promise<IArcAccount> => {
 

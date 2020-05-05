@@ -3,8 +3,8 @@ const TAG = 'account/alloc.auto.ts';
 import crypto from 'crypto';
 import account_alloc from './alloc';
 import account_recycle_auto from './recycle.auto';
-import arcapi_friend_clear from '@arcfetch/arcapi.friend.clear';
-import IArcAccount from '@arcfetch/interfaces/IArcAccount';
+import arcapi_friend_clear from '../arcfetch/arcapi.friend.clear';
+import IArcAccount from '../arcfetch/interfaces/IArcAccount';
 
 export default (valid_time: number, clear: boolean = false): Promise<string> => {
 

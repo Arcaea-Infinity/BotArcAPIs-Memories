@@ -1,9 +1,9 @@
 const TAG: string = 'v1/random.ts\t';
 
-import syslog from '@syslog';
-import APIError from '@apierror';
-import arcsong_random from '@database/database.arcsong.byrand';
-import arcsong_bysongid from '@database/database.arcsong.bysongid';
+import syslog from '../../modules/syslog/syslog';
+import APIError from '../../modules/apierror/apierror';
+import arcsong_random from '../../modules/database/database.arcsong.byrand';
+import arcsong_bysongid from '../../modules/database/database.arcsong.bysongid';
 
 export default (argument: any): Promise<any> => {
 

@@ -1,6 +1,6 @@
 const TAG: string = 'database.arcaccount.init.ts';
 
-import syslog from "@syslog";
+import syslog from "../syslog/syslog";
 
 export default (): Promise<void> => {
 

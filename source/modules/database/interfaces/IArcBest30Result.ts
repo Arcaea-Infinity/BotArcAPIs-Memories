@@ -1,4 +1,4 @@
-import IArcScore from "@arcfetch/interfaces/IArcScore";
+import IArcScore from "../../arcfetch/interfaces/IArcScore";
 
 export default interface IArcBest30Result {
   last_played: number,

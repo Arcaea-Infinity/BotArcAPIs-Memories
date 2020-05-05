@@ -1,7 +1,7 @@
 const TAG: string = 'database.arcbest30.update.ts';
 
 import { btoa } from 'abab';
-import syslog from "@syslog";
+import syslog from "../syslog/syslog";
 import IArcBest30Result from './interfaces/IArcBest30Result';
 import IDatabaseArcBest30 from './interfaces/IDatabaseArcBest30';
 
