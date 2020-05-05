@@ -1,3 +1,7 @@
+const TAG: string = 'database.arcsong.sid.byany.ts';
+
+import syslog from "@syslog";
+
 export default (anystr: string): Promise<Array<string>> => {
 
   return new Promise(async (resolve, reject) => {
@@ -8,6 +12,7 @@ export default (anystr: string): Promise<Array<string>> => {
 
       const _sql: string =
         'SELECT * FROM `alias` WHERE `alias` LIKE ?';
+      syslog.v(TAG, _sql);
 
       const _result: Array<IDatabaseArcSongAlias> | null =
         await DATABASE_ARCSONG.all(_sql, [anystr]);
@@ -30,6 +35,7 @@ export default (anystr: string): Promise<Array<string>> => {
         '`name_en` LIKE ? OR ' +
         '`name_jp` LIKE ? OR ' +
         '`alias` LIKE ?'
+      syslog.v(TAG, _sql);
 
       const _result: Array<IDatabaseArcSong> | null =
         await DATABASE_ARCSONG.all(_sql, Array(4).fill(`%${anystr}%`));

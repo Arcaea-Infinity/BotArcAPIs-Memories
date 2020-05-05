@@ -1,6 +1,6 @@
 import syslog from '@syslog';
 import APIError from '../../corefunc/apierror';
-import arcsong_sid_byany from '../../database/database.arcsong.sid.byany';
+import arcsong_sid_byany from '../../modules/database/database.arcsong.sid.byany';
 
 const TAG = 'v1/songalias.ts\t';
 export default (argument: any): Promise<any> => {

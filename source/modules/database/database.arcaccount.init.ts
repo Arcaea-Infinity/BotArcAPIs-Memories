@@ -1,3 +1,7 @@
+const TAG: string = 'database.arcaccount.init.ts';
+
+import syslog from "@syslog";
+
 export default (): Promise<void> => {
 
   const _sql: string =
@@ -10,6 +14,7 @@ export default (): Promise<void> => {
     '`token`  TEXT DEFAULT "",' +
     '`banned` TEXT NOT NULL DEFAULT "false" CHECK(`banned` IN("true", "false")),' +
     'PRIMARY KEY (`name` ASC));';
+  syslog.v(TAG, _sql);
 
   return DATABASE_ARCACCOUNT.exec(_sql);
 

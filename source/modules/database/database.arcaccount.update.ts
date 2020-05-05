@@ -1,3 +1,9 @@
+const TAG: string = 'database.arcaccount.update.ts';
+
+import syslog from "@syslog";
+import IArcAccount from "@modules/arcfetch/interfaces/IArcAccount";
+import IDatabaseArcAccount from "./interfaces/IDatabaseArcAccount";
+
 export default (account: IArcAccount): Promise<void> => {
 
   const _sqlbinding: IDatabaseArcAccount = {
@@ -21,6 +27,7 @@ export default (account: IArcAccount): Promise<void> => {
   const _sql: string =
     'UPDATE `accounts` ' +
     `SET ${_binding_updates} WHERE \`name\` == ?`;
+  syslog.v(TAG, _sql);
 
   // execute sql
   return DATABASE_ARCACCOUNT.run(_sql, Object.values(_sqlbinding));

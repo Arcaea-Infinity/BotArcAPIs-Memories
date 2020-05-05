@@ -1,8 +1,4 @@
-declare interface IArcSongList {
-  songs: Array<IArcSong>
-}
-
-declare interface IArcSong {
+export default interface IArcSong {
   id: string,
   title_localized: {
     en: string,

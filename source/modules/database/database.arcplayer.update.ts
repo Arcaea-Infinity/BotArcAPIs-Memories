@@ -1,3 +1,8 @@
+const TAG: string = 'database.arcplayer.update.ts';
+
+import syslog from "@syslog";
+import IArcPlayer from "@arcfetch/interfaces/IArcPlayer";
+
 export default (userinfos: IArcPlayer): Promise<Array<void>> => {
 
   // always pack object to array
@@ -28,6 +33,7 @@ export default (userinfos: IArcPlayer): Promise<Array<void>> => {
         `INSERT OR REPLACE INTO ` +
         `\`players\`(${Object.keys(_sqlbinding).join()}) ` +
         `VALUES(${new Array(Object.keys(_sqlbinding).length).fill('?').join(',')});`;
+      syslog.v(TAG, _sql);
 
       // execute sql
       return DATABASE_ARCPLAYER.run(_sql, Object.values(_sqlbinding));

@@ -1,3 +1,7 @@
+const TAG: string = 'database.arcrecord.init.ts';
+
+import syslog from "@syslog";
+
 export default (): Promise<void> => {
 
   const _sql: string =
@@ -17,8 +21,9 @@ export default (): Promise<void> => {
     '`perfect_count` INTEGER NOT NULL,' +
     '`shiny_perfect_count` INTEGER NOT NULL, ' +
     'PRIMARY KEY ("uid" ASC, "song_id" ASC, "time_played" ASC));';
+  syslog.v(TAG, _sql);
 
   // execute sql
   return DATABASE_ARCRECORD.exec(_sql);
-  
+
 }

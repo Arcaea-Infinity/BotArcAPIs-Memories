@@ -1,3 +1,7 @@
+const TAG: string = 'database.arcplayer.init.ts';
+
+import syslog from "@syslog";
+
 export default (): Promise<void> => {
 
   const _sql: string =
@@ -8,6 +12,7 @@ export default (): Promise<void> => {
     '`ptt`  INTEGER DEFAULT -1,' +     // user ptt
     '`join_date` INTEGER NOT NULL,' +  // join date
     'PRIMARY KEY (`uid` ASC));';
+  syslog.v(TAG, _sql);
 
   // execute sql
   return DATABASE_ARCPLAYER.exec(_sql);

@@ -1,7 +1,12 @@
+const TAG: string = 'database.arcsong.allcharts.ts';
+
+import syslog from "@syslog";
+
 export default (): Promise<Array<IDatabaseArcSongChart> | null> => {
 
   const _sql: string =
     'SELECT * FROM `charts` ORDER BY `rating` DESC';
+  syslog.v(TAG, _sql);
 
   // execute sql
   return DATABASE_ARCSONG.all(_sql)

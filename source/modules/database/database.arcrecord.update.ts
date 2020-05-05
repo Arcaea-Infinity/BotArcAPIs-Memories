@@ -1,5 +1,10 @@
-export default (userid: number, records: Array<IArcScore> | IArcScore):
-  Promise<Array<void>> => {
+const TAG: string = 'database.arcrecord.update.ts';
+
+import syslog from "@syslog";
+import IArcScore from "@modules/arcfetch/interfaces/IArcScore";
+
+export default (userid: number,
+  records: Array<IArcScore> | IArcScore): Promise<Array<void>> => {
 
   // always pack object to array
   let _wrapper: Array<IArcScore>;
@@ -33,6 +38,7 @@ export default (userid: number, records: Array<IArcScore> | IArcScore):
       const _sql = 'INSERT OR IGNORE INTO ' +
         `\`records\`(${Object.keys(_sqlbinding).join()}) ` +
         `VALUES(${new Array(Object.keys(_sqlbinding).length).fill('?').join(',')});`;
+      syslog.v(TAG, _sql);
 
       // execute sql
       return DATABASE_ARCRECORD.run(_sql, Object.values(_sqlbinding));

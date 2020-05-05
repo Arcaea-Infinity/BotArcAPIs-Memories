@@ -1,5 +1,10 @@
+const TAG: string = 'database.arcsong.sid.byany.ts';
+
+import syslog from "@syslog";
+import IArcSongList from "./interfaces/IArcSongList";
+
 export default (songlist: IArcSongList): Promise<void> => {
-  
+
   return Promise.resolve()
 
     // do update 'songs' table
@@ -50,6 +55,7 @@ export default (songlist: IArcSongList): Promise<void> => {
             'INSERT INTO ' +
             `\`songs\`(${_binding_keys}) VALUES(${_binding_vals})` +
             `ON CONFLICT(\`sid\`) DO UPDATE SET ${_binding_conflicts}`
+          syslog.v(TAG, _sql);
 
           // execute sql
           return DATABASE_ARCSONG.run(_sql, Object.values(_sqlbinding));
@@ -71,6 +77,7 @@ export default (songlist: IArcSongList): Promise<void> => {
         '  SELECT `sid`, 1, `difficultly_prs`, `rating_prs` FROM `songs`;' +
         'INSERT INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
         '  SELECT `sid`, 2, `difficultly_ftr`, `rating_ftr` FROM `songs`;';
+      syslog.v(TAG, _sql);
 
       // execute sql
       return DATABASE_ARCSONG.exec(_sql);

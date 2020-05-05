@@ -1,4 +1,4 @@
-declare interface IDatabaseArcAccount {
+export default interface IDatabaseArcAccount {
   uid: number,
   ucode: string,
   token: string,

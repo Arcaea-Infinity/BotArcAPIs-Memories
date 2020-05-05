@@ -1,7 +1,12 @@
+const TAG: string = 'database.arcsong.bysongid.ts';
+
+import syslog from "@syslog";
+
 export default (songid: string): Promise<IDatabaseArcSong> => {
 
   const _sql: string =
     'SELECT * FROM `songs` WHERE `sid` == ?';
+  syslog.v(TAG, _sql);
 
   // execute sql
   return DATABASE_ARCSONG.get(_sql, [songid])

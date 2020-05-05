@@ -1,5 +1,9 @@
+const TAG: string = 'database.arcsong.init.ts';
+
+import syslog from "@syslog";
+
 export default (): Promise<void> => {
-  
+
   return Promise.resolve()
 
     // the 'songs' table
@@ -41,6 +45,7 @@ export default (): Promise<void> => {
         '`jacket_designer_ftr` TEXT NOT NULL DEFAULT "",' +  // jacket designer future
 
         'PRIMARY KEY ("sid" ASC))';
+      syslog.v(TAG, _sql);
 
       return DATABASE_ARCSONG.exec(_sql);
 
@@ -55,6 +60,7 @@ export default (): Promise<void> => {
         '`alias`  TEXT NOT NULL,' +
         'PRIMARY KEY(`sid` ASC, `alias` ASC), ' +
         'FOREIGN KEY(`sid`) REFERENCES `songs`(`sid`))';
+      syslog.v(TAG, _sql);
 
       return DATABASE_ARCSONG.exec(_sql);
     })
@@ -69,6 +75,7 @@ export default (): Promise<void> => {
         '`difficultly`  INTEGER NOT NULL,' +
         '`rating`       INTEGER NOT NULL,' +
         'FOREIGN KEY(`sid`) REFERENCES `songs`(`sid`))';
+      syslog.v(TAG, _sql);
 
       return DATABASE_ARCSONG.exec(_sql);
 
