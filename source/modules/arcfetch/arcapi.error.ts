@@ -7,6 +7,7 @@ const _error_table: { [key: string]: string } = {
   3: 'You have been logged out by another device. Please restart Arcaea.',
   4: 'Could not connect to online server.',
   5: 'Incorrect app version.',
+  7: 'unknown',
   9: 'The Arcaea network is currently under maintenance.',
   12: 'Please update Arcaea to the latest version.',
   100: 'Registrations from this IP address are restricted. Try again later or contact support@lowiro.com.',

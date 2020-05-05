@@ -4,16 +4,16 @@ import { btoa } from 'abab';
 import syslog from '../syslog/syslog';
 import fetch, { Request } from 'node-fetch';
 
-declare interface ArcFetchHeaders { [key: string]: string; }
+export interface ArcFetchHeaders { [key: string]: string; }
 
-declare type ArcFetchRestUrl = string;
+export type ArcFetchRestUrl = string;
 
-declare enum ArcFetchMethod {
+export enum ArcFetchMethod {
   'GET' = 'GET',
   'POST' = 'POST'
 }
 
-declare interface ArcFetchExtra {
+export interface ArcFetchExtra {
   // will send authorization headers
   userName?: string,
   userPasswd?: string,
@@ -27,7 +27,7 @@ declare interface ArcFetchExtra {
   submitData?: BodyInit | URLSearchParams
 }
 
-class ArcFetchRequest extends Request {
+export class ArcFetchRequest extends Request {
 
   constructor(method: ArcFetchMethod, resturl: ArcFetchRestUrl, init: ArcFetchExtra) {
 
@@ -127,6 +127,8 @@ const do_fetch = (request: ArcFetchRequest): Promise<any> => {
  */
 const arcfetch = async (request: ArcFetchRequest): Promise<any> => {
 
+  syslog.v(TAG, `Arcfetch => ${request.url}`);
+
   let _retry = 0;
   while (true) {
 
@@ -158,4 +160,3 @@ const arcfetch = async (request: ArcFetchRequest): Promise<any> => {
 }
 
 export default arcfetch;
-export { ArcFetchRequest, ArcFetchHeaders, ArcFetchRestUrl, ArcFetchMethod, ArcFetchExtra };

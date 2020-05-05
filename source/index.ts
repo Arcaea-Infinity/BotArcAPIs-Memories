@@ -1,11 +1,12 @@
+const TAG: string = 'source/index.ts';
+
 import http from 'http';
 import config from './corefunc/config';
 import syslog from './modules/syslog/syslog';
 import database from './corefunc/database';
 import __loader__ from './__loader__';
 
-const TAG: string = 'source/index.ts';
-const main = ((): void => {
+(function main(): void {
 
   // initialize config first
   config.loadConfigs();
@@ -22,7 +23,7 @@ const main = ((): void => {
 
   // goto main entry ヾ(^▽^*)))
   const service = http.createServer(__loader__).listen(SERVER_PORT);
-  console.info(`Http server started at 0.0.0.0:${SERVER_PORT}`);
+  syslog.i(`Http server started at 0.0.0.0:${SERVER_PORT}`);
 
   // nodejs event handlers
   process.on('exit', (code) => {
