@@ -19,7 +19,7 @@ import arcsong_charts_all from '../../modules/database/database.arcsong.allchart
 import IArcAccount from '../../modules/arcfetch/interfaces/IArcAccount';
 import IArcPlayer from '../../modules/arcfetch/interfaces/IArcPlayer';
 import IArcBest30Result from '../../modules/database/interfaces/IArcBest30Result';
-import IDatabaseArcSongChart from '@database/interfaces/IDatabaseArcSongChart';
+import IDatabaseArcSongChart from '../../modules/database/interfaces/IDatabaseArcSongChart';
 
 export default (argument: any): Promise<any> => {
 
@@ -202,10 +202,12 @@ const do_fetch_userbest30 =
 
           while (true) {
 
+            syslog.d(_arc_chartuser[_arc_chartuser.length - 1].rating - 2, _arc_chartlist[0].rating);
+            
             const _chartheap: Array<IDatabaseArcSongChart> = [];
             const _endpoints: Array<string> = [];
             for (let i = 0; i < 5; ++i) {
-              if (_arc_chartlist.length != 0 || _arc_chartuser.length == 0 &&
+              if ((_arc_chartlist.length != 0 || _arc_chartuser.length == 0) &&
                 _arc_chartuser[_arc_chartuser.length - 1].rating - 2 <= _arc_chartlist[0].rating) {
 
                 // fill the endpoints and chartheap
