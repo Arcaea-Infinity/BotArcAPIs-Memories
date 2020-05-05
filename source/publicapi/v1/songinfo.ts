@@ -1,9 +1,10 @@
-import syslog from '@syslog';
-import APIError from '../../corefunc/apierror';
-import arcsong_sid_byany from '../../database/database.arcsong.sid.byany';
-import arcsong_bysongid from '../../database/database.arcsong.bysongid';
+const TAG: string = 'v1/songinfo.ts\t';
 
-const TAG = 'v1/songinfo.ts\t';
+import syslog from '@syslog';
+import APIError from '@apierror';
+import arcsong_sid_byany from '@database/database.arcsong.sid.byany';
+import arcsong_bysongid from '@database/database.arcsong.bysongid';
+
 export default (argument: any): Promise<any> => {
 
   return new Promise(async (resolve, reject) => {

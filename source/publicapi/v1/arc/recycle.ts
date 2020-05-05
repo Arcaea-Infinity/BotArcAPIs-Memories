@@ -1,8 +1,10 @@
-import syslog from '@syslog';
-import APIError from '../../../corefunc/apierror';
-import account_recycleauto from '../../../arcaea/account/account.recycle.auto';
+const TAG: string = 'v1/arc/recycle.js\t';
 
-const TAG = 'v1/arc/recycle.js\t';
+import syslog from '@syslog';
+import APIError from '@apierror';
+import account_recycle_auto from '@account/recycle.auto';
+import { ArcFetchMethod } from '@arcfetch/arcfetch';
+
 export default (argument: any, method: ArcFetchMethod,
   path: string, header: any, databody: any): Promise<any> => {
 
@@ -29,7 +31,7 @@ export default (argument: any, method: ArcFetchMethod,
         throw new APIError(-1, 'invalid token');
 
       // recycle the account
-      try { await account_recycleauto(_access_token); }
+      try { await account_recycle_auto(_access_token); }
       catch (e) { throw new APIError(-2, 'invalid token'); }
 
       resolve();

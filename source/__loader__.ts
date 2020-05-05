@@ -7,7 +7,7 @@
 const TAG = 'source/__loader__.ts';
 
 import Utils from './corefunc/utils';
-import APIError from './corefunc/apierror';
+import APIError from '@apierror';
 import syslog from '@syslog';
 import { IncomingMessage, ServerResponse, IncomingHttpHeaders } from 'http';
 

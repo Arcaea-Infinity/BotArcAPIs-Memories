@@ -1,19 +1,20 @@
+const TAG: string = 'v1/userbest.ts\t';
+
 import Utils from '../../corefunc/utils';
 import syslog from '@syslog';
-import APIError from '../../corefunc/apierror';
+import APIError from '@apierror';
 
-import arcapi_friend_add from '../../modules/arcaea/arcapi/arcapi.friend.add';
-import arcapi_friend_clear from '../../modules/arcaea/arcapi/arcapi.friend.clear';
-import arcapi_rank_friend from '../../modules/arcaea/arcapi/arcapi.rank.friend';
-import account_alloc from '../../arcaea/account/account.alloc';
-import account_recycle from '../../arcaea/account/account.recycle';
+import arcapi_friend_add from '@arcfetch/arcapi.friend.add';
+import arcapi_friend_clear from '@arcfetch/arcapi.friend.clear';
+import arcapi_rank_friend from '@arcfetch/arcapi.rank.friend';
+import account_alloc from '@account/alloc';
+import account_recycle from '@account/recycle';
 
-import arcsong_bysongid from '../../database/database.arcsong.bysongid';
-import arcsong_sid_byany from '../../database/database.arcsong.sid.byany';
-import arcrecord_update from '../../database/database.arcrecord.update';
-import arcplayer_update from '../../database/database.arcplayer.update';
+import arcsong_bysongid from '@database/database.arcsong.bysongid';
+import arcsong_sid_byany from '@database/database.arcsong.sid.byany';
+import arcrecord_update from '@database/database.arcrecord.update';
+import arcplayer_update from '@database/database.arcplayer.update';
 
-const TAG = 'v1/userbest.ts\t';
 export default (argument: any): Promise<any> => {
 
   return new Promise(async (resolve, reject): Promise<any> => {

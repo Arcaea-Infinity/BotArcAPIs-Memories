@@ -1,12 +1,14 @@
+const TAG: string = 'v1/userbest30.ts\t';
+
 import syslog from '@syslog';
 import Utils from '../../corefunc/utils';
-import APIError from '../../corefunc/apierror';
+import APIError from '@apierror';
 
 import arcapi_friend_add from '@arcfetch/arcapi.friend.add';
 import arcapi_friend_clear from '@arcfetch/arcapi.friend.clear';
 import arcapi_aggregate from '@arcfetch/arcapi.aggregate';
-import account_alloc from '../../arcaea/account/account.alloc';
-import account_recycle from '../../arcaea/account/account.recycle';
+import account_alloc from '@account/alloc';
+import account_recycle from '@account/recycle';
 
 import arcrecord_update from '@database/database.arcrecord.update';
 import arcplayer_update from '@database/database.arcplayer.update';
@@ -18,7 +20,6 @@ import IArcAccount from '@arcfetch/interfaces/IArcAccount';
 import IArcPlayer from '@arcfetch/interfaces/IArcPlayer';
 import IArcBest30Result from '@database/interfaces/IArcBest30Result';
 
-const TAG = 'v1/userbest30.ts\t';
 export default (argument: any): Promise<any> => {
 
   return new Promise(async (resolve, reject) => {

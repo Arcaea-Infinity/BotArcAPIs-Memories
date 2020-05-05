@@ -1,7 +1,7 @@
-const TAG: string = 'account/account.recycle.auto.ts';
+const TAG: string = 'account/recycle.auto.ts';
 
 import syslog from '@syslog';
-import arcaea_account_recycle from './account.recycle';
+import account_recycle from './recycle';
 
 export default (token: string): Promise<void> => {
 
@@ -14,7 +14,7 @@ export default (token: string): Promise<void> => {
     }
 
     // recycle the account
-    arcaea_account_recycle(ARCPERSISTENT[token]);
+    account_recycle(ARCPERSISTENT[token]);
     delete ARCPERSISTENT[token];
 
     resolve();

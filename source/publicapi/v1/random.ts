@@ -1,11 +1,12 @@
-import syslog from '@syslog';
-import APIError from '../../corefunc/apierror';
-import arcsong_random from '../../database/database.arcsong.byrand';
-import arcsong_bysongid from '../../database/database.arcsong.bysongid';
+const TAG: string = 'v1/random.ts\t';
 
-const TAG = 'v1/random.ts\t';
+import syslog from '@syslog';
+import APIError from '@apierror';
+import arcsong_random from '@database/database.arcsong.byrand';
+import arcsong_bysongid from '@database/database.arcsong.bysongid';
+
 export default (argument: any): Promise<any> => {
-  
+
   return new Promise(async (resolve, reject) => {
 
     try {
@@ -41,6 +42,7 @@ export default (argument: any): Promise<any> => {
 
       // return song info if needed
       if (argument.info == 'true') {
+        
         try {
           _arc_songinfo = await arcsong_bysongid(_arc_song.sid);
           _return.song_info = {
@@ -85,16 +87,21 @@ export default (argument: any): Promise<any> => {
             delete _return.song_info.title_localized.ja;
 
         } catch (e) { throw new APIError(-4, 'internal error'); }
+
       }
 
       resolve(_return);
 
     } catch (e) {
+
       if (e instanceof APIError)
         return reject(e);
 
       syslog.e(TAG, e.stack);
       return reject(new APIError(-233, 'unknown error occurred'));
+
     }
+
   });
+
 }

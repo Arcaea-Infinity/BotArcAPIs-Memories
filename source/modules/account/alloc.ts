@@ -1,4 +1,4 @@
-const TAG = 'account/account.alloc.ts';
+const TAG = 'account/alloc.ts';
 
 import syslog from '@syslog';
 import arcapi_login from '@arcfetch/arcapi.login';

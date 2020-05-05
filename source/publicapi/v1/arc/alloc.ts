@@ -1,8 +1,9 @@
-import syslog from '@syslog';
-import APIError from '../../../corefunc/apierror';
-import account_allocauto from '../../../arcaea/account/account.alloc.auto';
+const TAG: string = 'v1/arc/alloc.js\t';
 
-const TAG = 'v1/arc/alloc.js\t';
+import syslog from '@syslog';
+import APIError from '@apierror';
+import account_alloc_auto from '@account/alloc.auto';
+
 export default (argument: any): Promise<any> => {
 
   return new Promise(async (resolve, reject) => {
@@ -23,7 +24,7 @@ export default (argument: any): Promise<any> => {
         throw new APIError(-1, 'invalid time');
 
       let _token = null;
-      try { _token = await account_allocauto(argument.time, argument.clear); }
+      try { _token = await account_alloc_auto(argument.time, argument.clear); }
       catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
 
       const _return = {

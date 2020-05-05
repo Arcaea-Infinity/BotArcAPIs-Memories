@@ -1,4 +1,4 @@
-const TAG: string = 'account/account.recycle.ts';
+const TAG: string = 'account/recycle.ts';
 
 import syslog from '@syslog';
 import IArcAccount from '@arcfetch/interfaces/IArcAccount';

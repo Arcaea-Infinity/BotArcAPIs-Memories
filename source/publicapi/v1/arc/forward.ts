@@ -1,9 +1,11 @@
-import syslog from '@syslog';
-import APIError from '../../../corefunc/apierror';
-import arcapi_any from '../../../modules/arcaea/arcapi/arcapi.any';
-import account_fromtoken from '../../../arcaea/account/account.fromtoken';
+const TAG: string = 'v1/arc/forward.js\t';
 
-const TAG = 'v1/arc/forward.js\t';
+import syslog from '@syslog';
+import APIError from '@apierror';
+import arcapi_any from '@arcfetch/arcapi.any';
+import account_fromtoken from '@account/fromtoken';
+import { ArcFetchMethod } from '@arcfetch/arcfetch';
+
 export default (argument: any, method: ArcFetchMethod,
   path: string, header: any, databody: any): Promise<any> => {
 

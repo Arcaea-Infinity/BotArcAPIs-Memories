@@ -1,8 +1,8 @@
-const TAG = 'account/account.alloc.auto.ts';
+const TAG = 'account/alloc.auto.ts';
 
 import crypto from 'crypto';
-import account_alloc from './account.alloc';
-import account_recycleauto from './account.recycle.auto';
+import account_alloc from './alloc';
+import account_recycle_auto from './recycle.auto';
 import arcapi_friend_clear from '@arcfetch/arcapi.friend.clear';
 import IArcAccount from '@arcfetch/interfaces/IArcAccount';
 
@@ -33,7 +33,7 @@ export default (valid_time: number, clear: boolean = false): Promise<string> => 
 
     // timed out to auto recycle the account
     setTimeout(() => {
-      account_recycleauto(_token)
+      account_recycle_auto(_token)
         .catch((e) => { /* do nothing */ });
     }, valid_time * 1000);
 

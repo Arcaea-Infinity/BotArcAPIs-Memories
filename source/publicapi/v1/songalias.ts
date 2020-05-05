@@ -1,8 +1,9 @@
-import syslog from '@syslog';
-import APIError from '../../corefunc/apierror';
-import arcsong_sid_byany from '../../modules/database/database.arcsong.sid.byany';
+const TAG: string = 'v1/songalias.ts\t';
 
-const TAG = 'v1/songalias.ts\t';
+import syslog from '@syslog';
+import APIError from '@apierror';
+import arcsong_sid_byany from '@database/database.arcsong.sid.byany';
+
 export default (argument: any): Promise<any> => {
 
   return new Promise(async (resolve, reject) => {
