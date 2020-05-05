@@ -30,7 +30,7 @@ jobs:
       run: npm ci
 
     # Compile the project
-    - Compile
+    - name: Compile
       run: npm i -g typescript && tsc --build tsconfig.json
 
     # Test run
