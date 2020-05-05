@@ -19,6 +19,7 @@ import arcsong_charts_all from '../../modules/database/database.arcsong.allchart
 import IArcAccount from '../../modules/arcfetch/interfaces/IArcAccount';
 import IArcPlayer from '../../modules/arcfetch/interfaces/IArcPlayer';
 import IArcBest30Result from '../../modules/database/interfaces/IArcBest30Result';
+import IDatabaseArcSongChart from '@database/interfaces/IDatabaseArcSongChart';
 
 export default (argument: any): Promise<any> => {
 

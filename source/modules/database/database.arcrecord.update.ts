@@ -18,7 +18,7 @@ export default (userid: number,
   const _promises: Array<Promise<void>> =
     _wrapper.map((element) => {
 
-      const _sqlbinding = {
+      const _sqlbinding: any = {
         uid: userid,
         score: element.score,
         health: element.health,
@@ -35,7 +35,8 @@ export default (userid: number,
         shiny_perfect_count: element.shiny_perfect_count,
       };
 
-      const _sql = 'INSERT OR IGNORE INTO ' +
+      const _sql: string =
+        'INSERT OR IGNORE INTO ' +
         `\`records\`(${Object.keys(_sqlbinding).join()}) ` +
         `VALUES(${new Array(Object.keys(_sqlbinding).length).fill('?').join(',')});`;
       syslog.v(TAG, _sql);

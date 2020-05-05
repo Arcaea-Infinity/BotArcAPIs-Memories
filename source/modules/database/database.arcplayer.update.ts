@@ -30,7 +30,7 @@ export default (userinfos: IArcPlayer): Promise<Array<void>> => {
       if (element.rating == -1)
         delete _sqlbinding.ptt;
 
-      const _sql =
+      const _sql: string =
         `INSERT OR REPLACE INTO ` +
         `\`players\`(${Object.keys(_sqlbinding).join()}) ` +
         `VALUES(${new Array(Object.keys(_sqlbinding).length).fill('?').join(',')});`;

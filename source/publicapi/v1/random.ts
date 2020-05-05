@@ -4,6 +4,7 @@ import syslog from '../../modules/syslog/syslog';
 import APIError from '../../modules/apierror/apierror';
 import arcsong_random from '../../modules/database/database.arcsong.byrand';
 import arcsong_bysongid from '../../modules/database/database.arcsong.bysongid';
+import IDatabaseArcSong from '../../modules/database/interfaces/IDatabaseArcSong';
 
 export default (argument: any): Promise<any> => {
 
