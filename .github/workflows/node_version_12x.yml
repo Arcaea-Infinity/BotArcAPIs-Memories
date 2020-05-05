@@ -25,13 +25,13 @@ jobs:
       with:
         node-version: 12.x
 
-    # Compile the project
-    - name: Compile
-      run: npm i -g typescript && tsc --build tsconfig.json
-
     # Initialize node modules
     - name: Initialize
       run: npm ci
+
+    # Compile the project
+    - name: Compile
+      run: npm i -g typescript && tsc --build tsconfig.json
 
     # Test run
     - name: Test Run
