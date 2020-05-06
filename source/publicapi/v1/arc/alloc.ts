@@ -2,7 +2,7 @@ const TAG: string = 'v1/arc/alloc.js\t';
 
 import syslog from '../../../modules/syslog/syslog';
 import APIError from '../../../modules/apierror/apierror';
-import account_alloc_auto from '../../../modules/account/alloc.auto';
+import account_alloc_managed from '../../../modules/account/alloc.managed';
 
 export default (argument: any): Promise<any> => {
 
@@ -24,7 +24,7 @@ export default (argument: any): Promise<any> => {
         throw new APIError(-1, 'invalid time');
 
       let _token = null;
-      try { _token = await account_alloc_auto(argument.time, argument.clear); }
+      try { _token = await account_alloc_managed(argument.time, argument.clear); }
       catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
 
       const _return = {

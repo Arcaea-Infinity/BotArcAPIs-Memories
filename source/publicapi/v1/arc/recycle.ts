@@ -2,7 +2,7 @@ const TAG: string = 'v1/arc/recycle.js\t';
 
 import syslog from '../../../modules/syslog/syslog';
 import APIError from '../../../modules/apierror/apierror';
-import account_recycle_auto from '../../../modules/account/recycle.auto';
+import account_recycle_managed from '../../../modules/account/recycle.managed';
 import { ArcFetchMethod } from '../../../modules/arcfetch/arcfetch';
 
 export default (argument: any, method: ArcFetchMethod,
@@ -31,7 +31,7 @@ export default (argument: any, method: ArcFetchMethod,
         throw new APIError(-1, 'invalid token');
 
       // recycle the account
-      try { await account_recycle_auto(_access_token); }
+      try { await account_recycle_managed(_access_token); }
       catch (e) { throw new APIError(-2, 'invalid token'); }
 
       resolve();

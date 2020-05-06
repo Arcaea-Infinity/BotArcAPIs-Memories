@@ -2,11 +2,10 @@ const TAG: string = 'database.arcaccount.update.ts';
 
 import syslog from "../syslog/syslog";
 import IArcAccount from "../arcfetch/interfaces/IArcAccount";
-import IDatabaseArcAccount from "./interfaces/IDatabaseArcAccount";
 
 export default (account: IArcAccount): Promise<void> => {
 
-  const _sqlbinding: IDatabaseArcAccount = {
+  const _sqlbinding: IArcAccount = {
     passwd: account.passwd,
     device: account.device,
     uid: account.uid,

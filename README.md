@@ -9,8 +9,6 @@
 A fast and convenient Arcaea API for your bot.  
 
 ## 🤔 Dependences
-- node >= `12.16.0`
-- npm >= `6.14.0`
 - abab >= `2.0.3`
 - node-fetch >= `2.6.0`
 - sqlite-async >= `1.0.12`

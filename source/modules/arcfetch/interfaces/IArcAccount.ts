@@ -2,7 +2,7 @@ export default interface IArcAccount {
   uid: number,
   ucode: string,
   token: string,
-  banned: boolean,
+  banned: 'true' | 'false' | true | false,
   name: string,
   passwd: string,
   device: string
