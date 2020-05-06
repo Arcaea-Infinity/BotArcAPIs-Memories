@@ -202,8 +202,6 @@ const do_fetch_userbest30 =
 
           while (true) {
 
-            syslog.d(_arc_chartuser[_arc_chartuser.length - 1].rating - 2, _arc_chartlist[0].rating);
-
             const _chartheap: Array<IDatabaseArcSongChart> = [];
             const _endpoints: Array<string> = [];
             for (let i = 0; i < 5; ++i) {
