@@ -52,7 +52,7 @@ const initDataBases = (): void => {
 
           // token list for persistent querying
           Object.defineProperty(global, 'ARCPERSISTENT',
-            { value: [], writable: true, configurable: false });
+            { value: {}, writable: true, configurable: false });
 
           // verbose output
           for (let i = 0; i < result.length; ++i)
