@@ -16,8 +16,8 @@ export default (argument: any): Promise<any> => {
       argument.clear = argument.clear == 'true' ? true : false;
 
       // default time is 30 sec
-      if (isNaN(argument.time))
-        argument.time = 30;
+      if (isNaN(argument.time) || argument.time == 0)
+        argument.time = 1;
 
       // clamp the range
       if (argument.time < 30 || argument.time > 240)
