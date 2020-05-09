@@ -1,3 +1,5 @@
+import IDatabaseArcPlayer from "./IDatabaseArcPlayer";
+
 export default interface IDatabaseArcBest30 {
   uid: number,
   last_played: number,

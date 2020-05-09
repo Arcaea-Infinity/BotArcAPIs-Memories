@@ -12,6 +12,6 @@ export interface IArcUserMe {
   recent_score: Array<IArcScore>,
   max_friend: number,
   rating: number,
-  id: null,
+  id: number,
   join_date: number
 }

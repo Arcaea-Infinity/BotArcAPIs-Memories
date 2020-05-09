@@ -7,32 +7,27 @@ import IArcAccount from './interfaces/IArcAccount';
 export default (account: IArcAccount, method: ArcFetchMethod,
   path: string, databody: any): Promise<any> => {
 
-  return new Promise((resolve, reject) => {
+  // construct remote request
+  const _remote_request =
+    new ArcFetchRequest(method, path, {
+      userToken: account.token,
+      submitData: databody
+    });
 
-    // construct remote request
-    const _remote_request =
-      new ArcFetchRequest(method, path, {
-        userToken: account.token,
-        submitData: databody
-      });
+  // send request
+  return arcfetch(_remote_request)
+    .catch((e) => {
 
-    // send request
-    arcfetch(_remote_request)
-      .then((root) => { resolve(root); })
-      .catch((e) => {
+      // if token is invalid
+      // just erase the token and wait for
+      // auto login in next time allocating
+      if (e == 'UnauthorizedError') {
+        account.token = '';
+        syslog.w(TAG, `Invalid token => ${account.name} ${account.token}`);
+      }
 
-        // if token is invalid
-        // just erase the token and wait for
-        // auto login in next time allocating
-        if (e == 'UnauthorizedError') {
-          account.token = '';
-          syslog.w(TAG, `Invalid token => ${account.name} ${account.token}`);
-        }
+      throw e;
 
-        reject(e);
-
-      });
-
-  });
+    });
 
 }
