@@ -3,12 +3,11 @@ const TAG: string = 'arcapi.error.ts';
 const _error_table: { [key: string]: string } = {
   0: 'An error occurred completing purchases. Please try restarting your device or Arcaea and ensuring that you\'re logged in to.',
   1: 'This item is currently unavailable to purchase.',
-  2: 'All songs are already downloaded!',
+  2: 'The Arcaea network is currently under maintenance.',
   3: 'You have been logged out by another device. Please restart Arcaea.',
   4: 'Could not connect to online server.',
   5: 'Incorrect app version.',
   7: 'unknown',
-  9: 'The Arcaea network is currently under maintenance.',
   12: 'Please update Arcaea to the latest version.',
   100: 'Registrations from this IP address are restricted. Try again later or contact support@lowiro.com.',
   101: 'This username is already in use.',
