@@ -31,18 +31,22 @@ export default (): Promise<void> => {
         '`rating_pst` INTEGER NOT NULL DEFAULT 0,' +  // rating past
         '`rating_prs` INTEGER NOT NULL DEFAULT 0,' +  // rating present
         '`rating_ftr` INTEGER NOT NULL DEFAULT 0,' +  // rating future
+        '`rating_byd` INTEGER NOT NULL DEFAULT 0,' +  // rating beyond
 
         '`difficultly_pst` INTEGER NOT NULL DEFAULT 0,' +  // difficultly past
         '`difficultly_prs` INTEGER NOT NULL DEFAULT 0,' +  // difficultly present
         '`difficultly_ftr` INTEGER NOT NULL DEFAULT 0,' +  // difficultly future
+        '`difficultly_byd` INTEGER NOT NULL DEFAULT 0,' +  // difficultly beyond
 
         '`chart_designer_pst` TEXT NOT NULL DEFAULT "",' +  // chart designer past
         '`chart_designer_prs` TEXT NOT NULL DEFAULT "",' +  // chart designer present
         '`chart_designer_ftr` TEXT NOT NULL DEFAULT "",' +  // chart designer future
+        '`chart_designer_byd` TEXT NOT NULL DEFAULT "",' +  // chart designer beyond
 
         '`jacket_designer_pst` TEXT NOT NULL DEFAULT "",' +  // jacket designer past
         '`jacket_designer_prs` TEXT NOT NULL DEFAULT "",' +  // jacket designer present
         '`jacket_designer_ftr` TEXT NOT NULL DEFAULT "",' +  // jacket designer future
+        '`jacket_designer_byd` TEXT NOT NULL DEFAULT "",' +  // jacket designer beyond
 
         'PRIMARY KEY ("sid" ASC))';
       syslog.v(TAG, _sql);
@@ -71,7 +75,7 @@ export default (): Promise<void> => {
       const _sql: string =
         'CREATE TABLE IF NOT EXISTS `charts` (' +
         '`sid`          TEXT NOT NULL,' +
-        '`rating_class` INTEGER NOT NULL CHECK(`rating_class` IN (0, 1, 2)),' +
+        '`rating_class` INTEGER NOT NULL CHECK(`rating_class` IN (0, 1, 2, 3)),' +
         '`difficultly`  INTEGER NOT NULL,' +
         '`rating`       INTEGER NOT NULL,' +
         'FOREIGN KEY(`sid`) REFERENCES `songs`(`sid`))';

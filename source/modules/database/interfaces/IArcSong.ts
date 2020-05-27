@@ -25,21 +25,32 @@ export default interface IArcSong {
       chartDesigner: string,
       jacketDesigner: string,
       rating: number,
-      plusFingers?: boolean
+      plusFingers?: boolean,
+      ratingPlus?: boolean
     },
     {
       ratingClass: number,
       chartDesigner: string,
       jacketDesigner: string,
       rating: number,
-      plusFingers?: boolean
+      plusFingers?: boolean,
+      ratingPlus?: boolean
     },
     {
       ratingClass: number,
       chartDesigner: string,
       jacketDesigner: string,
       rating: number,
-      plusFingers?: boolean
+      plusFingers?: boolean,
+      ratingPlus?: boolean
+    },
+    {
+      ratingClass: number,
+      chartDesigner: string,
+      jacketDesigner: string,
+      rating: number,
+      plusFingers?: boolean,
+      ratingPlus?: boolean
     }
   ]
 }

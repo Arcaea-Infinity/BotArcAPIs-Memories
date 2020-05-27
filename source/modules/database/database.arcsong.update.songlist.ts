@@ -1,4 +1,4 @@
-const TAG: string = 'database.arcsong.sid.byany.ts';
+const TAG: string = 'database.arcsong.update.songlist.ts';
 
 import syslog from "../syslog/syslog";
 import IArcSongList from "./interfaces/IArcSongList";
@@ -26,16 +26,29 @@ export default (songlist: IArcSongList): Promise<void> => {
             date: element.date,
             world_unlock: element.world_unlock == true ? 'true' : 'false',
             remote_download: element.remote_dl == true ? 'true' : 'false',
-            difficultly_pst: element.difficulties[0].rating,
-            difficultly_prs: element.difficulties[1].rating,
-            difficultly_ftr: element.difficulties[2].rating,
+            difficultly_pst: element.difficulties[0].rating * 2,
+            difficultly_prs: element.difficulties[1].rating * 2,
+            difficultly_ftr: element.difficulties[2].rating * 2,
+            difficultly_byd: element.difficulties[3] ? element.difficulties[3].rating * 2: -1,
             chart_designer_pst: element.difficulties[0].chartDesigner,
             chart_designer_prs: element.difficulties[1].chartDesigner,
             chart_designer_ftr: element.difficulties[2].chartDesigner,
+            chart_designer_byd: element.difficulties[3] ? element.difficulties[3].chartDesigner : '',
             jacket_designer_pst: element.difficulties[0].jacketDesigner,
             jacket_designer_prs: element.difficulties[1].jacketDesigner,
             jacket_designer_ftr: element.difficulties[2].jacketDesigner,
+            jacket_designer_byd: element.difficulties[3] ? element.difficulties[3].jacketDesigner : '',
           };
+
+          // processing "ratingPlus"
+          if(element.difficulties[0]?.ratingPlus == true)
+            ++_sqlbinding.difficultly_pst;
+          if(element.difficulties[1]?.ratingPlus == true)
+            ++_sqlbinding.difficultly_prs;
+          if(element.difficulties[2]?.ratingPlus == true)
+            ++_sqlbinding.difficultly_ftr;
+          if(element.difficulties[3]?.ratingPlus == true)
+            ++_sqlbinding.difficultly_byd;
 
           const _binding_keys: string =
             Object.keys(_sqlbinding).join();
@@ -77,7 +90,9 @@ export default (songlist: IArcSongList): Promise<void> => {
         'INSERT INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
         '  SELECT `sid`, 1, `difficultly_prs`, `rating_prs` FROM `songs`;' +
         'INSERT INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
-        '  SELECT `sid`, 2, `difficultly_ftr`, `rating_ftr` FROM `songs`;';
+        '  SELECT `sid`, 2, `difficultly_ftr`, `rating_ftr` FROM `songs`;'+
+        'INSERT OR IGNORE INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
+        '  SELECT `sid`, 3, `difficultly_byd`, `rating_byd` FROM `songs`;';
       syslog.v(TAG, _sql);
 
       // execute sql
