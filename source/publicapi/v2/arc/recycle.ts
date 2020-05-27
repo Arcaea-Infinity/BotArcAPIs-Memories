@@ -1,4 +1,4 @@
-const TAG: string = 'v1/arc/recycle.js\t';
+const TAG: string = 'v2/arc/recycle.js\t';
 
 import syslog from '../../../modules/syslog/syslog';
 import APIError from '../../../modules/apierror/apierror';
