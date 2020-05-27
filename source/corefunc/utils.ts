@@ -1,18 +1,15 @@
 class Utils {
 
-  // calc song rating
+  // calc song rating for arcaea
   static arcCalcSongRating(score: number, ptt: number): number {
 
-    if (score >= 10000000)
+    if (score >= 10_000_000)
       return ptt + 2;
 
-    else if (score >= 9950000)
-      return ptt + 1.5 + (score - 9950000) / 100000;
+    else if (score > 9_800_000)
+      return ptt + 1 + (score - 9_800_000) / 200_000;
 
-    else if (score >= 9800000)
-      return ptt + 1 + (score - 9800000) / 400000;
-
-    let _value = ptt + (score - 9500000) / 300000;
+    let _value = ptt + (score - 9_500_000) / 300_000;
     return _value < 0 ? 0 : _value;
 
   }
@@ -21,11 +18,11 @@ class Utils {
   static arcMapDiffFormat(input: string | number, format: number): string | null {
 
     const _table_format: Array<string> = [
-      '0', '1', '2',
-      'pst', 'prs', 'ftr',
-      'PST', 'PRS', 'FTR',
-      'past', 'present', 'future',
-      'PAST', 'PRESENT', 'FUTURE'
+      '0', '1', '2', '3',
+      'pst', 'prs', 'ftr', 'byd',
+      'PST', 'PRS', 'FTR', 'BYD',
+      'past', 'present', 'future', 'beyond',
+      'PAST', 'PRESENT', 'FUTURE', 'BEYOND'
     ];
 
     if (typeof input == 'string')
@@ -37,7 +34,7 @@ class Utils {
       if (input != element)
         return true;
 
-      _to_format = _table_format[format * 3 + index % 3];
+      _to_format = _table_format[format * 4 + index % 4];
       return false;
     });
 
@@ -46,7 +43,6 @@ class Utils {
     return _to_format;
 
   }
-
 
   // instead of Object.fromEntries
   static httpGetAllParams(searchParams: URLSearchParams): any {
