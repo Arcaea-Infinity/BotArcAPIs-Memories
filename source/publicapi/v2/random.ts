@@ -91,7 +91,7 @@ export default (argument: any): Promise<any> => {
 
           // append beyond rating
           if (_arc_songinfo.difficultly_byn != -1) {
-            _return.difficulties[3] = {
+            _return.song_info.difficulties[3] = {
               ratingClass: 3,
               chartDesigner: _arc_songinfo.chart_designer_byn,
               jacketDesigner: _arc_songinfo.jacket_designer_byn,
@@ -102,7 +102,7 @@ export default (argument: any): Promise<any> => {
           }
 
           // append rating
-          _return.difficulties.map((element: any) => {
+          _return.song_info.difficulties.map((element: any) => {
             element.rating = Math.floor(element.rating / 2);
             if (!element.ratingPlus)
               delete element.ratingPlus;
