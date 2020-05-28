@@ -29,15 +29,15 @@ export default (songlist: IArcSongList): Promise<void> => {
             difficultly_pst: element.difficulties[0].rating * 2,
             difficultly_prs: element.difficulties[1].rating * 2,
             difficultly_ftr: element.difficulties[2].rating * 2,
-            difficultly_byd: element.difficulties[3] ? element.difficulties[3].rating * 2: -1,
+            difficultly_byn: element.difficulties[3] ? element.difficulties[3].rating * 2: -1,
             chart_designer_pst: element.difficulties[0].chartDesigner,
             chart_designer_prs: element.difficulties[1].chartDesigner,
             chart_designer_ftr: element.difficulties[2].chartDesigner,
-            chart_designer_byd: element.difficulties[3] ? element.difficulties[3].chartDesigner : '',
+            chart_designer_byn: element.difficulties[3] ? element.difficulties[3].chartDesigner : '',
             jacket_designer_pst: element.difficulties[0].jacketDesigner,
             jacket_designer_prs: element.difficulties[1].jacketDesigner,
             jacket_designer_ftr: element.difficulties[2].jacketDesigner,
-            jacket_designer_byd: element.difficulties[3] ? element.difficulties[3].jacketDesigner : '',
+            jacket_designer_byn: element.difficulties[3] ? element.difficulties[3].jacketDesigner : '',
           };
 
           // processing "ratingPlus"
@@ -48,7 +48,7 @@ export default (songlist: IArcSongList): Promise<void> => {
           if(element.difficulties[2]?.ratingPlus == true)
             ++_sqlbinding.difficultly_ftr;
           if(element.difficulties[3]?.ratingPlus == true)
-            ++_sqlbinding.difficultly_byd;
+            ++_sqlbinding.difficultly_byn;
 
           const _binding_keys: string =
             Object.keys(_sqlbinding).join();
