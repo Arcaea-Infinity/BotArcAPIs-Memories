@@ -20,12 +20,13 @@ export default (argument: any): Promise<any> => {
       if (isNaN(argument.end)) argument.end = 0;
 
       // default range
+      // 1 1+ 2 2+ ... 10 10+ 11
       if (argument.start == 0 && argument.end == 0) {
-        argument.start = 1;
+        argument.start = 2;
         argument.end = 23;
       }
 
-      if (argument.start < 1 || argument.start > 23)
+      if (argument.start < 2 || argument.start > 23)
         throw new APIError(-1, 'invalid range of start');
       if (argument.end != 0 && (argument.end < argument.start || argument.end > 23))
         throw new APIError(-2, 'invalid range of end');
