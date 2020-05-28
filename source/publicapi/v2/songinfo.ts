@@ -77,14 +77,14 @@ export default (argument: any): Promise<any> => {
       };
 
       // append beyond rating
-      if (_arc_songinfo.difficultly_byd != -1) {
+      if (_arc_songinfo.difficultly_byn != -1) {
         _return.difficulties[3] = {
           ratingClass: 3,
-          chartDesigner: _arc_songinfo.chart_designer_byd,
-          jacketDesigner: _arc_songinfo.jacket_designer_byd,
-          rating: _arc_songinfo.difficultly_byd,
-          ratingReal: _arc_songinfo.rating_byd,
-          ratingPlus: (_arc_songinfo.difficultly_byd % 2 != 0)
+          chartDesigner: _arc_songinfo.chart_designer_byn,
+          jacketDesigner: _arc_songinfo.jacket_designer_byn,
+          rating: _arc_songinfo.difficultly_byn,
+          ratingReal: _arc_songinfo.rating_byn,
+          ratingPlus: (_arc_songinfo.difficultly_byn % 2 != 0)
         };
       }
 

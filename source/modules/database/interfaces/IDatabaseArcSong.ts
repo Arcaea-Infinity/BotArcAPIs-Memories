@@ -14,17 +14,17 @@ export default interface IDatabaseArcSong {
   rating_pst?: number,
   rating_prs?: number,
   rating_ftr?: number,
-  rating_byd?: number,
+  rating_byn?: number,
   difficultly_pst: number,
   difficultly_prs: number,
   difficultly_ftr: number,
-  difficultly_byd: number,
+  difficultly_byn: number,
   chart_designer_pst: string,
   chart_designer_prs: string,
   chart_designer_ftr: string,
-  chart_designer_byd: string,
+  chart_designer_byn: string,
   jacket_designer_pst: string,
   jacket_designer_prs: string,
   jacket_designer_ftr: string,
-  jacket_designer_byd: string
+  jacket_designer_byn: string
 }

@@ -92,7 +92,7 @@ export default (songlist: IArcSongList): Promise<void> => {
         'INSERT INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
         '  SELECT `sid`, 2, `difficultly_ftr`, `rating_ftr` FROM `songs`;'+
         'INSERT OR IGNORE INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
-        '  SELECT `sid`, 3, `difficultly_byd`, `rating_byd` FROM `songs`;';
+        '  SELECT `sid`, 3, `difficultly_byn`, `rating_byn` FROM `songs`;';
       syslog.v(TAG, _sql);
 
       // execute sql
