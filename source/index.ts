@@ -47,11 +47,9 @@ import __loader__ from './__loader__';
   });
   process.on('uncaughtException', (reason) => {
     syslog.f(`unhandledRejection => ${(<any>reason)?.stack ?? 'unknown'}`);
-    process.exit(1);
   });
   process.on('unhandledRejection', (reason, promise) => {
     syslog.f(`unhandledRejection => ${(<any>reason)?.stack ?? 'unknown'}`);
-    process.exit(1);
   });
 
 })();
