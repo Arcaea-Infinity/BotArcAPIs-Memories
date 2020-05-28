@@ -1,4 +1,4 @@
-const TAG: string = 'account/recycle.auto.ts';
+const TAG: string = 'account/recycle.managed.ts';
 
 import syslog from '../syslog/syslog';
 import account_recycle from './recycle';
