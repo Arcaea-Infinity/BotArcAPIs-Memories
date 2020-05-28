@@ -9,7 +9,7 @@ export default (token: string): Promise<void> => {
 
     // validate data
     if (!ARCPERSISTENT[token]) {
-      syslog.w(TAG, `Invalid token => ${token}`);
+      // syslog.w(TAG, `Invalid token => ${token}`);
       return reject(new Error('Invalid token'));
     }
 
