@@ -19,8 +19,8 @@ class Utils {
 
     const _table_format: Array<string> = [
       '0', '1', '2', '3',
-      'pst', 'prs', 'ftr', 'byd',
-      'PST', 'PRS', 'FTR', 'BYD',
+      'pst', 'prs', 'ftr', 'byn',
+      'PST', 'PRS', 'FTR', 'BYN',
       'past', 'present', 'future', 'beyond',
       'PAST', 'PRESENT', 'FUTURE', 'BEYOND'
     ];
