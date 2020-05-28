@@ -55,26 +55,31 @@ export default (argument: any): Promise<any> => {
         _arc_songinfo = await arcsong_bysongid(_arc_songid);
       } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-7, 'internal error'); }
 
+      // check for beyond is existed
+      if (_arc_songinfo.difficultly_byn == -1 && _arc_difficulty == 3) {
+        throw new APIError(-8, 'this song has no beyond level');
+      }
+
       // request an arc account
       try {
         _arc_account = await account_alloc();
-      } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-8, 'allocate an arc account failed'); }
+      } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-9, 'allocate an arc account failed'); }
 
       try {
 
         // clear friend list
         try {
           await arcapi_friend_clear(_arc_account);
-        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-9, 'clear friend list failed'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-10, 'clear friend list failed'); }
 
         // add friend
         try {
           _arc_friendlist = await arcapi_friend_add(_arc_account, argument.usercode);
-        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-10, 'add friend failed'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-11, 'add friend failed'); }
 
         // length must be 1
         if (_arc_friendlist.length != 1)
-          throw new APIError(-11, 'internal error occurred');
+          throw new APIError(-12, 'internal error occurred');
 
         // result of arcapi not include
         // user code anymore since v6
@@ -84,10 +89,10 @@ export default (argument: any): Promise<any> => {
         // get rank result
         try {
           _arc_ranklist = await arcapi_rank_friend(_arc_account, _arc_songid, _arc_difficulty, 0, 1);
-        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-12, 'internal error occurred'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-13, 'internal error occurred'); }
 
         if (!_arc_ranklist.length)
-          throw new APIError(-13, 'not played yet');
+          throw new APIError(-14, 'not played yet');
 
         // calculate song rating
         _arc_rank = _arc_ranklist[0];
