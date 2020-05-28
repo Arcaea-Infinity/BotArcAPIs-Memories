@@ -1,4 +1,4 @@
-const TAG = 'account/alloc.auto.ts';
+const TAG = 'account/alloc.managed.ts';
 
 import crypto from 'crypto';
 import account_alloc from './alloc';
