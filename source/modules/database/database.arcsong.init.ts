@@ -76,8 +76,8 @@ export default (): Promise<void> => {
         'CREATE TABLE IF NOT EXISTS `charts` (' +
         '`sid`          TEXT NOT NULL,' +
         '`rating_class` INTEGER NOT NULL CHECK(`rating_class` IN (0, 1, 2, 3)),' +
-        '`difficultly`  INTEGER NOT NULL,' +
-        '`rating`       INTEGER NOT NULL,' +
+        '`difficultly`  INTEGER NOT NULL CHECK(`difficultly` != -1),' +
+        '`rating`       INTEGER NOT NULL CHECK(`rating` != -1),' +
         'FOREIGN KEY(`sid`) REFERENCES `songs`(`sid`))';
       syslog.v(TAG, _sql);
 
