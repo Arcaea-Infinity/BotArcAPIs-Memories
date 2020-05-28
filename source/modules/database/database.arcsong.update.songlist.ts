@@ -29,7 +29,7 @@ export default (songlist: IArcSongList): Promise<void> => {
             difficultly_pst: element.difficulties[0].rating * 2,
             difficultly_prs: element.difficulties[1].rating * 2,
             difficultly_ftr: element.difficulties[2].rating * 2,
-            difficultly_byn: element.difficulties[3] ? element.difficulties[3].rating * 2: -1,
+            difficultly_byn: element.difficulties[3] ? element.difficulties[3].rating * 2 : -1,
             chart_designer_pst: element.difficulties[0].chartDesigner,
             chart_designer_prs: element.difficulties[1].chartDesigner,
             chart_designer_ftr: element.difficulties[2].chartDesigner,
@@ -41,13 +41,13 @@ export default (songlist: IArcSongList): Promise<void> => {
           };
 
           // processing "ratingPlus"
-          if(element.difficulties[0]?.ratingPlus == true)
+          if (element.difficulties[0]?.ratingPlus == true)
             ++_sqlbinding.difficultly_pst;
-          if(element.difficulties[1]?.ratingPlus == true)
+          if (element.difficulties[1]?.ratingPlus == true)
             ++_sqlbinding.difficultly_prs;
-          if(element.difficulties[2]?.ratingPlus == true)
+          if (element.difficulties[2]?.ratingPlus == true)
             ++_sqlbinding.difficultly_ftr;
-          if(element.difficulties[3]?.ratingPlus == true)
+          if (element.difficulties[3]?.ratingPlus == true)
             ++_sqlbinding.difficultly_byn;
 
           const _binding_keys: string =
@@ -86,11 +86,11 @@ export default (songlist: IArcSongList): Promise<void> => {
       const _sql =
         'DELETE FROM `charts`; ' +
         'INSERT INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
-        '  SELECT `sid`, 0, `difficultly_pst`, `rating_pst` FROM `songs`;' +
+        '  SELECT `sid`, 0, `difficultly_pst`, `rating_pst` FROM `songs`; ' +
         'INSERT INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
-        '  SELECT `sid`, 1, `difficultly_prs`, `rating_prs` FROM `songs`;' +
+        '  SELECT `sid`, 1, `difficultly_prs`, `rating_prs` FROM `songs`; ' +
         'INSERT INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
-        '  SELECT `sid`, 2, `difficultly_ftr`, `rating_ftr` FROM `songs`;'+
+        '  SELECT `sid`, 2, `difficultly_ftr`, `rating_ftr` FROM `songs`; ' +
         'INSERT OR IGNORE INTO `charts` (`sid`, `rating_class`, `difficultly`, `rating`) ' +
         '  SELECT `sid`, 3, `difficultly_byn`, `rating_byn` FROM `songs`;';
       syslog.v(TAG, _sql);
