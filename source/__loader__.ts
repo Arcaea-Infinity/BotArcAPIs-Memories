@@ -47,7 +47,8 @@ const handler_request_favicon = async (response: ServerResponse) => {
 }
 
 const specific_routine: { [key: string]: RegExp } = {
-  '/v1/arc/forward': /^\/v1\/arc\/forward\//
+  '/v1/arc/forward': /^\/v1\/arc\/forward\//,
+  '/v2/arc/forward': /^\/v2\/arc\/forward\//
 };
 const handler_request_publicapi =
   async (response: ServerResponse, argument: string,
