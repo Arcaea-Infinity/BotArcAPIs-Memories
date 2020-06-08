@@ -41,7 +41,7 @@ export default (): Promise<IArcAccount> => {
         } finally {
 
           // fetch information of account if needed
-          if (!_account.banned && (!_account.uid || !_account.ucode)) {
+          if (!_account.banned && (_account.uid == 0 && _account.ucode == '')) {
             const _info = await arcapi_userme(_account);
             _account.uid = _info.user_id;
             _account.ucode = _info.user_code;

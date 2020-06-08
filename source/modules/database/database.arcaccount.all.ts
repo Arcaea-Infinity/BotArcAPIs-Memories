@@ -16,7 +16,7 @@ export default (): Promise<Array<IArcAccount> | null> => {
       if (!data) return null;
 
       return data.map((element) => {
-        element.banned == 'true' ? true : false
+        element.banned = element.banned == 'true' ? true : false;
         return element;
       });
 
