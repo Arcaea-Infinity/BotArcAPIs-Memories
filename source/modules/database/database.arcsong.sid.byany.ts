@@ -34,8 +34,8 @@ export default (anystr: string): Promise<Array<string>> => {
         'FROM (SELECT `sid`,`name_en`,`name_jp`,`alias` FROM `songs` LEFT JOIN `alias` USING (`sid`))' +
         'WHERE' +
         '`sid` LIKE ? OR ' +
-        '`name_en` LIKE ? OR ' +
-        '`name_jp` LIKE ? OR ' +
+        'replace(`name_en`,\' \',\'\') LIKE replace(?,\' \',\'\') OR ' +
+        'replace(`name_jp`,\' \',\'\') LIKE replace(?,\' \',\'\') OR ' +
         '`alias` LIKE ?'
       syslog.v(TAG, _sql);
 
