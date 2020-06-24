@@ -25,8 +25,11 @@ class Utils {
       'PAST', 'PRESENT', 'FUTURE', 'BEYOND'
     ];
 
-    if (typeof input == 'string')
+    if (typeof input == 'string') {
       input = input.toLowerCase();
+      // byd to byn
+      if (input == 'byd') input = 'byn';
+    }
 
     // try parse input as an integer
     let _to_format: string | null = null;
