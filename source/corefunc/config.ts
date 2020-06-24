@@ -7,7 +7,7 @@ const _default_config: any = {
   'BOTARCAPI_MAJOR': 0,
   'BOTARCAPI_MINOR': 0,
   'BOTARCAPI_VERSION': 4,
-  'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.4',
+  'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.5',
 
   // useragent white list
   // if set '[]' will accept all requests
