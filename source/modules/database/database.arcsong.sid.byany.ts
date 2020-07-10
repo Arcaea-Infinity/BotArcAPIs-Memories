@@ -13,7 +13,7 @@ export default (anystr: string): Promise<Array<string>> => {
     try {
 
       const _sql: string =
-        'SELECT * FROM `alias` WHERE `alias` LIKE ?';
+        'SELECT * FROM `alias` WHERE `alias` LIKE replace(?,\' \',\'\')';
       syslog.v(TAG, _sql);
 
       const _result: Array<IDatabaseArcSongAlias> | null =
@@ -36,7 +36,7 @@ export default (anystr: string): Promise<Array<string>> => {
         '`sid` LIKE ? OR ' +
         'replace(`name_en`,\' \',\'\') LIKE replace(?,\' \',\'\') OR ' +
         'replace(`name_jp`,\' \',\'\') LIKE replace(?,\' \',\'\') OR ' +
-        '`alias` LIKE ?'
+        '`alias` LIKE replace(?,\' \',\'\')'
       syslog.v(TAG, _sql);
 
       const _result: Array<IDatabaseArcSong> | null =
