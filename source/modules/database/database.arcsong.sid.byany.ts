@@ -13,7 +13,7 @@ export default (anystr: string): Promise<Array<string>> => {
     try {
 
       const _sql: string =
-        'SELECT * FROM `alias` WHERE `alias` LIKE replace(?,\' \',\'\')';
+        'SELECT * FROM `alias` WHERE replace(`alias`,\' \',\'\') LIKE replace(?,\' \',\'\')';
       syslog.v(TAG, _sql);
 
       const _result: Array<IDatabaseArcSongAlias> | null =
@@ -33,10 +33,10 @@ export default (anystr: string): Promise<Array<string>> => {
         'SELECT DISTINCT `sid` ' +
         'FROM (SELECT `sid`,`name_en`,`name_jp`,`alias` FROM `songs` LEFT JOIN `alias` USING (`sid`))' +
         'WHERE' +
-        '`sid` LIKE ? OR ' +
+        '`sid` LIKE replace(?,\' \',\'\') OR ' +
         'replace(`name_en`,\' \',\'\') LIKE replace(?,\' \',\'\') OR ' +
         'replace(`name_jp`,\' \',\'\') LIKE replace(?,\' \',\'\') OR ' +
-        '`alias` LIKE replace(?,\' \',\'\')'
+        'replace(`alias`,\' \',\'\') LIKE replace(?,\' \',\'\')'
       syslog.v(TAG, _sql);
 
       const _result: Array<IDatabaseArcSong> | null =
