@@ -14,9 +14,9 @@ services:
       BOTARCAPI_CONFIG: |
         {
           "SERVER_PORT": 80
-          "BOTARCAPI_VERSTR": "v0.0.3",
-          "ARCAPI_VERSION": 11,
-          "ARCAPI_APPVERSION": "2.6.1c",
+          "BOTARCAPI_VERSTR": "v0.0.6",
+          "ARCAPI_VERSION": 12,
+          "ARCAPI_APPVERSION": "3.0.4c",
           "ARCAPI_USERAGENT": "Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)",
           "LOG_LEVEL": 0
         }
