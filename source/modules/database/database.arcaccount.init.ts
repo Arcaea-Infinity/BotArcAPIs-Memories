@@ -9,9 +9,9 @@ export default (): Promise<void> => {
     '`name`   TEXT NOT NULL,' +
     '`passwd` TEXT NOT NULL,' +
     '`device` TEXT NOT NULL DEFAULT (LOWER(HEX(RANDOMBLOB(8)))),' +
-    '`uid`    INTEGER DEFAULT 0,' +
-    '`ucode`  TEXT DEFAULT "", ' +
-    '`token`  TEXT DEFAULT "",' +
+    '`uid`    INTEGER NOT NULL DEFAULT 0,' +
+    '`ucode`  TEXT NOT NULL DEFAULT "", ' +
+    '`token`  TEXT NOT NULL DEFAULT "",' +
     '`banned` TEXT NOT NULL DEFAULT "false" CHECK(`banned` IN("true", "false")),' +
     'PRIMARY KEY (`name` ASC));';
   syslog.v(TAG, _sql);
