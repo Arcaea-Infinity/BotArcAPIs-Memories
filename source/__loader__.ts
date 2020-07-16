@@ -112,15 +112,13 @@ const handler_request_publicapi =
 const routine = async (request: IncomingMessage, response: ServerResponse) => {
 
   // user-agent and client-agent
-  let _client_sign: string | undefined =
-    <string | undefined>request.headers['client-agent'];
-
-  if (!_client_sign) _client_sign = request.headers['user-agent'];
-  if (!_client_sign) return handler_request_notfound(response);
+  const _sign_agent: string =
+    <string | undefined> request.headers['client-agent'] ??
+    <string | undefined> request.headers['user-agent'] ?? '';
 
   // match useragent
-  if (!Utils.httpMatchUserAgent(_client_sign)) {
-    syslog.w(TAG, `Invalid user agent => ${_client_sign}`);
+  if (!Utils.httpMatchUserAgent(_sign_agent)) {
+    syslog.w(TAG, `Invalid user agent => ${_sign_agent}`);
     return handler_request_notfound(response);
   }
 
@@ -130,7 +128,7 @@ const routine = async (request: IncomingMessage, response: ServerResponse) => {
   const _api_headers = request.headers;
   const _api_arguments = Utils.httpGetAllParams(_api_url.searchParams);
   syslog.i(TAG,
-    `Accept ${_client_sign} ` +
+    `Accept ${_sign_agent} ` +
     `request => ${request.method} ` +
     `${_api_path} ${JSON.stringify(_api_arguments)}`
   );
