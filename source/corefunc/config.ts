@@ -6,8 +6,8 @@ const _default_config: any = {
   // botarcapi version
   'BOTARCAPI_MAJOR': 0,
   'BOTARCAPI_MINOR': 0,
-  'BOTARCAPI_VERSION': 7,
-  'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.7',
+  'BOTARCAPI_VERSION': 8,
+  'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.8',
 
   // useragent white list
   // if set '[]' will accept all requests
@@ -17,7 +17,7 @@ const _default_config: any = {
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 12,
-  'ARCAPI_APPVERSION': '3.0.5c',
+  'ARCAPI_APPVERSION': '3.0.6c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
 
   // path to database folder
