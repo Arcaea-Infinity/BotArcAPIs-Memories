@@ -33,7 +33,7 @@ export default (argument: any): Promise<any> => {
         _arc_songinfo = await arcsong_bysongid(_arc_songid);
       } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-4, 'internal error'); }
 
-      const _return = {
+      const _return: any = {
         id: _arc_songinfo.sid,
         title_localized: {
           en: _arc_songinfo.name_en,
