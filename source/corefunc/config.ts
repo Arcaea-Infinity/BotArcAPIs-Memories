@@ -5,9 +5,9 @@ import syslog from '../modules/syslog/syslog';
 const _default_config: any = {
   // botarcapi version
   'BOTARCAPI_MAJOR': 0,
-  'BOTARCAPI_MINOR': 0,
-  'BOTARCAPI_VERSION': 9,
-  'BOTARCAPI_VERSTR': 'BotArcAPI v0.0.9',
+  'BOTARCAPI_MINOR': 1,
+  'BOTARCAPI_VERSION': 0,
+  'BOTARCAPI_VERSTR': 'BotArcAPI v0.1.0',
 
   // useragent white list
   // if set '[]' will accept all requests
@@ -17,7 +17,7 @@ const _default_config: any = {
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 12,
-  'ARCAPI_APPVERSION': '3.1.0c',
+  'ARCAPI_APPVERSION': '3.1.2c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
 
   // path to database folder
