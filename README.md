@@ -9,7 +9,7 @@ A fast and convenient Arcaea API for your bot.
 
 ## 🤔 Dependences
 - abab >= `2.0.3`
-- node-fetch >= `2.6.0`
+- node-fetch >= `2.6.1`
 - sqlite-async >= `1.0.12`
 
 ## 🌈 Guide for using
