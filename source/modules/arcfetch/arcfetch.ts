@@ -40,6 +40,7 @@ export class ArcFetchRequest extends Request {
       'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
       'AppVersion': ARCAPI_APPVERSION,
       'User-Agent': ARCAPI_USERAGENT,
+      'Platform': 'android',
       'Host': 'arcapi.lowiro.com',
       'Connection': 'Keep-Alive'
     }
