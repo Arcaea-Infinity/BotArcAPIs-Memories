@@ -18,5 +18,9 @@ A fast and convenient Arcaea API for your bot.
 - [API Reference v1](../../wiki/API-Reference-v1)
 - [API Reference v2](../../wiki/API-Reference-v2)
 
+## Contribute with Song Database
+We're looking for new song alias now.  
+If you know the new song alias which is not recorded in the database yet, Please draft an issue to contact us.
+
 ## 💕 License
 Licensed under `MIT License`.
