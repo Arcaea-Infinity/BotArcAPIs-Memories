@@ -17,3 +17,6 @@
 
 # windows file
 desktop.ini
+
+# vscode file
+.vscode
