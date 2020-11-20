@@ -34,7 +34,7 @@ export default (argument: any, method: ArcFetchMethod,
       try { await account_recycle_managed(_access_token); }
       catch (e) { throw new APIError(-2, 'invalid token'); }
 
-      resolve();
+      resolve(null);
 
     } catch (e) {
       if (e instanceof APIError)
