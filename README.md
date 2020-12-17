@@ -20,9 +20,11 @@ A fast and convenient Arcaea API for your bot.
 
 ## 🙌 Contribute with song database
 We're looking for new song alias now.  
-If you know the new song alias which is not recorded in the database yet, Please draft an issue to contact us.  
+If you know the new song alias which is not recorded in the database yet, Please [draft a discussion](../../discussions) to talk about this. Your name will be recorded in this file while we accepted your offer.
 
-Your name will be recorded in this file.
+Special thanks for arcsong.db contributors:  
+ [@AzusaYukina](https://github.com/AzusaYukina) [@littlenine12](https://github.com/littlenine12),  
+ And [@All Arcaea Players](#) !
 
 ## 💕 License
 Licensed under `MIT License`.
