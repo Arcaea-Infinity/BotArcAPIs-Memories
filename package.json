@@ -1,6 +1,6 @@
 {
   "name": "botarcapi",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A fast and convenient Arcaea API for your bot.",
   "dependencies": {
     "@types/node-fetch": "^2.5.7",
