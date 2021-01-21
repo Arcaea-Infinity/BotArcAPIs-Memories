@@ -38,6 +38,11 @@ export default (): Promise<void> => {
         '`difficultly_ftr` INTEGER NOT NULL DEFAULT 0,' +  // difficultly future
         '`difficultly_byn` INTEGER NOT NULL DEFAULT 0,' +  // difficultly beyond
 
+        '`notes_pst` INTEGER NOT NULL DEFAULT 0, ' +  // notes past
+        '`notes_prs` INTEGER NOT NULL DEFAULT 0, ' +  // notes present
+        '`notes_ftr` INTEGER NOT NULL DEFAULT 0, ' +  // notes future
+        '`notes_byn` INTEGER NOT NULL DEFAULT 0, ' +  // notes beyond
+
         '`chart_designer_pst` TEXT NOT NULL DEFAULT "",' +  // chart designer past
         '`chart_designer_prs` TEXT NOT NULL DEFAULT "",' +  // chart designer present
         '`chart_designer_ftr` TEXT NOT NULL DEFAULT "",' +  // chart designer future

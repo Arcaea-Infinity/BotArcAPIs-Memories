@@ -26,7 +26,8 @@ export default interface IArcSong {
       jacketDesigner: string,
       rating: number,
       plusFingers?: boolean,
-      ratingPlus?: boolean
+      ratingPlus?: boolean,
+      totalNotes?: number
     },
     {
       ratingClass: number,
@@ -35,6 +36,7 @@ export default interface IArcSong {
       rating: number,
       plusFingers?: boolean,
       ratingPlus?: boolean
+      totalNotes?: number
     },
     {
       ratingClass: number,
@@ -43,6 +45,7 @@ export default interface IArcSong {
       rating: number,
       plusFingers?: boolean,
       ratingPlus?: boolean
+      totalNotes?: number
     },
     {
       ratingClass: number,
@@ -51,6 +54,7 @@ export default interface IArcSong {
       rating: number,
       plusFingers?: boolean,
       ratingPlus?: boolean
+      totalNotes?: number
     }
   ]
 }
