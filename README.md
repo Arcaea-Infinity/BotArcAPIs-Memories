@@ -22,7 +22,7 @@ We're looking for new song alias now.
 If you know the new song alias which is not recorded in the database yet, Please [draft a discussion](../../discussions) to talk about this. Your name will be recorded in this file while we accepted your offer.
 
 Special thanks for arcsong.db contributors:  
- [@AzusaYukina](https://github.com/AzusaYukina) [@littlenine12](https://github.com/littlenine12),  
+ [@AzusaYukina](https://github.com/AzusaYukina) [@littlenine12](https://github.com/littlenine12)  [@iyume](https://github.com/iyume),  
  And [@All Arcaea Players](#) !
 
 ## 💕 License
