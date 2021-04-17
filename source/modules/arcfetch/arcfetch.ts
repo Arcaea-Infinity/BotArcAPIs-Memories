@@ -33,7 +33,7 @@ export class ArcFetchRequest extends Request {
 
     // request url
     let _request_url: ArcFetchRestUrl =
-      `https://arcapi.lowiro.com/latte/${ARCAPI_VERSION}/${resturl}`;
+      `${ARCAPI_URL}/${ARCAPI_VERSION}/${resturl}`;
 
     // http headers
     const _request_headers: ArcFetchHeaders = {
