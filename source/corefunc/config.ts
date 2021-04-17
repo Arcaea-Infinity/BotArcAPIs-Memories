@@ -19,6 +19,7 @@ const _default_config: any = {
   'ARCAPI_VERSION': 13,
   'ARCAPI_APPVERSION': '3.5.4c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
+  'ARCAPI_URL': 'https://arcapi.lowiro.com/latte',
 
   // path to database folder
   'DATABASE_PATH': './savedata/',
