@@ -13,21 +13,29 @@ export default (argument: any): Promise<any> => {
 
       // /song/rating?start=xxx&end=xxx
       // check for request arguments
-      if (typeof argument.start == 'undefined' || argument.start == '')
+      argument.start = parseFloat(argument.start);
+      if (isNaN(argument.start))
         throw new APIError(-1, 'invalid range start of the rating');
 
-      if (typeof argument.end == 'undefined' || argument.end == '')
+      if (argument.start <= 0 || argument.start > 15)
+        throw new APIError(-2, 'invalid range start of the rating');
+
+      if (isNaN(parseFloat(argument.end)))
         argument.end = argument.start;
+      else argument.end = parseFloat(argument.end);
+
+      if (argument.end <= 0 || argument.end > 15)
+        throw new APIError(-3, 'invalid range end of the rating');
 
       if (argument.end < argument.start)
-        throw new APIError(-2, 'range of rating end larger than its start');
+        throw new APIError(-4, 'range of rating end smaller than its start');
 
       let _arc_charts: IDatabaseArcSongChart[] = [];
 
       try {
         _arc_charts = await arcsong_bysongrating(argument.start, argument.end);
 
-      } catch (e) { }
+      } catch (e) { throw new APIError(-5, 'unknown error occurred'); }
 
       // make return results
       resolve({
