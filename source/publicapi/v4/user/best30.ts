@@ -89,10 +89,6 @@ export default (argument: any): Promise<any> => {
           arcbest30_update(_arc_friend.user_id, _arc_best30)
             .catch((e: Error) => { syslog.e(TAG, e.stack); });
 
-          // update records
-          arcrecord_update(_arc_friend.user_id, _arc_best30.best30_list)
-            .catch((e: Error) => { syslog.e(TAG, e.stack); });
-
         } else _arc_best30 = _arc_best30_cache;
 
         resolve({
@@ -143,6 +139,8 @@ const do_fetch_userbest30 =
 
     return new Promise(async (resolve, reject) => {
 
+      let _arc_records: any = [];
+
       try {
 
         let _arc_chartlist: Array<IDatabaseArcSongChart> | null = null;
@@ -189,6 +187,9 @@ const do_fetch_userbest30 =
               _result[j].rating = Utils.arcCalcSongRating(_result[j].score, v.rating);
               _arc_chartuser.push(_result[j]);
             }
+
+            // save records
+            _arc_records.concat(_result);
           }
 
           // sort the results by rating
@@ -250,6 +251,9 @@ const do_fetch_userbest30 =
 
             }
 
+            // save records
+            _arc_records.concat(_result);
+
           }
 
           // sort the results by rating
@@ -267,6 +271,10 @@ const do_fetch_userbest30 =
         // return zero when user ptt is negative
         const _best30_avg: number = _best30_sum / 30;
         const _recent10_avg: number = userinfo.rating == -1 ? 0 : (userinfo.rating / 100) * 4 - _best30_avg * 3;
+
+        // Save all records that have been searched
+        arcrecord_update(userinfo.user_id, _arc_records)
+          .catch((e: Error) => { syslog.e(TAG, e.stack); });
 
         resolve({
           last_played: userinfo.recent_score[0].time_played,
