@@ -14,6 +14,10 @@ const _default_config: any = {
   // supported regex
   'BOTARCAPI_WHITELIST': [],
 
+  // max of endpoint limitation for batch api
+  // botarcapi will deny the request which exceeds the limit
+  'BOTARCAPI_BATCH_MAX_ENDPOINTS': 10,
+
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 13,
