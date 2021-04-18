@@ -8,12 +8,12 @@ export default (anystr: string): Promise<Array<string>> => {
 
   return new Promise(async (resolve, reject) => {
 
-    // accurate querying an alias
+    // accurate search an alias
     // such as 'AB' (Aterlbus) 'GL' (GrievousLady)
     try {
 
       const _sql: string =
-        'SELECT * FROM `alias` WHERE replace(`alias`,\' \',\'\') LIKE replace(?,\' \',\'\')';
+        'SELECT * FROM `alias` WHERE REPLACE(`alias`,\' \',\'\') LIKE REPLACE(?,\' \',\'\')';
       syslog.v(TAG, _sql);
 
       const _result: Array<IDatabaseArcSongAlias> | null =
@@ -25,7 +25,7 @@ export default (anystr: string): Promise<Array<string>> => {
     } catch (e) { return reject(e); }
 
 
-    // not found? then fuzzy querying
+    // not found? then fuzzy search
     // whole the database in 'name_en' 'name_jp' 'alias' 'songid'
     try {
 

@@ -2,7 +2,9 @@ const TAG: string = 'v4/songalias.ts\t';
 
 import syslog from '../../modules/syslog/syslog';
 import APIError from '../../modules/apierror/apierror';
-import arcsong_sid_byany from '../../modules/database/database.arcsong.sid.byany';
+import IDatabaseArcSongAlias from '../../modules/database/interfaces/IDatabaseArcSongAlias';
+
+import arcsong_alias_bysid from '../../modules/database/database.arcsong.alias.byid';
 
 export default (argument: any): Promise<any> => {
 
@@ -10,22 +12,19 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /songalias?songname=xxx
+      // /songalias?songid=xxx
       // validate request arguments
-      if (typeof argument.songname == 'undefined' || argument.songname == '')
-        throw new APIError(-1, 'invalid songname');
+      if (typeof argument.songid == 'undefined' || argument.songid == '')
+        throw new APIError(-1, 'invalid song id');
 
-      let _arc_songid: Array<string>;
+      let _arc_alias: IDatabaseArcSongAlias[];
 
-      // query songid by any string
+      // search song alias with song id
       try {
-        _arc_songid = await arcsong_sid_byany(argument.songname);
+        _arc_alias = await arcsong_alias_bysid(argument.songid);
       } catch (e) { throw new APIError(-2, 'no result'); }
 
-      if (_arc_songid.length > 1)
-        throw new APIError(-3, 'too many records');
-
-      resolve({ id: _arc_songid[0] });
+      resolve({ alias: _arc_alias.map((element) => { return element.alias; }) });
 
     } catch (e) {
 
