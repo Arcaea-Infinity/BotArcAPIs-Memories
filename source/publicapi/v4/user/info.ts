@@ -1,19 +1,19 @@
-const TAG: string = 'v4/userinfo.ts\t';
+const TAG: string = 'v4/user/info.ts\t';
 
-import syslog from '../../modules/syslog/syslog';
-import APIError from '../../modules/apierror/apierror';
+import syslog from  '../../../modules/syslog/syslog';
+import APIError from  '../../../modules/apierror/apierror';
 
-import arcapi_friend_add from '../../modules/arcfetch/arcapi.friend.add';
-import arcapi_friend_clear from '../../modules/arcfetch/arcapi.friend.clear';
-import account_alloc from '../../modules/account/alloc';
-import account_recycle from '../../modules/account/recycle';
+import arcapi_friend_add from  '../../../modules/arcfetch/arcapi.friend.add';
+import arcapi_friend_clear from  '../../../modules/arcfetch/arcapi.friend.clear';
+import account_alloc from  '../../../modules/account/alloc';
+import account_recycle from  '../../../modules/account/recycle';
 
-import arcrecord_update from '../../modules/database/database.arcrecord.update';
-import arcplayer_update from '../../modules/database/database.arcplayer.update';
-import arcrecord_byuserid from '../../modules/database/database.arcrecord.byuserid';
+import arcrecord_update from  '../../../modules/database/database.arcrecord.update';
+import arcplayer_update from  '../../../modules/database/database.arcplayer.update';
+import arcrecord_byuserid from  '../../../modules/database/database.arcrecord.byuserid';
 
-import IArcAccount from '../../modules/arcfetch/interfaces/IArcAccount';
-import IArcPlayer from '../../modules/arcfetch/interfaces/IArcPlayer';
+import IArcAccount from  '../../../modules/arcfetch/interfaces/IArcAccount';
+import IArcPlayer from  '../../../modules/arcfetch/interfaces/IArcPlayer';
 
 export default (argument: any): Promise<any> => {
 

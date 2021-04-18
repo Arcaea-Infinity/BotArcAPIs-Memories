@@ -1,25 +1,25 @@
-const TAG: string = 'v4/userbest30.ts\t';
+const TAG: string = 'v4/user/best30.ts\t';
 
-import syslog from '../../modules/syslog/syslog';
-import Utils from '../../corefunc/utils';
-import APIError from '../../modules/apierror/apierror';
+import syslog from '../../../modules/syslog/syslog';
+import Utils from '../../../corefunc/utils';
+import APIError from '../../../modules/apierror/apierror';
 
-import arcapi_friend_add from '../../modules/arcfetch/arcapi.friend.add';
-import arcapi_friend_clear from '../../modules/arcfetch/arcapi.friend.clear';
-import arcapi_aggregate from '../../modules/arcfetch/arcapi.aggregate';
-import account_alloc from '../../modules/account/alloc';
-import account_recycle from '../../modules/account/recycle';
+import arcapi_friend_add from '../../../modules/arcfetch/arcapi.friend.add';
+import arcapi_friend_clear from '../../../modules/arcfetch/arcapi.friend.clear';
+import arcapi_aggregate from '../../../modules/arcfetch/arcapi.aggregate';
+import account_alloc from '../../../modules/account/alloc';
+import account_recycle from '../../../modules/account/recycle';
 
-import arcrecord_update from '../../modules/database/database.arcrecord.update';
-import arcplayer_update from '../../modules/database/database.arcplayer.update';
-import arcbest30_byuid from '../../modules/database/database.arcbest30.byuid';
-import arcbest30_update from '../../modules/database/database.arcbest30.update';
-import arcsong_charts_all from '../../modules/database/database.arcsong.allcharts';
+import arcrecord_update from '../../../modules/database/database.arcrecord.update';
+import arcplayer_update from '../../../modules/database/database.arcplayer.update';
+import arcbest30_byuid from '../../../modules/database/database.arcbest30.byuid';
+import arcbest30_update from '../../../modules/database/database.arcbest30.update';
+import arcsong_charts_all from '../../../modules/database/database.arcsong.allcharts';
 
-import IArcAccount from '../../modules/arcfetch/interfaces/IArcAccount';
-import IArcPlayer from '../../modules/arcfetch/interfaces/IArcPlayer';
-import IArcBest30Result from '../../modules/database/interfaces/IArcBest30Result';
-import IDatabaseArcSongChart from '../../modules/database/interfaces/IDatabaseArcSongChart';
+import IArcAccount from '../../../modules/arcfetch/interfaces/IArcAccount';
+import IArcPlayer from '../../../modules/arcfetch/interfaces/IArcPlayer';
+import IArcBest30Result from '../../../modules/database/interfaces/IArcBest30Result';
+import IDatabaseArcSongChart from '../../../modules/database/interfaces/IDatabaseArcSongChart';
 
 export default (argument: any): Promise<any> => {
 

@@ -1,10 +1,10 @@
-const TAG: string = 'v4/songalias.ts\t';
+const TAG: string = 'v4/song/alias.ts\t';
 
-import syslog from '../../modules/syslog/syslog';
-import APIError from '../../modules/apierror/apierror';
-import IDatabaseArcSongAlias from '../../modules/database/interfaces/IDatabaseArcSongAlias';
+import syslog from '../../../modules/syslog/syslog';
+import APIError from '../../../modules/apierror/apierror';
+import IDatabaseArcSongAlias from '../../../modules/database/interfaces/IDatabaseArcSongAlias';
 
-import arcsong_alias_bysid from '../../modules/database/database.arcsong.alias.byid';
+import arcsong_alias_bysid from '../../../modules/database/database.arcsong.alias.byid';
 
 export default (argument: any): Promise<any> => {
 
