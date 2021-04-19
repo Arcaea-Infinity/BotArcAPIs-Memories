@@ -46,6 +46,10 @@ export default (argument: any): Promise<any> => {
       if (!(_endpoints instanceof Array))
         throw new APIError(-3, 'invalid endpoints');
 
+      // check limitation
+      if (_endpoints.length > BOTARCAPI_BATCH_MAX_ENDPOINTS)
+        throw new APIError(-4, 'too many endpoints requested');
+
       // initialize result in vm context
       _vm_context.result = null;
 
@@ -57,7 +61,7 @@ export default (argument: any): Promise<any> => {
 
         // check statement
         if (!Utils.checkBindStatement(element.bind))
-          throw new APIError(-4, 'invalid bind variables');
+          throw new APIError(-5, 'invalid bind variables');
 
         // initialize variables
         element.bind.forEach((i: object) => {
@@ -66,7 +70,7 @@ export default (argument: any): Promise<any> => {
 
           // check variables
           if (!varname.startsWith('$'))
-            throw new APIError(-5, 'bind variables must start with character $');
+            throw new APIError(-6, 'bind variables must start with character $');
 
           _vm_context[varname] = null;
           _vm_vartable = _vm_vartable.concat(element.bind);
@@ -136,7 +140,7 @@ export default (argument: any): Promise<any> => {
         }
 
 
-      } catch (e) { throw new APIError(-4, 'unknown error occurred'); }
+      } catch (e) { throw new APIError(-7, 'unknown error occurred'); }
 
       resolve(_return);
 
