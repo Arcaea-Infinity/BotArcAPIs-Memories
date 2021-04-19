@@ -72,6 +72,15 @@ class Utils {
     return false;
   }
 
+  // check illegal bind variables
+  static checkBindStatement(bind: [string, string][]): boolean {
+    for (const element in bind) {
+      if (element.match(/;|\(|\)|var|let|const|delete|undefined|null|=>|\(\)|{}|\$|=|#|==|&|\||\^|!|\*|\/|-|\+|>|</g))
+        return false;
+    }
+    return true;
+  }
+
 }
 
 export default Utils;
