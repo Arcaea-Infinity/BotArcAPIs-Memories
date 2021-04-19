@@ -12,7 +12,7 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /songalias?songid=xxx
+      // /song/alias?songid=xxx
       // validate request arguments
       if (typeof argument.songid == 'undefined' || argument.songid == '')
         throw new APIError(-1, 'invalid song id');
