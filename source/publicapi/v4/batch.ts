@@ -79,65 +79,55 @@ export default (argument: any): Promise<any> => {
 
         let _endret: any = {};
 
-        try {
 
-          // apply the variable for this endpoint
-          const regexp = /=(\$\S*?)&/g;
-          let donext = false;
-          let result: any = {};
+        // apply the variable for this endpoint
+        const regexp = /=(\$\S*?)&/g;
+        let donext = false;
+        let result: any = {};
 
-          do {
-            result = regexp.exec(_endpoints[i].endpoint + '&');
-            donext = !(!result);
+        do {
+          result = regexp.exec(_endpoints[i].endpoint + '&');
+          donext = !(!result);
 
-            if (donext) {
+          if (donext) {
 
-              if (result.length != 2)
-                continue;
+            if (result.length != 2)
+              continue;
 
-              const varname = result[1];
-              const varexpr = _vm_vartable[varname];
+            const varname = result[1];
+            const varexpr = _vm_vartable[varname];
 
-              // eval the value
-              const val = safeEval(varexpr, _vm_resultbox[_vm_reftable[varname]]);
+            // eval the value
+            const val = safeEval(varexpr, _vm_resultbox[_vm_reftable[varname]]);
 
-              // replace the variable
-              _endpoints[i].endpoint = _endpoints[i].endpoint.replace(varname, val);
-            }
-
-          } while (donext)
-
-          // teardown params
-          const _url = new URL(`http://example.com/${_endpoints[i].endpoint}`);
-          const _path = _url.pathname;
-          const _arguments = Utils.httpGetAllParams(_url.searchParams);
-
-          // load api endpoint
-          let _entry = await import(`./${_path}`);
-          _entry = _entry.default;
-
-          // invoke method
-          await _entry(_arguments)
-            .then((result: any) => {
-              _endret.status = 0;
-              _endret.content = result;
-
-              // apply this result box
-              _vm_resultbox[`result${_endpoints[i].id}`] = _endret.content;
-            })
-            .catch((error: APIError) => {
-              _endret.status = error.status;
-              _endret.message = error.notify;
-            });
-
-        } catch (e) {
-          _endret = {
-            status: 233,
-            message: "invalid endpoint or bind variable failed"
+            // replace the variable
+            _endpoints[i].endpoint = _endpoints[i].endpoint.replace(varname, val);
           }
 
-          syslog.e(e.stack);
-        }
+        } while (donext)
+
+        // teardown params
+        const _url = new URL(`http://example.com/${_endpoints[i].endpoint}`);
+        const _path = _url.pathname;
+        const _arguments = Utils.httpGetAllParams(_url.searchParams);
+
+        // load api endpoint
+        let _entry = await import(`./${_path}`);
+        _entry = _entry.default;
+
+        // invoke method
+        await _entry(_arguments)
+          .then((result: any) => {
+            _endret.status = 0;
+            _endret.content = result;
+
+            // apply this result box
+            _vm_resultbox[`result${_endpoints[i].id}`] = _endret.content;
+          })
+          .catch((error: APIError) => {
+            _endret.status = error.status;
+            _endret.message = error.notify;
+          });
 
         // build results
         _return.push({
