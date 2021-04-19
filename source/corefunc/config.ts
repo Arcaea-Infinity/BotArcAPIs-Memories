@@ -5,9 +5,9 @@ import syslog from '../modules/syslog/syslog';
 const _default_config: any = {
   // botarcapi version
   'BOTARCAPI_MAJOR': 0,
-  'BOTARCAPI_MINOR': 2,
-  'BOTARCAPI_VERSION': 6,
-  'BOTARCAPI_VERSTR': 'BotArcAPI v0.2.6',
+  'BOTARCAPI_MINOR': 3,
+  'BOTARCAPI_VERSION': 0,
+  'BOTARCAPI_VERSTR': 'BotArcAPI v0.3.0',
 
   // useragent white list
   // if set '[]' will accept all requests
