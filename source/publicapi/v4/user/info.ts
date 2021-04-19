@@ -1,19 +1,19 @@
 const TAG: string = 'v4/user/info.ts\t';
 
-import syslog from  '../../../modules/syslog/syslog';
-import APIError from  '../../../modules/apierror/apierror';
+import syslog from '../../../modules/syslog/syslog';
+import APIError from '../../../modules/apierror/apierror';
 
-import arcapi_friend_add from  '../../../modules/arcfetch/arcapi.friend.add';
-import arcapi_friend_clear from  '../../../modules/arcfetch/arcapi.friend.clear';
-import account_alloc from  '../../../modules/account/alloc';
-import account_recycle from  '../../../modules/account/recycle';
+import arcapi_friend_add from '../../../modules/arcfetch/arcapi.friend.add';
+import arcapi_friend_clear from '../../../modules/arcfetch/arcapi.friend.clear';
+import account_alloc from '../../../modules/account/alloc';
+import account_recycle from '../../../modules/account/recycle';
 
-import arcrecord_update from  '../../../modules/database/database.arcrecord.update';
-import arcplayer_update from  '../../../modules/database/database.arcplayer.update';
-import arcrecord_byuserid from  '../../../modules/database/database.arcrecord.byuserid';
+import arcrecord_update from '../../../modules/database/database.arcrecord.update';
+import arcplayer_update from '../../../modules/database/database.arcplayer.update';
+import arcrecord_byuserid from '../../../modules/database/database.arcrecord.byuserid';
 
-import IArcAccount from  '../../../modules/arcfetch/interfaces/IArcAccount';
-import IArcPlayer from  '../../../modules/arcfetch/interfaces/IArcPlayer';
+import IArcAccount from '../../../modules/arcfetch/interfaces/IArcAccount';
+import IArcPlayer from '../../../modules/arcfetch/interfaces/IArcPlayer';
 
 export default (argument: any): Promise<any> => {
 
@@ -21,10 +21,17 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /userinfo?usercode=xxx[&recent=true]
+      // /user/info?usercode=xxx[&recent=7]
       // check for request arguments
       if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid usercode');
+
+      if (isNaN(parseFloat(argument.recent)))
+        throw new APIError(-2, 'invalid recent number');
+      else argument.recent = parseFloat(argument.recent);
+
+      if (argument.recent < 0 || argument.recent > 7)
+        throw new APIError(-3, 'invalid recent number');
 
       let _arc_account: IArcAccount | null = null;
       let _arc_friendlist: Array<IArcPlayer> | null = null;
@@ -33,23 +40,23 @@ export default (argument: any): Promise<any> => {
       // request an arc account
       try {
         _arc_account = await account_alloc();
-      } catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
+      } catch (e) { throw new APIError(-4, 'allocate an arc account failed'); }
 
       try {
 
         // clear friend list
         try {
           await arcapi_friend_clear(_arc_account);
-        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-3, 'clear friend list failed'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-5, 'clear friend list failed'); }
 
         // add friend
         try {
           _arc_friendlist = await arcapi_friend_add(_arc_account, argument.usercode);
-        } catch (e) { throw new APIError(-4, 'add friend failed'); }
+        } catch (e) { throw new APIError(-6, 'add friend failed'); }
 
         // length must be 1
         if (_arc_friendlist.length != 1)
-          throw new APIError(-5, 'internal error occurred');
+          throw new APIError(-7, 'internal error occurred');
 
         // result of arcapi not include
         // user code anymore since v6
@@ -65,11 +72,11 @@ export default (argument: any): Promise<any> => {
             .catch((error) => { syslog.e(error.stack); });
 
         // delete field if no need recent data
-        if (argument.recent != 'true') {
+        if (argument.recent == 0) {
           delete _return.recent_score;
         } else {
           // pickup user recent records from the database
-          _return.recent_score = await arcrecord_byuserid(_arc_friend.user_id, 7);
+          _return.recent_score = await arcrecord_byuserid(_arc_friend.user_id, argument.recent);
         }
 
         // delete usercode field
