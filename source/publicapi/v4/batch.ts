@@ -13,7 +13,7 @@ export default (argument: any): Promise<any> => {
     // [
     //    {
     //      id: 0,
-    //      bind: [{"$sid": "recent_score[0].song_id"}]
+    //      bind: {"$sid": "recent_score[0].song_id"}
     //      endpoint: "user/info?usercode=000000001"
     //    },
     //    {
@@ -35,8 +35,9 @@ export default (argument: any): Promise<any> => {
       // try parse endpoints
       let _endpoints: any = {};
       let _return: any = [];
-      let _vm_context: any = {};
-      let _vm_vartable: any = [];
+      let _vm_vartable: any = {};
+      let _vm_reftable: any = {};
+      let _vm_resultbox: any = {};
 
       try {
         _endpoints = JSON.parse(argument.calls);
@@ -50,30 +51,26 @@ export default (argument: any): Promise<any> => {
       if (_endpoints.length > BOTARCAPI_BATCH_MAX_ENDPOINTS)
         throw new APIError(-4, 'too many endpoints requested');
 
-      // initialize result in vm context
-      _vm_context.result = null;
-
-      // collect bind variables into vm context
+      // collect bind variables
       _endpoints.forEach((element) => {
 
         if (!element.bind)
           return;
 
         // check statement
-        if (!Utils.checkBindStatement(element.bind))
-          throw new APIError(-5, 'invalid bind variables');
+        // if (!Utils.checkBindStatement(element.bind))
+        //   throw new APIError(-5, 'invalid bind variables');
 
         // initialize variables
-        element.bind.forEach((i: object) => {
-
-          let varname = Object.keys(i)[0];
+        Object.keys(element.bind).forEach(varname => {
 
           // check variables
           if (!varname.startsWith('$'))
             throw new APIError(-6, 'bind variables must start with character $');
 
-          _vm_context[varname] = null;
-          _vm_vartable = _vm_vartable.concat(element.bind);
+          _vm_vartable = { ..._vm_vartable, ...element.bind };
+          _vm_reftable = { ..._vm_reftable, ...{ [varname]: `result${element.id}` } };
+
         });
       });
 
@@ -86,19 +83,31 @@ export default (argument: any): Promise<any> => {
 
           try {
 
-            if (_vm_context.result) {
-              // apply the variable for next endpoint
-              _vm_vartable.forEach((j: object) => {
+            // apply the variable for this endpoint
+            const regexp = /=(\$\S*?)&/g;
+            let donext = false;
+            let result: any = {};
 
-                const k = Object.keys(j)[0];
-                const v = Object.values(j)[0];
+            do {
+              result = regexp.exec(_endpoints[i].endpoint + '&');
+              donext = !(!result);
 
-                const val = safeEval(`result.${v}`, _vm_context);
+              if (donext) {
+
+                if (result.length != 2)
+                  continue;
+
+                const varname = result[1];
+                const varexpr = _vm_vartable[varname];
+
+                // eval the value
+                const val = safeEval(varexpr, _vm_resultbox[_vm_reftable[varname]]);
 
                 // replace the variable
-                _endpoints[i].endpoint = _endpoints[i].endpoint.replace(k, val);
-              });
-            }
+                _endpoints[i].endpoint = _endpoints[i].endpoint.replace(varname, val);
+              }
+
+            } while (donext)
 
             // teardown params
             const _url = new URL(`http://example.com/${_endpoints[i].endpoint}`);
@@ -114,6 +123,9 @@ export default (argument: any): Promise<any> => {
               .then((result: any) => {
                 _endret.status = 0;
                 _endret.content = result;
+
+                // apply this result box
+                _vm_resultbox[`result${_endpoints[i].id}`] = _endret.content;
               })
               .catch((error: APIError) => {
                 _endret.status = error.status;
@@ -128,9 +140,6 @@ export default (argument: any): Promise<any> => {
 
             syslog.e(e.stack);
           }
-
-          // apply last result in context
-          _vm_context.result = _endret.content;
 
           // build results
           _return.push({
