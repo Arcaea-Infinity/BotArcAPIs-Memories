@@ -11,7 +11,7 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /song/rating?start=xxx&end=xxx
+      // /song/rating?start=xxx[&end=xxx]
       // check for request arguments
       argument.start = parseFloat(argument.start);
       if (isNaN(argument.start))

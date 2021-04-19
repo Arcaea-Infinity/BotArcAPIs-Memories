@@ -21,7 +21,7 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /userbest?usercode=xxx&songname=xxx&difficulty=x
+      // /user/best?usercode=xxx&songname=xxx&difficulty=x
       // validate request arguments
       if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid usercode');

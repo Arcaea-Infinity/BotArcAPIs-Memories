@@ -11,7 +11,7 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /songinfo?songname=xxx
+      // /song/info?songname=xxx
       // check for request arguments
       if (typeof argument.songname == 'undefined' || argument.songname == '')
         throw new APIError(-1, 'invalid songname');
