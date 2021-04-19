@@ -79,61 +79,25 @@ export default (argument: any): Promise<any> => {
 
         let _endret: any = {};
 
-
-        // apply the variable for this endpoint
-        const regexp = /=(\$\S*?)&/g;
-        let donext = false;
-        let result: any = {};
-
-        do {
-          result = regexp.exec(_endpoints[i].endpoint + '&');
-          donext = !(!result);
-
-          if (donext) {
-
-            if (result.length != 2)
-              continue;
-
-            const varname = result[1];
-            const varexpr = _vm_vartable[varname];
-
-            // eval the value
-            const val = safeEval(varexpr, _vm_resultbox[_vm_reftable[varname]]);
-
-            // replace the variable
-            _endpoints[i].endpoint = _endpoints[i].endpoint.replace(varname, val);
+        try {
+          _endret = await do_single_operation
+            (_endpoints[i], _vm_vartable, _vm_reftable, _vm_resultbox);
+        } catch (e) {
+          if (e instanceof APIError)
+            _endret = { status: e.status, message: e.notify }
+          else {
+            _endret = { status: -233, message: 'unknown error occurred in endpoint' };
+            syslog.e(e.stack);
           }
 
-        } while (donext)
-
-        // teardown params
-        const _url = new URL(`http://example.com/${_endpoints[i].endpoint}`);
-        const _path = _url.pathname;
-        const _arguments = Utils.httpGetAllParams(_url.searchParams);
-
-        // load api endpoint
-        let _entry = await import(`./${_path}`);
-        _entry = _entry.default;
-
-        // invoke method
-        await _entry(_arguments)
-          .then((result: any) => {
-            _endret.status = 0;
-            _endret.content = result;
-
-            // apply this result box
-            _vm_resultbox[`result${_endpoints[i].id}`] = _endret.content;
-          })
-          .catch((error: APIError) => {
-            _endret.status = error.status;
-            _endret.message = error.notify;
-          });
+        }
 
         // build results
         _return.push({
           id: _endpoints[i].id,
           result: _endret
         });
+
       }
 
       resolve(_return);
@@ -150,3 +114,65 @@ export default (argument: any): Promise<any> => {
 
   });
 };
+
+const do_single_operation =
+  async (endpoint: any, vartable: any, reftable: any, resultbox: any) => {
+
+    // apply the variable for this endpoint
+    const regexp = /=(\$\S*?)&/g;
+    let donext = false;
+    let result: any = {};
+
+    do {
+      result = regexp.exec(endpoint.endpoint + '&');
+      donext = !(!result);
+
+      if (donext) {
+
+        if (result.length != 2)
+          continue;
+
+        const varname = result[1];
+        const varexpr = vartable[varname];
+        let val = {};
+
+        // eval the value
+        try {
+          val = safeEval(varexpr, resultbox[reftable[varname]]);
+        } catch (e) { throw new APIError(-1, 'run expression failed'); }
+
+        // replace the variable
+        endpoint.endpoint = endpoint.endpoint.replace(varname, val);
+      }
+    } while (donext)
+
+    // teardown params
+    const _url = new URL(`http://example.com/${endpoint.endpoint}`);
+    const _path = _url.pathname;
+    const _arguments = Utils.httpGetAllParams(_url.searchParams);
+
+    let _entry: any = {};
+    let _return: any = {};
+
+    // load api endpoint
+    try {
+      _entry = await import(`./${_path}`);
+      _entry = _entry.default;
+    } catch (e) { throw new APIError(-2, 'endpoint not found'); }
+
+    // invoke method
+    await _entry(_arguments)
+      .then((result: any) => {
+        _return.status = 0;
+        _return.content = result;
+
+        // apply this result box
+        resultbox[`result${endpoint.id}`] = _return.content;
+      })
+      .catch((error: APIError) => {
+        _return.status = error.status;
+        _return.message = error.notify;
+      });
+
+    return _return;
+  }
