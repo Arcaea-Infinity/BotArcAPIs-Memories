@@ -73,9 +73,9 @@ class Utils {
   }
 
   // check illegal bind variables
-  static checkBindStatement(bind: [string, string][]): boolean {
-    for (const element in bind) {
-      if (element.match(/;|\(|\)|var|let|const|delete|undefined|null|=>|\(\)|{}|\$|=|#|==|&|\||\^|!|\*|\/|-|\+|>|</g))
+  static checkBindStatement(bind: any): boolean {
+    for (const element in Object.keys(bind).concat(Object.values(bind))) {
+      if (element.match(/;|\(|\)|var|let|const|delete|undefined|null|=>|\(\)|{}|=|#|==|&|\||\^|!|\*|\/|-|\+|>|</g))
         return false;
     }
     return true;
