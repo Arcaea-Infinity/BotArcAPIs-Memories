@@ -17,8 +17,7 @@
     "scripts": "build/source/publicapi/**/*.js",
     "targets": [
       "node14-win-x64",
-      "node14-linux-x64",
-      "node12.2-linux-armv7"
+      "node14-linux-x64"
     ],
     "outputPath": "build/bin"
   },
