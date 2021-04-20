@@ -15,11 +15,13 @@ import arcplayer_update from '../../../modules/database/database.arcplayer.updat
 import arcbest30_byuid from '../../../modules/database/database.arcbest30.byuid';
 import arcbest30_update from '../../../modules/database/database.arcbest30.update';
 import arcsong_charts_all from '../../../modules/database/database.arcsong.allcharts';
+import arcplayer_byany from '../../../modules/database/database.arcplayer.byany';
 
 import IArcAccount from '../../../modules/arcfetch/interfaces/IArcAccount';
 import IArcPlayer from '../../../modules/arcfetch/interfaces/IArcPlayer';
 import IArcBest30Result from '../../../modules/database/interfaces/IArcBest30Result';
 import IDatabaseArcSongChart from '../../../modules/database/interfaces/IDatabaseArcSongChart';
+import IDatabaseArcPlayer from "../../../modules/database/interfaces/IDatabaseArcPlayer";
 
 export default (argument: any): Promise<any> => {
 
@@ -27,50 +29,83 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /user/best30?usercode=xxx
+      // /user/best30?[user=xxx][usercode=xxx]
       // validate request arguments
-      if (typeof argument.usercode == 'undefined' || argument.usercode == '')
-        throw new APIError(-1, 'invalid usercode');
+      if ((typeof argument.user == 'undefined' || argument.user == '')
+        && typeof argument.usercode == 'undefined' || argument.usercode == '')
+        throw new APIError(-1, 'invalid username or usercode');
 
+      if (argument.usercode && !(/\d{9}/g.test(argument.usercode)))
+        throw new APIError(-2, 'invalid usercode');
+
+      let _arc_ucode: string = "";
       let _arc_account: IArcAccount | null = null;
       let _arc_friendlist: Array<IArcPlayer> | null = null;
       let _arc_friend: IArcPlayer | null = null;
       let _arc_best30: IArcBest30Result | any = null;
       let _arc_best30_cache: IArcBest30Result | null = null;
 
+      // use this usercode directly
+      if (argument.usercode) {
+        _arc_ucode = argument.usercode;
+      }
+
+      // try search this user code while usercode not passing in
+      else if (argument.user) {
+
+        let users: IDatabaseArcPlayer[];
+
+        try {
+          users = await arcplayer_byany(argument.user);
+        } catch (e) { throw new APIError(-3, 'internal error occurred'); }
+
+        if (users.length <= 0)
+          throw new APIError(-4, 'user not found');
+
+        // too many users
+        if (users.length > 1)
+          throw new APIError(-5, 'too many users');
+
+        _arc_ucode = users[0].code;
+      }
+
+      // check user code again
+      if (!_arc_ucode)
+        throw new APIError(-6, 'internal error occurred');
+
       // request an arc account
       try {
         _arc_account = await account_alloc();
-      } catch (e) { throw new APIError(-2, 'allocate an arc account failed'); }
+      } catch (e) { throw new APIError(-7, 'allocate an arc account failed'); }
 
       try {
 
         // clear friend list
         try {
           await arcapi_friend_clear(_arc_account);
-        } catch (e) { throw new APIError(-3, 'clear friend list failed'); }
+        } catch (e) { throw new APIError(-8, 'clear friend list failed'); }
 
         // add friend
         try {
-          _arc_friendlist = await arcapi_friend_add(_arc_account, argument.usercode);
-        } catch (e) { throw new APIError(-4, 'add friend failed'); }
+          _arc_friendlist = await arcapi_friend_add(_arc_account, _arc_ucode);
+        } catch (e) { throw new APIError(-9, 'add friend failed'); }
 
         // length must be 1
         if (_arc_friendlist.length != 1)
-          throw new APIError(-5, 'internal error occurred');
+          throw new APIError(-10, 'internal error occurred');
 
         // result of arcapi not include
         // user code anymore since v6
         _arc_friend = _arc_friendlist[0];
-        _arc_friend.code = argument.usercode;
+        _arc_friend.code = _arc_ucode;
 
         if (!_arc_friend.recent_score.length)
-          throw new APIError(-6, 'not played yet');
+          throw new APIError(-11, 'not played yet');
 
         // read best30 cache from database
         try {
           _arc_best30_cache = await arcbest30_byuid(_arc_friend.user_id);
-        } catch (e) { throw new APIError(-7, 'internal error occurred'); }
+        } catch (e) { throw new APIError(-12, 'internal error occurred'); }
 
         // confirm update cache is needed by compare last played time
         if (!_arc_best30_cache ||
@@ -149,12 +184,12 @@ const do_fetch_userbest30 =
         // read all charts for best30 querying
         try {
           _arc_chartlist = await arcsong_charts_all();
-        } catch (e) { throw new APIError(-8, 'internal error occurred'); }
+        } catch (e) { throw new APIError(-13, 'internal error occurred'); }
 
         if (!_arc_chartlist) {
           syslog.f(TAG, 'Fatal error occured when read charts');
           syslog.f(TAG, 'Consider to update the song database?');
-          throw new APIError(-9, 'internal error occurred');
+          throw new APIError(-14, 'internal error occurred');
         }
 
         // query 30 charts first
@@ -181,7 +216,7 @@ const do_fetch_userbest30 =
 
               const v = _chartheap[i * 6 + j];
               if (_result[j].song_id != v.sid || _result[j].difficulty != v.rating_class)
-                return reject(new APIError(-10, 'internal error occurred'));
+                return reject(new APIError(-15, 'internal error occurred'));
 
               // calculate rating
               _result[j].rating = Utils.arcCalcSongRating(_result[j].score, v.rating);
@@ -195,7 +230,7 @@ const do_fetch_userbest30 =
           // sort the results by rating
           do_charts_sort(_arc_chartuser);
 
-        } catch (e) { syslog.e(TAG, e.stack); return reject(new APIError(-11, 'querying best30 failed')) }
+        } catch (e) { syslog.e(TAG, e.stack); return reject(new APIError(-16, 'querying best30 failed')) }
 
 
         // then query the remained charts until rating less than user ptt -2
@@ -230,7 +265,7 @@ const do_fetch_userbest30 =
 
               if (_result[i].song_id != _chartheap[i].sid ||
                 _result[i].difficulty != _chartheap[i].rating_class)
-                return reject(new APIError(-12, 'internal error occurred'));
+                return reject(new APIError(-17, 'internal error occurred'));
 
               // calculate rating
               _result[i].rating = Utils.arcCalcSongRating(_result[i].score, _chartheap[i].rating);
@@ -259,7 +294,7 @@ const do_fetch_userbest30 =
           // sort the results by rating
           do_charts_sort(_arc_chartuser);
 
-        } catch (e) { syslog.e(TAG, e.stack); return reject(new APIError(-13, 'querying best30 failed')) }
+        } catch (e) { syslog.e(TAG, e.stack); return reject(new APIError(-18, 'querying best30 failed')) }
 
         // calculate sum of best30
         let _best30_sum: number = 0;
