@@ -11,9 +11,11 @@ import account_recycle from '../../../modules/account/recycle';
 import arcrecord_update from '../../../modules/database/database.arcrecord.update';
 import arcplayer_update from '../../../modules/database/database.arcplayer.update';
 import arcrecord_byuserid from '../../../modules/database/database.arcrecord.byuserid';
+import arcplayer_byany from '../../../modules/database/database.arcplayer.byany';
 
 import IArcAccount from '../../../modules/arcfetch/interfaces/IArcAccount';
 import IArcPlayer from '../../../modules/arcfetch/interfaces/IArcPlayer';
+import IDatabaseArcPlayer from "../../../modules/database/interfaces/IDatabaseArcPlayer";
 
 export default (argument: any): Promise<any> => {
 
@@ -21,49 +23,82 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /user/info?usercode=xxx[&recent=7]
+      // /user/info?[user=xxx][usercode=xxx][&recent=7]
       // check for request arguments
-      if (typeof argument.usercode == 'undefined' || argument.usercode == '')
-        throw new APIError(-1, 'invalid usercode');
+      if ((typeof argument.user == 'undefined' || argument.user == '')
+        && typeof argument.usercode == 'undefined' || argument.usercode == '')
+        throw new APIError(-1, 'invalid username or usercode');
+
+      if (argument.usercode && !(/\d{9}/g.test(argument.usercode)))
+        throw new APIError(-2, 'invalid usercode');
 
       if (typeof argument.recent == 'undefined' || argument.recent == '')
         argument.recent = 0;
       else if (isNaN(parseFloat(argument.recent)))
-        throw new APIError(-2, 'invalid recent number');
+        throw new APIError(-3, 'invalid recent number');
       else argument.recent = parseFloat(argument.recent);
 
       if (argument.recent < 0 || argument.recent > 7)
-        throw new APIError(-3, 'invalid recent number');
+        throw new APIError(-4, 'invalid recent number');
 
+      let _arc_ucode: string = "";
       let _arc_account: IArcAccount | null = null;
       let _arc_friendlist: Array<IArcPlayer> | null = null;
       let _arc_friend: IArcPlayer | null = null;
 
+      // use this usercode directly
+      if (argument.usercode) {
+        _arc_ucode = argument.usercode;
+      }
+
+      // try search this user code while usercode not passing in
+      else if (argument.user) {
+
+        let users: IDatabaseArcPlayer[];
+
+        try {
+          users = await arcplayer_byany(argument.user);
+        } catch (e) { throw new APIError(-5, 'internal error occurred'); }
+
+        if (users.length <= 0)
+          throw new APIError(-6, 'user not found');
+
+        // too many users
+        if (users.length > 1)
+          throw new APIError(-7, 'too many users');
+
+        _arc_ucode = users[0].code;
+      }
+
+      // check user code again
+      if (!_arc_ucode)
+        throw new APIError(-9, 'internal error occurred');
+
       // request an arc account
       try {
         _arc_account = await account_alloc();
-      } catch (e) { throw new APIError(-4, 'allocate an arc account failed'); }
+      } catch (e) { throw new APIError(-10, 'allocate an arc account failed'); }
 
       try {
 
         // clear friend list
         try {
           await arcapi_friend_clear(_arc_account);
-        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-5, 'clear friend list failed'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-11, 'clear friend list failed'); }
 
         // add friend
         try {
-          _arc_friendlist = await arcapi_friend_add(_arc_account, argument.usercode);
-        } catch (e) { throw new APIError(-6, 'add friend failed'); }
+          _arc_friendlist = await arcapi_friend_add(_arc_account, _arc_ucode);
+        } catch (e) { throw new APIError(-12, 'add friend failed'); }
 
         // length must be 1
         if (_arc_friendlist.length != 1)
-          throw new APIError(-7, 'internal error occurred');
+          throw new APIError(-13, 'internal error occurred');
 
         // result of arcapi not include
         // user code anymore since v6
         _arc_friend = _arc_friendlist[0];
-        _arc_friend.code = argument.usercode;
+        _arc_friend.code = _arc_ucode;
 
         // must do deep copy
         const _return = JSON.parse(JSON.stringify(_arc_friend));
