@@ -9,11 +9,13 @@ import arcapi_friend_clear from '../../../modules/arcfetch/arcapi.friend.clear';
 import arcapi_rank_friend from '../../../modules/arcfetch/arcapi.rank.friend';
 import account_alloc from '../../../modules/account/alloc';
 import account_recycle from '../../../modules/account/recycle';
+import arcplayer_byany from '../../../modules/database/database.arcplayer.byany';
 
 import arcsong_bysongid from '../../../modules/database/database.arcsong.bysongid';
 import arcsong_sid_byany from '../../../modules/database/database.arcsong.sid.byany';
 import arcrecord_update from '../../../modules/database/database.arcrecord.update';
 import arcplayer_update from '../../../modules/database/database.arcplayer.update';
+import IDatabaseArcPlayer from "../../../modules/database/interfaces/IDatabaseArcPlayer";
 
 export default (argument: any): Promise<any> => {
 
@@ -21,19 +23,26 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /user/best?usercode=xxx&songname=xxx&difficulty=x
+      // /user/best?[user=xxx][usercode=xxx]&songname=xxx&difficulty=x
       // validate request arguments
-      if (typeof argument.usercode == 'undefined' || argument.usercode == '')
-        throw new APIError(-1, 'invalid usercode');
+      if ((typeof argument.user == 'undefined' || argument.user == '')
+        && typeof argument.usercode == 'undefined' || argument.usercode == '')
+        throw new APIError(-1, 'invalid username or usercode');
+
+      if (argument.usercode && !(/\d{9}/g.test(argument.usercode)))
+        throw new APIError(-2, 'invalid usercode');
+
       if (typeof argument.songname == 'undefined' || argument.songname == '')
-        throw new APIError(-2, 'invalid songname');
+        throw new APIError(-3, 'invalid songname');
+
       if (typeof argument.difficulty == 'undefined' || argument.difficulty == '')
-        throw new APIError(-3, 'invalid difficulty');
+        throw new APIError(-4, 'invalid difficulty');
 
       let _arc_difficulty: any = Utils.arcMapDiffFormat(argument.difficulty, 0);
       if (!_arc_difficulty)
-        throw new APIError(-4, 'invalid difficulty');
+        throw new APIError(-5, 'invalid difficulty');
 
+      let _arc_ucode: string = "";
       let _arc_account: any = null;
       let _arc_songid: any = null;
       let _arc_songinfo: any = null;
@@ -45,41 +54,69 @@ export default (argument: any): Promise<any> => {
       // check songid valid
       try {
         _arc_songid = await arcsong_sid_byany(argument.songname);
-      } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-5, 'this song is not recorded in the database'); }
+      } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-6, 'this song is not recorded in the database'); }
 
       if (_arc_songid.length > 1)
-        throw new APIError(-6, 'too many records');
+        throw new APIError(-7, 'too many records');
       _arc_songid = _arc_songid[0];
 
       try {
         _arc_songinfo = await arcsong_bysongid(_arc_songid);
-      } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-7, 'internal error'); }
+      } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-8, 'internal error'); }
 
       // check for beyond is existed
       if (_arc_songinfo.difficultly_byn == -1 && _arc_difficulty == 3) {
-        throw new APIError(-8, 'this song has no beyond level');
+        throw new APIError(-9, 'this song has no beyond level');
       }
+
+      // use this usercode directly
+      if (argument.usercode) {
+        _arc_ucode = argument.usercode;
+      }
+
+      // try search this user code while usercode not passing in
+      else if (argument.user) {
+
+        let users: IDatabaseArcPlayer[];
+
+        try {
+          users = await arcplayer_byany(argument.user);
+        } catch (e) { throw new APIError(-10, 'internal error occurred'); }
+
+        if (users.length <= 0)
+          throw new APIError(-11, 'user not found');
+
+        // too many users
+        if (users.length > 1)
+          throw new APIError(-12, 'too many users');
+
+        _arc_ucode = users[0].code;
+      }
+
+      // check user code again
+      if (!_arc_ucode)
+        throw new APIError(-13, 'internal error occurred');
 
       // request an arc account
       try {
         _arc_account = await account_alloc();
-      } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-9, 'allocate an arc account failed'); }
+      } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-14, 'allocate an arc account failed'); }
 
       try {
 
         // clear friend list
         try {
           await arcapi_friend_clear(_arc_account);
-        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-10, 'clear friend list failed'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-15, 'clear friend list failed'); }
 
         // add friend
         try {
           _arc_friendlist = await arcapi_friend_add(_arc_account, argument.usercode);
-        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-11, 'add friend failed'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-16, 'add friend failed'); }
 
         // length must be 1
         if (_arc_friendlist.length != 1)
-          throw new APIError(-12, 'internal error occurred');
+          throw new APIError(-17, 'internal error occurred');
 
         // result of arcapi not include
         // user code anymore since v6
@@ -89,10 +126,10 @@ export default (argument: any): Promise<any> => {
         // get rank result
         try {
           _arc_ranklist = await arcapi_rank_friend(_arc_account, _arc_songid, _arc_difficulty, 0, 1);
-        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-13, 'internal error occurred'); }
+        } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-18, 'internal error occurred'); }
 
         if (!_arc_ranklist.length)
-          throw new APIError(-14, 'not played yet');
+          throw new APIError(-19, 'not played yet');
 
         // calculate song rating
         _arc_rank = _arc_ranklist[0];
