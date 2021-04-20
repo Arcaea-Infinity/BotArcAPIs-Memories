@@ -15,6 +15,10 @@
   "bin": "build/source/index.js",
   "pkg": {
     "scripts": "build/source/publicapi/**/*.js",
+    "assets": [
+      "image/**",
+      "node_modules/sqlite3/lib/binding/**/node_sqlite3.node"
+    ],
     "targets": [
       "node14-win-x64",
       "node14-linux-x64"
