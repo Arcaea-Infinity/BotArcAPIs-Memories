@@ -26,7 +26,9 @@ export default (argument: any): Promise<any> => {
       if (typeof argument.usercode == 'undefined' || argument.usercode == '')
         throw new APIError(-1, 'invalid usercode');
 
-      if (isNaN(parseFloat(argument.recent)))
+      if (typeof argument.recent == 'undefined' || argument.recent == '')
+        argument.recent = 0;
+      else if (isNaN(parseFloat(argument.recent)))
         throw new APIError(-2, 'invalid recent number');
       else argument.recent = parseFloat(argument.recent);
 
