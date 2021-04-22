@@ -154,11 +154,15 @@ const do_single_operation =
     let _entry: any = {};
     let _return: any = {};
 
+    // refuse request batch endpoint
+    if (_path == 'batch')
+      throw new APIError(-2, 'batch api cannot include another batch endpoint');
+
     // load api endpoint
     try {
-      _entry = await import(`./${_path}`);
+      _entry = await import(`./${_path}.js`);
       _entry = _entry.default;
-    } catch (e) { throw new APIError(-2, 'endpoint not found'); }
+    } catch (e) { throw new APIError(-3, 'endpoint not found'); }
 
     // invoke method
     await _entry(_arguments)
