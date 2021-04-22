@@ -111,7 +111,7 @@ export default (argument: any): Promise<any> => {
 
         // add friend
         try {
-          _arc_friendlist = await arcapi_friend_add(_arc_account, argument.usercode);
+          _arc_friendlist = await arcapi_friend_add(_arc_account, _arc_ucode);
         } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-16, 'add friend failed'); }
 
         // length must be 1
