@@ -116,9 +116,6 @@ export default (argument: any): Promise<any> => {
           _return.recent_score = await arcrecord_byuserid(_arc_friend.user_id, argument.recent);
         }
 
-        // delete usercode field
-        delete _return.code;
-
         resolve(_return);
 
       } catch (e) {
