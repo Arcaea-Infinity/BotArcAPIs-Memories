@@ -9,20 +9,42 @@ const _default_config: any = {
   'BOTARCAPI_VERSION': 0,
   'BOTARCAPI_VERSTR': 'BotArcAPI v0.3.0',
 
-  // useragent white list
+  // useragent whitelist
   // if set '[]' will accept all requests
   // supported regex
   'BOTARCAPI_WHITELIST': [],
 
-  // max of endpoint limitation for batch api
-  // botarcapi will deny the request which exceeds the limit
-  'BOTARCAPI_BATCH_MAX_ENDPOINTS': 10,
+  // the max of endpoint limitation for batch api
+  'BOTARCAPI_BATCH_ENDPOINTS_MAX': 10,
+
+  // forwarding whitelist
+  // BotArcAPI can forward apis in whitelist only
+  'BOTARCAPI_FORWARD_WHITELIST': [
+    /^user\/me/g,
+    /^friend\/me\/add/g,
+    /^friend\/me\/delete/g,
+    /^score\/song/g,
+    /^score\/song\/me/g,
+    /^score\/song\/friend/g
+  ],
+
+  // the valid time for the token
+  // BotArcAPI will recycle the token while time exceed
+  'BOTARCAPI_FORWARD_TIMESEC_MAX': 120,
+
+  // the default valid time for the token
+  'BOTARCAPI_FORWARD_TIMESEC_DEFAULT': 10,
+
+  // the number of times the callers can extend the valid time of the token
+  // BotArcAPI will deny the feeds while exceeding the limitation
+  'BOTARCAPI_FORWARD_FEED_MAX': 2,
 
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 13,
   'ARCAPI_APPVERSION': '3.5.4c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
+  'ARCAPI_AGGREGATE_LIMITATION': 6,
   'ARCAPI_URL': 'https://arcapi.lowiro.com/latte',
 
   // path to database folder
