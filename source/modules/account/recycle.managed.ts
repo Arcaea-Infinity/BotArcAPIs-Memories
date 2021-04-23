@@ -9,12 +9,11 @@ export default (token: string): Promise<void> => {
 
     // validate data
     if (!ARCPERSISTENT[token]) {
-      // syslog.w(TAG, `Invalid token => ${token}`);
-      return reject(new Error('Invalid token'));
+      return reject(new Error('Invalid token or token has beed recycled'));
     }
 
     // recycle the account
-    account_recycle(ARCPERSISTENT[token]);
+    account_recycle(ARCPERSISTENT[token].account);
     delete ARCPERSISTENT[token];
 
     resolve();
