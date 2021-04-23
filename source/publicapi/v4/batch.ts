@@ -148,7 +148,7 @@ const do_single_operation =
 
     // teardown params
     const _url = new URL(`http://example.com/${endpoint.endpoint}`);
-    const _path = _url.pathname;
+    let _path = _url.pathname;
     const _arguments = Utils.httpGetAllParams(_url.searchParams);
 
     let _entry: any = {};
@@ -160,12 +160,20 @@ const do_single_operation =
 
     // load api endpoint
     try {
-      _entry = await import(`./${_path}.js`);
+
+      // supports forward api
+      // batch api only supported GET method
+      if (new RegExp(/^\/forward\/forward\//).test(_path)) {
+        _path = _path.replace('/forward/forward/', '');
+        _entry = await import(`./forward/forward`);
+      } else _entry = await import(`./${_path}.js`);
+
       _entry = _entry.default;
+
     } catch (e) { throw new APIError(-3, 'endpoint not found'); }
 
     // invoke method
-    await _entry(_arguments)
+    await _entry(_arguments, 'GET', _path)
       .then((result: any) => {
         _return.status = 0;
         _return.content = result;
