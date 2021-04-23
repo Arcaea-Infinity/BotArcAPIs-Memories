@@ -72,22 +72,6 @@ const handler_request_publicapi =
           path = path.replace(forward_route[v], '');
           _api_entry = await import(`./publicapi/${v}`);
 
-          let pass = false;
-
-          // check forward whitelist
-          if (BOTARCAPI_FORWARD_WHITELIST
-            && BOTARCAPI_FORWARD_WHITELIST.length > 0) {
-
-            for (const _ in BOTARCAPI_FORWARD_WHITELIST) {
-              if (new RegExp(BOTARCAPI_FORWARD_WHITELIST[_]).test(path)) {
-                pass = true; break;
-              }
-            }
-
-            if (!pass)
-              throw new Error('Illegal forward path');
-          }
-
           break;
         }
       }

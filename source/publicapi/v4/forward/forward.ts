@@ -42,6 +42,21 @@ export default (argument: any, method: ArcFetchMethod,
       try { _account = await account_fromtoken(_access_token); }
       catch (e) { throw new APIError(-2, 'invalid token'); }
 
+      // check forward whitelist
+      let pass = false;
+      if (BOTARCAPI_FORWARD_WHITELIST
+        && BOTARCAPI_FORWARD_WHITELIST.length > 0) {
+
+        for (const _ in BOTARCAPI_FORWARD_WHITELIST) {
+          if (new RegExp(BOTARCAPI_FORWARD_WHITELIST[_]).test(path)) {
+            pass = true; break;
+          }
+        }
+
+        if (!pass)
+          throw new APIError(-3, 'illegal forward url');
+      }
+
       // request arcapi
       let _return: any = {};
       try {
