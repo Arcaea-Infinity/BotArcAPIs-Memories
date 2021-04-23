@@ -48,7 +48,7 @@ export default (argument: any): Promise<any> => {
         throw new APIError(-3, 'invalid endpoints');
 
       // check limitation
-      if (_endpoints.length > BOTARCAPI_BATCH_MAX_ENDPOINTS)
+      if (_endpoints.length > BOTARCAPI_BATCH_ENDPOINTS_MAX)
         throw new APIError(-4, 'too many endpoints requested');
 
       // collect bind variables

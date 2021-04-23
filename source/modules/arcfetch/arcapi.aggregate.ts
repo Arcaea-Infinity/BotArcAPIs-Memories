@@ -8,9 +8,8 @@ export default (account: IArcAccount, endpoints: Array<string>) => {
   
   return new Promise((resolve, reject) => {
 
-    // the maximum endpoints is 6
     // account will be BANNED from server if exceed
-    if (endpoints.length > 6)
+    if (endpoints.length > ARCAPI_AGGREGATE_LIMITATION)
       return reject(new Error('Endpoints limit exceeded'));
 
     // construct endpoint object
