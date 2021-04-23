@@ -18,6 +18,7 @@ import arcsong_charts_all from '../../../modules/database/database.arcsong.allch
 import arcplayer_byany from '../../../modules/database/database.arcplayer.byany';
 
 import IArcAccount from '../../../modules/arcfetch/interfaces/IArcAccount';
+import IArcScore from "../../../modules/arcfetch/interfaces/IArcScore";
 import IArcPlayer from '../../../modules/arcfetch/interfaces/IArcPlayer';
 import IArcBest30Result from '../../../modules/database/interfaces/IArcBest30Result';
 import IDatabaseArcSongChart from '../../../modules/database/interfaces/IDatabaseArcSongChart';
@@ -174,7 +175,7 @@ const do_fetch_userbest30 =
 
     return new Promise(async (resolve, reject) => {
 
-      let _arc_records: any = [];
+      let _arc_records: IArcScore[] = [];
 
       try {
 
@@ -221,10 +222,10 @@ const do_fetch_userbest30 =
               // calculate rating
               _result[j].rating = Utils.arcCalcSongRating(_result[j].score, v.rating);
               _arc_chartuser.push(_result[j]);
-            }
 
-            // save records
-            _arc_records.concat(_result);
+              // save records
+              _arc_records.push(_result[j]);
+            }
           }
 
           // sort the results by rating
@@ -284,10 +285,9 @@ const do_fetch_userbest30 =
                 do_charts_sort(_arc_chartuser);
               }
 
+              // save records
+              _arc_records.push(_result[i]);
             }
-
-            // save records
-            _arc_records.concat(_result);
 
           }
 
