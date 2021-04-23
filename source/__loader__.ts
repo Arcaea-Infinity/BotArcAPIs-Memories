@@ -46,11 +46,13 @@ const handler_request_favicon = async (response: ServerResponse) => {
   syslog.v(TAG, 'Send response back');
 }
 
-const specific_routine: { [key: string]: RegExp } = {
+const forward_route: { [key: string]: RegExp } = {
   '/v1/arc/forward': /^\/v1\/arc\/forward\//,
   '/v2/arc/forward': /^\/v2\/arc\/forward\//,
-  '/v3/arc/forward': /^\/v3\/arc\/forward\//
+  '/v3/arc/forward': /^\/v3\/arc\/forward\//,
+  '/v4/forward/forward': /^\/v4\/forward\/forward\//
 };
+
 const handler_request_publicapi =
   async (response: ServerResponse, argument: string,
     method: string, path: string, header: IncomingHttpHeaders, databody: string | null) => {
@@ -63,11 +65,29 @@ const handler_request_publicapi =
 
       let _api_entry: any;
 
-      // try match the specific routine
-      for (const v in specific_routine) {
-        if (new RegExp(specific_routine[v]).test(path)) {
+      // try match the forward route
+      for (const v in forward_route) {
+        if (new RegExp(forward_route[v]).test(path)) {
+
+          path = path.replace(forward_route[v], '');
           _api_entry = await import(`./publicapi/${v}`);
-          path = path.replace(specific_routine[v], '');
+
+          let pass = false;
+
+          // check forward whitelist
+          if (BOTARCAPI_FORWARD_WHITELIST
+            && BOTARCAPI_FORWARD_WHITELIST.length > 0) {
+
+            for (const _ in BOTARCAPI_FORWARD_WHITELIST) {
+              if (new RegExp(BOTARCAPI_FORWARD_WHITELIST[_]).test(path)) {
+                pass = true; break;
+              }
+            }
+
+            if (!pass)
+              throw new Error('Illegal forward path');
+          }
+
           break;
         }
       }
@@ -110,12 +130,12 @@ const handler_request_publicapi =
 
   }
 
-const routine = async (request: IncomingMessage, response: ServerResponse) => {
+const handler = async (request: IncomingMessage, response: ServerResponse) => {
 
   // user-agent and client-agent
   const _sign_agent: string =
-    <string | undefined> request.headers['client-agent'] ??
-    <string | undefined> request.headers['user-agent'] ?? '';
+    <string | undefined>request.headers['client-agent'] ??
+    <string | undefined>request.headers['user-agent'] ?? '';
 
   // match useragent
   if (!Utils.httpMatchUserAgent(_sign_agent)) {
@@ -159,4 +179,4 @@ const routine = async (request: IncomingMessage, response: ServerResponse) => {
 
 }
 
-export default routine;
+export default handler;
