@@ -1,4 +1,4 @@
-const TAG: string = 'v4/arc/forward.js\t';
+const TAG: string = 'v4/arc/forward.ts\t';
 
 import syslog from '../../../modules/syslog/syslog';
 import APIError from '../../../modules/apierror/apierror';

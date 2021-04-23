@@ -1,4 +1,4 @@
-const TAG: string = 'v4/forward/alloc.js\t';
+const TAG: string = 'v4/forward/alloc.ts\t';
 
 import syslog from '../../../modules/syslog/syslog';
 import APIError from '../../../modules/apierror/apierror';
@@ -15,12 +15,13 @@ export default (argument: any): Promise<any> => {
       argument.time = parseInt(argument.time);
       argument.clear = argument.clear == 'true' ? true : false;
 
-      // default time is 30 sec
+      // check time
       if (isNaN(argument.time) || argument.time == 0)
-        argument.time = 30;
+        argument.time = BOTARCAPI_FORWARD_TIMESEC_DEFAULT;
 
       // clamp the range
-      if (argument.time < 30 || argument.time > 240)
+      if (argument.time < BOTARCAPI_FORWARD_TIMESEC_DEFAULT
+        || argument.time > BOTARCAPI_FORWARD_TIMESEC_MAX)
         throw new APIError(-1, 'invalid time');
 
       let _token = null;

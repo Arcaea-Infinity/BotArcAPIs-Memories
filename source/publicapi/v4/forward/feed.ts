@@ -1,8 +1,8 @@
-const TAG: string = 'v4/forward/recycle.ts\t';
+const TAG: string = 'v4/forward/feed.ts\t';
 
 import syslog from '../../../modules/syslog/syslog';
 import APIError from '../../../modules/apierror/apierror';
-import account_recycle_managed from '../../../modules/account/recycle.managed';
+import account_feed_managed from '../../../modules/account/feed.managed';
 import { ArcFetchMethod } from '../../../modules/arcfetch/arcfetch';
 
 export default (argument: any, method: ArcFetchMethod,
@@ -12,7 +12,7 @@ export default (argument: any, method: ArcFetchMethod,
 
     try {
 
-      // /forward/recycle?token=xxx
+      // /forward/feed?token=xxx
       // get token from GET parameters
       let _access_token = null;
       if (argument.token) {
@@ -30,11 +30,13 @@ export default (argument: any, method: ArcFetchMethod,
       if (!_access_token)
         throw new APIError(-1, 'invalid token');
 
-      // recycle the account
-      try { await account_recycle_managed(_access_token); }
-      catch (e) { throw new APIError(-2, 'invalid token'); }
+      let _time = 0;
 
-      resolve(null);
+      // recycle the account
+      try { _time = await account_feed_managed(_access_token); }
+      catch (e) { throw new APIError(-2, 'feed token failed'); }
+
+      resolve({ valid_time: _time });
 
     } catch (e) {
       if (e instanceof APIError)
