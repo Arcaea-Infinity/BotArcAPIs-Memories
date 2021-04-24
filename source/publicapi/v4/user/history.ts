@@ -1,4 +1,4 @@
-const TAG: string = 'v4/user/best.ts\t';
+const TAG: string = 'v4/user/history.ts\t';
 
 import Utils from '../../../corefunc/utils';
 import syslog from '../../../modules/syslog/syslog';
@@ -24,7 +24,7 @@ export default (argument: any): Promise<any> => {
 
     try {
 
-      // /user/best?[user=xxx][usercode=xxx]&songname=xxx&difficulty=x
+      // /user/history?[user=xxx][&usercode=xxx][&quantity]&songname=xxx&difficulty=x
       // validate request arguments
       if ((typeof argument.user == 'undefined' || argument.user == '')
         && typeof argument.usercode == 'undefined' || argument.usercode == '')
