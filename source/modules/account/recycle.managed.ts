@@ -14,6 +14,11 @@ export default (token: string): Promise<void> => {
 
     // recycle the account
     account_recycle(ARCPERSISTENT[token].account);
+
+    // Clear timeout
+    clearTimeout(ARCPERSISTENT[token].proc);
+
+    // Remove it from persistent
     delete ARCPERSISTENT[token];
 
     resolve();

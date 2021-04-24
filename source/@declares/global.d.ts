@@ -23,7 +23,15 @@ declare var LOG_LEVEL: number;
 declare var LOG_PATH: string;
 
 declare var ARCACCOUNT: any;
-declare var ARCPERSISTENT: { [key: string]: { account: any, feed: number, feeded: number, validtime: number } };
+declare var ARCPERSISTENT: {
+  [key: string]: {
+    account: any,
+    feed: number,
+    feeded: number,
+    validtime: number,
+    proc?: any
+  }
+};
 declare var DATABASE_ARCACCOUNT: any;
 declare var DATABASE_ARCBEST30: any;
 declare var DATABASE_ARCPLAYER: any;

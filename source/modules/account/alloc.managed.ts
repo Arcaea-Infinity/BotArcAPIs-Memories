@@ -51,7 +51,7 @@ const check_recycle = (token: string) => {
 
   // Validate the token
   if (!ARCPERSISTENT[token]) {
-    syslog.w(TAG, 'Token not exists while recycling. Maybe it has been recycled manually? Canceled');
+    syslog.w(TAG, 'Token not exists while recycling.');
     return;
   }
 
@@ -63,5 +63,6 @@ const check_recycle = (token: string) => {
   }
 
   // reset the timeout
-  setTimeout(() => check_recycle(token), ARCPERSISTENT[token].validtime);
+  ARCPERSISTENT[token].proc =
+    setTimeout(() => check_recycle(token), ARCPERSISTENT[token].validtime);
 };
