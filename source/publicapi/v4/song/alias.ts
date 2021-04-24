@@ -22,7 +22,10 @@ export default (argument: any): Promise<any> => {
       // search song alias with song id
       try {
         _arc_alias = await arcsong_alias_bysid(argument.songid);
-      } catch (e) { throw new APIError(-2, 'no result'); }
+      } catch (e) { throw new APIError(-2, 'internal error'); }
+
+      if (_arc_alias.length == 0)
+        throw new APIError(-3, 'no result');
 
       resolve({ alias: _arc_alias.map((element) => { return element.alias; }) });
 
