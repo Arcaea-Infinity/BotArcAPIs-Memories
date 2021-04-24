@@ -121,7 +121,7 @@ export default (argument: any): Promise<any> => {
         // result of arcapi not include
         // user code anymore since v6
         _arc_friend = _arc_friendlist[0];
-        _arc_friend.code = argument.usercode;
+        _arc_friend.code = _arc_ucode;
 
         // get rank result
         try {
