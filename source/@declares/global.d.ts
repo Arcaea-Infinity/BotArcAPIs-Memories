@@ -8,6 +8,8 @@ declare var BOTARCAPI_FORWARD_WHITELIST: Array<RegExp>;
 declare var BOTARCAPI_FORWARD_TIMESEC_MAX: number;
 declare var BOTARCAPI_FORWARD_TIMESEC_DEFAULT: number;
 declare var BOTARCAPI_FORWARD_FEED_MAX: number;
+declare var BOTARCAPI_USERBEST_HISTORY_MAX: number;
+declare var BOTARCAPI_USERBEST_HISTORY_DEFAULT: number;
 
 declare var ARCAPI_RETRY: number;
 declare var ARCAPI_VERSION: number;

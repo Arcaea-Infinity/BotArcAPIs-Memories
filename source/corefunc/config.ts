@@ -39,6 +39,9 @@ const _default_config: any = {
   // BotArcAPI will deny the feeds while exceeding the limitation
   'BOTARCAPI_FORWARD_FEED_MAX': 2,
 
+  'BOTARCAPI_USERBEST_HISTORY_MAX': 20,
+  'BOTARCAPI_USERBEST_HISTORY_DEFAULT': 7,
+
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 13,
