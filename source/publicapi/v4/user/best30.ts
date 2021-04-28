@@ -305,7 +305,13 @@ const do_fetch_userbest30 =
         // calculate best30 and recent10 average value
         // return zero when user ptt is negative
         const _best30_avg: number = _best30_sum / 30;
-        const _recent10_avg: number = userinfo.rating == -1 ? 0 : (userinfo.rating / 100) * 4 - _best30_avg * 3;
+        let _recent10_avg: number = userinfo.rating == -1 ? 0 : (userinfo.rating / 100) * 4 - _best30_avg * 3;
+
+        // clamp minimum value
+        if (_recent10_avg < 0) {
+          _recent10_avg = 0;
+          syslog.w(TAG, 'Recent 10 average value less than 0.');
+        }
 
         // Save all records that have been searched
         arcrecord_update(userinfo.user_id, _arc_records)
