@@ -68,7 +68,8 @@ class SystemLog {
       `${String(_time.getDate()).padStart(2, '0')} ` +
       `${String(_time.getHours()).padStart(2, '0')}:` +
       `${String(_time.getMinutes()).padStart(2, '0')}:` +
-      `${String(_time.getSeconds()).padStart(2, '0')}]`;
+      `${String(_time.getSeconds()).padStart(2, '0')}.` +
+      `${String(_time.getMilliseconds()).padStart(3, '0')}]`;
 
     // print log string to screen
     const _log_content = `${_time_string} ` +

@@ -1,6 +1,7 @@
 const TAG = 'account/alloc.managed.ts';
 
 import crypto from 'crypto';
+import syslog from '../syslog/syslog';
 import account_alloc from './alloc';
 import account_recycle_managed from './recycle.managed';
 import arcapi_friend_clear from '../arcfetch/arcapi.friend.clear';
@@ -11,7 +12,8 @@ export default (valid_time: number, clear: boolean = false): Promise<string> => 
   return new Promise(async (resolve, reject) => {
 
     // validate data
-    if (valid_time < 30 || valid_time > 600)
+    if (valid_time < BOTARCAPI_FORWARD_TIMESEC_DEFAULT
+      || valid_time > BOTARCAPI_FORWARD_TIMESEC_MAX)
       return reject(new Error('Invalid time'));
 
     // try to grab an account
@@ -28,17 +30,39 @@ export default (valid_time: number, clear: boolean = false): Promise<string> => 
     }
 
     // save account to persistent list
-    const _token = crypto.randomBytes(16).toString('hex');
-    ARCPERSISTENT[_token] = _account;
+    const _token: string = crypto.randomBytes(16).toString('hex');
+    ARCPERSISTENT[_token] = {
+      feed: 1, // must be 1
+      feeded: 0,
+      account: _account,
+      validtime: valid_time * 1000
+    };
 
-    // timed out to auto recycle the account
-    setTimeout(() => {
-      account_recycle_managed(_token)
-        .catch((e) => { /* do nothing */ });
-    }, valid_time * 1000);
+    // start check
+    check_recycle(_token);
 
     resolve(_token);
 
   });
 
 }
+
+const check_recycle = (token: string) => {
+
+  // Validate the token
+  if (!ARCPERSISTENT[token]) {
+    syslog.w(TAG, 'Token not exists while recycling.');
+    return;
+  }
+
+  // Recycle the token
+  if (--ARCPERSISTENT[token].feed < 0) {
+    account_recycle_managed(token)
+      .catch((e) => { /* do nothing */ });
+    return;
+  }
+
+  // reset the timeout
+  ARCPERSISTENT[token].proc =
+    setTimeout(() => check_recycle(token), ARCPERSISTENT[token].validtime);
+};

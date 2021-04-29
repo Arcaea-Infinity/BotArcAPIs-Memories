@@ -72,6 +72,18 @@ class Utils {
     return false;
   }
 
+  // check illegal bind variables
+  static checkBindStatement(bind: any): boolean {
+    const beCheck: any = Object.values(bind);
+
+    for (let i = 0; i < beCheck.length; ++i) {
+      if (beCheck[i].match(/;|\(|\)|var|let|const|delete|undefined|null|=>|\(\)|{|}|{}|=|#|==|&|\||\^|!|\*|\/|-|\+|>|<|\?/g))
+        return false;
+    }
+
+    return true;
+  }
+
 }
 
 export default Utils;

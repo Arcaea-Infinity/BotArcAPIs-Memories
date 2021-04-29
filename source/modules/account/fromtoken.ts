@@ -11,7 +11,7 @@ export default (token: string): Promise<IArcAccount> => {
     if (!ARCPERSISTENT[token])
       return reject(new Error('Invalid token'));
 
-    resolve(ARCPERSISTENT[token]);
+    resolve(ARCPERSISTENT[token].account);
 
   });
 
