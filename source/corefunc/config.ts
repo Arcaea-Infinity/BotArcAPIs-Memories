@@ -44,11 +44,11 @@ const _default_config: any = {
 
   // arcaea api config
   'ARCAPI_RETRY': 3,
-  'ARCAPI_VERSION': 13,
-  'ARCAPI_APPVERSION': '3.5.4c',
+  'ARCAPI_VERSION': 14,
+  'ARCAPI_APPVERSION': '3.6.0c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
   'ARCAPI_AGGREGATE_LIMITATION': 6,
-  'ARCAPI_URL': 'https://arcapi.lowiro.com/latte',
+  'ARCAPI_URL': 'https://arcapi.lowiro.com/blockchain',
 
   // path to database folder
   'DATABASE_PATH': './savedata/',
