@@ -4,6 +4,7 @@
   "description": "A fast and convenient Arcaea API for your bot.",
   "dependencies": {
     "abab": "^2.0.3",
+    "archash4all": "^1.0.0",
     "node-fetch": "^2.6.1",
     "safe-eval": "^0.4.1",
     "sqlite-async": "^1.0.12"
