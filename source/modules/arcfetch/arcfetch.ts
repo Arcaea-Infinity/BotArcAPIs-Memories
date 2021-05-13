@@ -61,6 +61,15 @@ export class ArcFetchRequest extends Request {
       _request_headers['DeviceId'] = init.deviceId;
     }
 
+    // Challenge code
+    var _hash_body = "";
+    if (method == 'POST' && init.submitData) {
+      _hash_body = init.submitData?.toString();
+      syslog.d(_hash_body);
+    }
+
+    _request_headers['X-Random-Challenge'] = archash(_hash_body);
+
     // append init.submitData after url if method is GET
     // otherwise it's post data
     let _request_body: any = null;
@@ -72,9 +81,6 @@ export class ArcFetchRequest extends Request {
         _request_body = init.submitData;
       }
     }
-
-    // Challenge code
-    _request_headers['X-Random-Challenge'] = archash(_request_body ?? "");
 
     super(_request_url, {
       method: method,
