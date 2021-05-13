@@ -64,8 +64,7 @@ export class ArcFetchRequest extends Request {
     // Challenge code
     var _hash_body = "";
     if (method == 'POST' && init.submitData) {
-      _hash_body = init.submitData?.toString();
-      syslog.d(_hash_body);
+      _hash_body = init.submitData.toString();
     }
 
     _request_headers['X-Random-Challenge'] = archash(_hash_body);
