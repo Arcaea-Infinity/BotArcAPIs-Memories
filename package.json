@@ -18,7 +18,8 @@
     "scripts": "build/source/publicapi/**/*.js",
     "assets": [
       "image/**",
-      "node_modules/sqlite3/lib/binding/**/node_sqlite3.node"
+      "node_modules/sqlite3/lib/binding/**/node_sqlite3.node",
+      "node_modules/archash4all/lib/binding/**/archash4all.node"
     ],
     "targets": [
       "node14-win-x64",

@@ -61,8 +61,8 @@ export class ArcFetchRequest extends Request {
       _request_headers['DeviceId'] = init.deviceId;
     }
 
-    // Challenge code
-    var _hash_body = "";
+    // challenge code
+    let _hash_body = "";
     if (method == 'POST' && init.submitData) {
       _hash_body = init.submitData.toString();
     }

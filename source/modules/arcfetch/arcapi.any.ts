@@ -11,6 +11,7 @@ export default (account: IArcAccount, method: ArcFetchMethod,
   const _remote_request =
     new ArcFetchRequest(method, path, {
       userToken: account.token,
+      deviceId: account.device,
       submitData: databody
     });
 

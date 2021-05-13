@@ -12,6 +12,7 @@ export default (account: IArcAccount, songid: string,
     const _remote_request =
       new ArcFetchRequest(ArcFetchMethod.GET, 'score/song/friend', {
         userToken: account.token,
+        deviceId: account.device,
         submitData: new URLSearchParams({
           'song_id': songid,
           'difficulty': difficulty,
