@@ -5,7 +5,7 @@ import arcfetch, { ArcFetchRequest, ArcFetchMethod } from './arcfetch';
 import IArcAccount from './interfaces/IArcAccount';
 
 export default (account: IArcAccount, songid: string,
-  difficulty: number, start: number = 0, limit: number = 10) => {
+  difficulty: number, start: number = 4, limit: number = 18) => {
 
   return new Promise((resolve, reject) => {
 
