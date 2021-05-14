@@ -12,7 +12,7 @@ A fast and convenient Arcaea API for your bot.
 - node-fetch >= `2.6.1`
 - sqlite-async >= `1.0.12`
 - safe-eval >= `0.4.1`
-- archash4all >= `1.0.0`
+- archash4all >= `1.2.0`
 
 ## 🌈 Guide for using
 - [Get Started](../../wiki/Get-Started)
