@@ -13,6 +13,7 @@ export default (account: IArcAccount, usercode: string): Promise<Array<IArcPlaye
     const _remote_request =
       new ArcFetchRequest(ArcFetchMethod.POST, 'friend/me/add', {
         userToken: account.token,
+        deviceId: account.device,
         submitData: new URLSearchParams({ 'friend_code': usercode })
       });
 

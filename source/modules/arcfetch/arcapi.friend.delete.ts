@@ -13,6 +13,7 @@ export default (account: IArcAccount, userid: number): Promise<Array<IArcPlayer>
     const _remote_request =
       new ArcFetchRequest(ArcFetchMethod.POST, 'friend/me/delete', {
         userToken: account.token,
+        deviceId: account.device,
         submitData: new URLSearchParams({ 'friend_id': userid } as any)
       });
 

@@ -3,6 +3,7 @@ const TAG: string = 'corefunc/arcfetch.ts';
 import { btoa } from 'abab';
 import syslog from '../syslog/syslog';
 import fetch, { Request } from 'node-fetch';
+import { archash } from 'archash4all';
 
 export interface ArcFetchHeaders { [key: string]: string; }
 
@@ -59,6 +60,14 @@ export class ArcFetchRequest extends Request {
     if (init.deviceId) {
       _request_headers['DeviceId'] = init.deviceId;
     }
+
+    // challenge code
+    let _hash_body = "";
+    if (method == 'POST' && init.submitData) {
+      _hash_body = init.submitData.toString();
+    }
+
+    _request_headers['X-Random-Challenge'] = archash(_hash_body);
 
     // append init.submitData after url if method is GET
     // otherwise it's post data

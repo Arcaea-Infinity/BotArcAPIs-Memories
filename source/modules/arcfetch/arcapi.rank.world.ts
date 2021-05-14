@@ -5,7 +5,7 @@ import arcfetch, { ArcFetchRequest, ArcFetchMethod } from './arcfetch';
 import IArcAccount from './interfaces/IArcAccount';
 
 export default (account: IArcAccount, songid: string,
-  difficulty: number, start: number = 0, limit: number = 10) => {
+  difficulty: number, start: number = 0, limit: number = 20) => {
 
   return new Promise((resolve, reject) => {
 
@@ -13,6 +13,7 @@ export default (account: IArcAccount, songid: string,
     const _remote_request =
       new ArcFetchRequest(ArcFetchMethod.GET, 'score/song', {
         userToken: account.token,
+        deviceId: account.device,
         submitData: new URLSearchParams({
           'song_id': songid,
           'difficulty': difficulty,
