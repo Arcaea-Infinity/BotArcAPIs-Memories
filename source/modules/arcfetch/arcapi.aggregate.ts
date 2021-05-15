@@ -75,7 +75,8 @@ export default (account: IArcAccount, endpoints: Array<string>) => {
               _results.push(element.value[0]));
 
             resolve(_results);
-          });
+
+          }).catch((e: string) => reject(e));
 
       } else {
 

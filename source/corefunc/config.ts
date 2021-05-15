@@ -52,7 +52,7 @@ const _default_config: any = {
 
   // send a huge of requests concurrently
   // only valid on 'BOTARCAPI_AGGREGATE_ENABLED' set to false
-  'BOTARCAPI_AGGREGATE_CONCURRENT': true,
+  'BOTARCAPI_AGGREGATE_CONCURRENT': false,
 
   // arcaea api config
   'ARCAPI_RETRY': 3,
