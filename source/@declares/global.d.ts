@@ -10,12 +10,14 @@ declare var BOTARCAPI_FORWARD_TIMESEC_DEFAULT: number;
 declare var BOTARCAPI_FORWARD_FEED_MAX: number;
 declare var BOTARCAPI_USERBEST_HISTORY_MAX: number;
 declare var BOTARCAPI_USERBEST_HISTORY_DEFAULT: number;
+declare var BOTARCAPI_AGGREGATE_LIMITATION: number;
+declare var BOTARCAPI_AGGREGATE_ENABLED: boolean;
+declare var BOTARCAPI_AGGREGATE_CONCURRENT: boolean;
 
 declare var ARCAPI_RETRY: number;
 declare var ARCAPI_VERSION: number;
 declare var ARCAPI_APPVERSION: string;
 declare var ARCAPI_USERAGENT: string;
-declare var ARCAPI_AGGREGATE_LIMITATION: number;
 declare var ARCAPI_URL: string;
 
 declare var DATABASE_PATH: string;
