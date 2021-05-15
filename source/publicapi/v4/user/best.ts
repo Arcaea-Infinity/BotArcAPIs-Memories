@@ -125,7 +125,7 @@ export default (argument: any): Promise<any> => {
 
         // get rank result
         try {
-          _arc_ranklist = await arcapi_rank_friend(_arc_account, _arc_songid, _arc_difficulty, 0, 1);
+          _arc_ranklist = await arcapi_rank_friend(_arc_account, _arc_songid, _arc_difficulty);
         } catch (e) { syslog.e(TAG, e.stack); throw new APIError(-18, 'internal error occurred'); }
 
         if (!_arc_ranklist.length)

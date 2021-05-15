@@ -205,7 +205,7 @@ const do_fetch_userbest30 =
             const _endpoints: Array<string> = [];
             for (let j = 0; j < 6; ++j) {
               const v = _chartheap[i * 6 + j];
-              _endpoints.push(`/score/song/friend?song_id=${v.sid}&difficulty=${v.rating_class}&start=0&limit=1`);
+              _endpoints.push(`score/song/friend?song_id=${v.sid}&difficulty=${v.rating_class}&start=0&limit=11`);
             }
 
             // send request
@@ -247,7 +247,7 @@ const do_fetch_userbest30 =
 
                 // fill the endpoints and chartheap
                 const v: any = _arc_chartlist.shift();
-                _endpoints.push(`/score/song/friend?song_id=${v.sid}&difficulty=${v.rating_class}&start=0&limit=1`);
+                _endpoints.push(`score/song/friend?song_id=${v.sid}&difficulty=${v.rating_class}&start=0&limit=11`);
                 _chartheap.push(v);
 
               } else break;
