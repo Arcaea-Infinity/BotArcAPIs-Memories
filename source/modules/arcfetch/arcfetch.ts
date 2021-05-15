@@ -42,7 +42,6 @@ export class ArcFetchRequest extends Request {
       'AppVersion': ARCAPI_APPVERSION,
       'User-Agent': ARCAPI_USERAGENT,
       'Platform': 'android',
-      'Host': 'arcapi.lowiro.com',
       'Connection': 'Keep-Alive'
     }
 
