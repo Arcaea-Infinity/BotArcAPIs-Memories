@@ -103,7 +103,8 @@ const do_selectnode = (): string => {
 
   // filter the nodes
   for (let i = 0; i < BOTARCAPI_FRONTPROXY_NODES.length; ++i) {
-    if (BOTARCAPI_FRONTPROXY_NODES[i].enabled) {
+    if (BOTARCAPI_FRONTPROXY_NODES[i].enabled
+      || BOTARCAPI_FRONTPROXY_NODES[i].enabled == undefined) {
       _enabled.push(BOTARCAPI_FRONTPROXY_NODES[i]);
       _weight_sum += BOTARCAPI_FRONTPROXY_NODES[i].weight;
     }
