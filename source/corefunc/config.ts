@@ -54,12 +54,23 @@ const _default_config: any = {
   // only valid on 'BOTARCAPI_AGGREGATE_ENABLED' set to false
   'BOTARCAPI_AGGREGATE_CONCURRENT': false,
 
+  // frontend http proxy
+  // used to load balance for per ip
+  // change this will ignore the 'ARCAPI_URL' config
+  // if set to '[]' will disable the frontend proxy
+  'BOTARCAPI_FRONTPROXY_NODES': [
+    // { url: "https://arcapi.lowiro.com", weight: 1.0 },
+    // { url: "https://example.com", weight: 0.8 },
+    // { url: "https://your.proxy.node.com", weight: 0.3 },
+  ],
+
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 14,
   'ARCAPI_APPVERSION': '3.6.0c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
-  'ARCAPI_URL': 'https://arcapi.lowiro.com/blockchain',
+  'ARCAPI_URL': 'https://arcapi.lowiro.com',
+  'ARCAPI_URL_CODENAME': 'blockchain',
 
   // path to database folder
   'DATABASE_PATH': './savedata/',
