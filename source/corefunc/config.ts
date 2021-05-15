@@ -42,12 +42,23 @@ const _default_config: any = {
   'BOTARCAPI_USERBEST_HISTORY_MAX': 20,
   'BOTARCAPI_USERBEST_HISTORY_DEFAULT': 7,
 
+  // aggregate limit
+  'BOTARCAPI_AGGREGATE_LIMITATION': 6,
+
+  // sending only one 'compose/aggregate' request instead
+  // of send a huge of requests to arcapi.
+  // this feature is for 3.6.0 arcapi
+  'BOTARCAPI_AGGREGATE_ENABLED': false,
+
+  // send a huge of requests concurrently
+  // only valid on 'BOTARCAPI_AGGREGATE_ENABLED' set to false
+  'BOTARCAPI_AGGREGATE_CONCURRENT': true,
+
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 14,
   'ARCAPI_APPVERSION': '3.6.0c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
-  'ARCAPI_AGGREGATE_LIMITATION': 6,
   'ARCAPI_URL': 'https://arcapi.lowiro.com/blockchain',
 
   // path to database folder
