@@ -307,6 +307,10 @@ const do_fetch_userbest30 =
         const _best30_avg: number = _best30_sum / 30;
         let _recent10_avg: number = userinfo.rating == -1 ? 0 : (userinfo.rating / 100) * 4 - _best30_avg * 3;
 
+        // this is impossible
+        if (_best30_avg == 0 && userinfo.rating > 0)
+          return reject(new APIError(-19, 'internal error occurred'));
+
         // clamp minimum value
         if (_recent10_avg < 0) {
           _recent10_avg = 0;
