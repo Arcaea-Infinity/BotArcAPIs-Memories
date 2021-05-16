@@ -34,7 +34,7 @@ export class ArcFetchRequest extends Request {
 
     // request url
     let _request_url: ArcFetchRestUrl =
-      `${ARCAPI_URL}/${ARCAPI_VERSION}/${resturl}`;
+      `${do_selectnode()}/${ARCAPI_URL_CODENAME}/${ARCAPI_VERSION}/${resturl}`;
 
     // http headers
     const _request_headers: ArcFetchHeaders = {
@@ -42,7 +42,6 @@ export class ArcFetchRequest extends Request {
       'AppVersion': ARCAPI_APPVERSION,
       'User-Agent': ARCAPI_USERAGENT,
       'Platform': 'android',
-      'Host': 'arcapi.lowiro.com',
       'Connection': 'Keep-Alive'
     }
 
@@ -89,6 +88,38 @@ export class ArcFetchRequest extends Request {
 
   }
 
+}
+
+const do_selectnode = (): string => {
+
+  if (!BOTARCAPI_FRONTPROXY_NODES.length
+    || BOTARCAPI_FRONTPROXY_NODES.length == 0) {
+    return ARCAPI_URL;
+  }
+
+  let _enabled = [];
+  let _weight_sum = 0;
+
+  // filter the nodes
+  for (let i = 0; i < BOTARCAPI_FRONTPROXY_NODES.length; ++i) {
+    if (BOTARCAPI_FRONTPROXY_NODES[i].enabled
+      || BOTARCAPI_FRONTPROXY_NODES[i].enabled == undefined) {
+      _enabled.push(BOTARCAPI_FRONTPROXY_NODES[i]);
+      _weight_sum += BOTARCAPI_FRONTPROXY_NODES[i].weight;
+    }
+  }
+
+  // roll a number select node by weight
+  let roll = Math.random() * _weight_sum;
+  _weight_sum = 0;
+
+  // select a node
+  for (let i = 0; i < _enabled.length; ++i) {
+    _weight_sum += _enabled[i].weight;
+    if (_weight_sum >= roll) return _enabled[i].url;
+  }
+
+  return _enabled[_enabled.length - 1].url;
 }
 
 const do_fetch = (request: ArcFetchRequest): Promise<any> => {

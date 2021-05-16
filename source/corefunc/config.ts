@@ -36,7 +36,7 @@ const _default_config: any = {
   'BOTARCAPI_FORWARD_TIMESEC_DEFAULT': 10,
 
   // the number of times the callers can extend the valid time of the token
-  // BotArcAPI will deny the feeds while exceeding the limitation
+  // BotArcAPI will decline the feeds while exceeding the limitation
   'BOTARCAPI_FORWARD_FEED_MAX': 2,
 
   'BOTARCAPI_USERBEST_HISTORY_MAX': 20,
@@ -50,16 +50,27 @@ const _default_config: any = {
   // this feature is for 3.6.0 arcapi
   'BOTARCAPI_AGGREGATE_ENABLED': false,
 
-  // send a huge of requests concurrently
+  // sending requests concurrently
   // only valid on 'BOTARCAPI_AGGREGATE_ENABLED' set to false
   'BOTARCAPI_AGGREGATE_CONCURRENT': false,
+
+  // frontend http proxy
+  // used to load balance for per ip
+  // change this will ignore the 'ARCAPI_URL' config
+  // if set to '[]' will disable the frontend proxy
+  'BOTARCAPI_FRONTPROXY_NODES': [
+    // { url: "https://arcapi.lowiro.com", weight: 1.0 },
+    // { url: "https://example.com", weight: 0.8 },
+    // { url: "https://your.proxy.node.com", weight: 0.3 },
+  ],
 
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 14,
   'ARCAPI_APPVERSION': '3.6.0c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
-  'ARCAPI_URL': 'https://arcapi.lowiro.com/blockchain',
+  'ARCAPI_URL': 'https://arcapi.lowiro.com',
+  'ARCAPI_URL_CODENAME': 'blockchain',
 
   // path to database folder
   'DATABASE_PATH': './savedata/',

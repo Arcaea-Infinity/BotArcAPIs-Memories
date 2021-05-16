@@ -13,12 +13,20 @@ declare var BOTARCAPI_USERBEST_HISTORY_DEFAULT: number;
 declare var BOTARCAPI_AGGREGATE_LIMITATION: number;
 declare var BOTARCAPI_AGGREGATE_ENABLED: boolean;
 declare var BOTARCAPI_AGGREGATE_CONCURRENT: boolean;
+declare var BOTARCAPI_FRONTPROXY_NODES: Array<FontProxyNode>;
+
+interface FontProxyNode {
+  url: string,
+  weight: number
+  enabled: boolean,
+}
 
 declare var ARCAPI_RETRY: number;
 declare var ARCAPI_VERSION: number;
 declare var ARCAPI_APPVERSION: string;
 declare var ARCAPI_USERAGENT: string;
 declare var ARCAPI_URL: string;
+declare var ARCAPI_URL_CODENAME: string;
 
 declare var DATABASE_PATH: string;
 declare var SERVER_PORT: number;
