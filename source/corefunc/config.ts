@@ -36,7 +36,7 @@ const _default_config: any = {
   'BOTARCAPI_FORWARD_TIMESEC_DEFAULT': 10,
 
   // the number of times the callers can extend the valid time of the token
-  // BotArcAPI will deny the feeds while exceeding the limitation
+  // BotArcAPI will decline the feeds while exceeding the limitation
   'BOTARCAPI_FORWARD_FEED_MAX': 2,
 
   'BOTARCAPI_USERBEST_HISTORY_MAX': 20,
@@ -50,7 +50,7 @@ const _default_config: any = {
   // this feature is for 3.6.0 arcapi
   'BOTARCAPI_AGGREGATE_ENABLED': false,
 
-  // send a huge of requests concurrently
+  // sending requests concurrently
   // only valid on 'BOTARCAPI_AGGREGATE_ENABLED' set to false
   'BOTARCAPI_AGGREGATE_CONCURRENT': false,
 
