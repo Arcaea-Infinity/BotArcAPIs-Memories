@@ -30,6 +30,34 @@ export interface ArcFetchExtra {
 
 export class ArcFetchRequest extends Request {
 
+  private _init: ArcFetchExtra;
+  private _method: ArcFetchMethod;
+  private _resturl: ArcFetchRestUrl;
+
+  set init(val: ArcFetchExtra) {
+    this._init = val;
+  }
+
+  set methods(val: ArcFetchMethod) {
+    this._method = val;
+  }
+
+  set resturl(val: ArcFetchRestUrl) {
+    this._resturl = val;
+  }
+
+  get init(): ArcFetchExtra {
+    return this._init;
+  }
+
+  get methods(): ArcFetchMethod {
+    return this._method;
+  }
+
+  get resturl(): ArcFetchRestUrl {
+    return this._resturl;
+  }
+
   constructor(method: ArcFetchMethod, resturl: ArcFetchRestUrl, init: ArcFetchExtra) {
 
     // request url
@@ -86,6 +114,10 @@ export class ArcFetchRequest extends Request {
       body: _request_body
     });
 
+    // save arguments
+    this._init = init;
+    this._method = method;
+    this._resturl = resturl;
   }
 
 }
@@ -122,12 +154,18 @@ const do_selectnode = (): string => {
   return _enabled[_enabled.length - 1].url;
 }
 
+const do_rebuild = (request: ArcFetchRequest): ArcFetchRequest => {
+  return new ArcFetchRequest(request.methods, request.resturl, request.init);
+}
+
 const do_fetch = (request: ArcFetchRequest): Promise<any> => {
 
   // request origin arcapi
   return fetch(request)
     .then((response) => {
-      return response.text();
+      if (response.status == 200)
+        return response.text();
+      throw new Error(`invalid http code ${response.status}`);
     })
 
     // try parse json
@@ -153,7 +191,7 @@ const do_fetch = (request: ArcFetchRequest): Promise<any> => {
         const _errcode =
           root.error_code != undefined ? root.error_code : root.code;
 
-        syslog.e(TAG, `Arcapi returns an error => ${_errcode}`);
+        syslog.e(TAG, `Arcapi returns an error => ${ _errcode }`);
         syslog.e(TAG, JSON.stringify(root));
 
         return Promise.reject(_errcode);
@@ -168,28 +206,34 @@ const do_fetch = (request: ArcFetchRequest): Promise<any> => {
  */
 const arcfetch = async (request: ArcFetchRequest): Promise<any> => {
 
-  syslog.v(TAG, `Arcfetch => ${request.url}`);
+  syslog.v(TAG, `Arcfetch => ${ request.url }`);
 
   let _retry = 0;
+  let _request = request;
   while (true) {
 
     try {
-      return await do_fetch(request);
+      return await do_fetch(_request);
     }
     catch (e) {
       _retry += 1;
-      syslog.w(TAG, `Failed... retrying ${_retry}/${ARCAPI_RETRY}`);
+      syslog.w(TAG, `Failed...retrying ${ _retry } / ${ ARCAPI_RETRY }`);
 
       if (e instanceof Error)
         syslog.e(TAG, e.stack);
-
 
       // do not retry when some error occurred
       // like has been banned or service not available or etc.
       // only do retry when like request timed out or etc.
       else if (typeof e == 'number' || e == 'UnauthorizedError') {
         _retry = ARCAPI_RETRY;
-        syslog.w(TAG, `Retry canceled => errcode ${e}`);
+        syslog.w(TAG, `Retry canceled => errcode ${ e }`);
+      }
+
+      // change node
+      if (BOTARCAPI_FRONTPROXY_CHANGE_NODE) {
+        _request = do_rebuild(_request);
+        syslog.w(TAG, `Change node to => ${ _request.url }`);
       }
 
       if (_retry >= ARCAPI_RETRY) throw e;
