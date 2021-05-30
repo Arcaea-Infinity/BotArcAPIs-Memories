@@ -4,5 +4,6 @@ export default interface IArcBest30Result {
   last_played: number,
   best30_avg: number,
   recent10_avg: number,
-  best30_list: Array<IArcScore>
+  best30_list: Array<IArcScore>,
+  best30_overflow: Array<IArcScore>
 }

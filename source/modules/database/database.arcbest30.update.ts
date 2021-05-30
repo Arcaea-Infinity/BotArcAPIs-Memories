@@ -13,6 +13,7 @@ export default (userid: number, best30: IArcBest30Result) => {
     best30_avg: Math.floor(best30.best30_avg * 10000),
     recent10_avg: Math.floor(best30.recent10_avg * 10000),
     best30_list: btoa(JSON.stringify(best30.best30_list)) ?? '[]',
+    best30_overflow: btoa(JSON.stringify(best30.best30_overflow)) ?? '[]',
   };
 
   const _sql: string =

@@ -39,6 +39,10 @@ export default (argument: any): Promise<any> => {
       if (argument.usercode && !(/\d{9}/g.test(argument.usercode)))
         throw new APIError(-2, 'invalid usercode');
 
+      argument.overflow = parseInt(argument.overflow);
+      if (isNaN(argument.overflow)) argument.overflow = 0;
+      if (argument.overflow < 0) argument.overflow = 0;
+
       let _arc_ucode: string = "";
       let _arc_account: IArcAccount | null = null;
       let _arc_friendlist: Array<IArcPlayer> | null = null;
@@ -121,17 +125,35 @@ export default (argument: any): Promise<any> => {
             delete _arc_best30.best30_list[index].user_id;
           });
 
+          _arc_best30.best30_overflow.forEach((_: any, index: number) => {
+            delete _arc_best30.best30_overflow[index].name;
+            delete _arc_best30.best30_overflow[index].user_id;
+          });
+
           // update cache
           arcbest30_update(_arc_friend.user_id, _arc_best30)
             .catch((e: Error) => { syslog.e(TAG, e.stack); });
 
         } else _arc_best30 = _arc_best30_cache;
 
-        resolve({
+        let _return: any = {
           best30_avg: _arc_best30.best30_avg,
           recent10_avg: _arc_best30.recent10_avg,
-          best30_list: _arc_best30.best30_list
-        });
+          best30_list: _arc_best30.best30_list,
+          best30_overflow: _arc_best30.best30_overflow
+        };
+
+        // clamp overflow results
+        if (argument.overflow >= 0) {
+
+          if (argument.overflow == 0)
+            delete _return.best30_overflow;
+          else
+            _return.best30_overflow =
+              _return.best30_overflow.slice(0, argument.overflow);
+        }
+
+        resolve(_return);
 
       } catch (e) {
 
@@ -181,6 +203,7 @@ const do_fetch_userbest30 =
 
         let _arc_chartlist: Array<IDatabaseArcSongChart> | null = null;
         let _arc_chartuser = [];
+        let _arc_chartoverflow = [];
 
         // read all charts for best30 querying
         try {
@@ -243,7 +266,8 @@ const do_fetch_userbest30 =
             const _endpoints: Array<string> = [];
             for (let i = 0; i < 6; ++i) {
               if (_arc_chartlist.length != 0 && (_arc_chartuser.length < 30 ||
-                _arc_chartuser[_arc_chartuser.length - 1].rating - 2 <= _arc_chartlist[0].rating)) {
+                _arc_chartuser[_arc_chartuser.length - 1].rating - 2 <= _arc_chartlist[0].rating ||
+                _arc_chartuser[_arc_chartuser.length - 1].rating - 3 <= _arc_chartlist[0].rating)) {
 
                 // fill the endpoints and chartheap
                 const v: any = _arc_chartlist.shift();
@@ -281,9 +305,17 @@ const do_fetch_userbest30 =
               // replace it and resort when
               // the current rating is higher than last one
               else if (_result[i].rating > _arc_chartuser[_arc_chartuser.length - 1].rating) {
+
+                // save overflow
+                _arc_chartoverflow.push(_arc_chartuser[_arc_chartuser.length - 1]);
+
+                // replace last one
                 _arc_chartuser[_arc_chartuser.length - 1] = _result[i];
                 do_charts_sort(_arc_chartuser);
               }
+
+              // save overflow
+              else _arc_chartoverflow.push(_result[i]);
 
               // save records
               _arc_records.push(_result[i]);
@@ -293,6 +325,7 @@ const do_fetch_userbest30 =
 
           // sort the results by rating
           do_charts_sort(_arc_chartuser);
+          do_charts_sort(_arc_chartoverflow);
 
         } catch (e) { syslog.e(TAG, e.stack); return reject(new APIError(-18, 'querying best30 failed')) }
 
@@ -325,7 +358,8 @@ const do_fetch_userbest30 =
           last_played: userinfo.recent_score[0].time_played,
           best30_avg: Math.floor(_best30_avg * 1000) / 1000,
           recent10_avg: Math.floor(_recent10_avg * 1000) / 1000,
-          best30_list: _arc_chartuser
+          best30_list: _arc_chartuser,
+          best30_overflow: _arc_chartoverflow
         } as IArcBest30Result);
 
       } catch (e) { return reject(e); }

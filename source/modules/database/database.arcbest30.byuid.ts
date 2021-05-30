@@ -19,7 +19,8 @@ export default (userid: number): Promise<IArcBest30Result | null> => {
         last_played: data.last_played,
         best30_avg: data.best30_avg / 10000,
         recent10_avg: data.recent10_avg / 10000,
-        best30_list: JSON.parse(atob(data.best30_list) ?? '[]')
+        best30_list: JSON.parse(atob(data.best30_list) ?? '[]'),
+        best30_overflow: JSON.parse(atob(data.best30_overflow) ?? '[]')
       } as IArcBest30Result : null;
 
     });

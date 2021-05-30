@@ -11,6 +11,7 @@ export default (): Promise<void> => {
     '`best30_avg`   INTEGER NOT NULL DEFAULT 0,' +
     '`recent10_avg` INTEGER NOT NULL DEFAULT 0,' +
     '`best30_list`  TEXT DEFAULT "",' +
+    '`best30_overflow`  TEXT DEFAULT "",' +
     'PRIMARY KEY (`uid` ASC));';
   syslog.v(TAG, _sql);
 
