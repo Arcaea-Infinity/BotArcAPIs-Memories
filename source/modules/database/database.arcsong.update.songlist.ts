@@ -24,6 +24,7 @@ export default (songlist: IArcSongList): Promise<void> => {
             artist: element.artist,
             side: element.side,
             date: element.date,
+            version: element.version ?? '',
             world_unlock: element.world_unlock == true ? 'true' : 'false',
             remote_download: element.remote_dl == true ? 'true' : 'false',
             difficultly_pst: element.difficulties[0].rating * 2,
@@ -38,6 +39,10 @@ export default (songlist: IArcSongList): Promise<void> => {
             jacket_designer_prs: element.difficulties[1].jacketDesigner,
             jacket_designer_ftr: element.difficulties[2].jacketDesigner,
             jacket_designer_byn: element.difficulties[3] ? element.difficulties[3].jacketDesigner : '',
+            jacket_override_pst: element.difficulties[0].jacketOverride == true ? 'true' : 'false',
+            jacket_override_prs: element.difficulties[1].jacketOverride == true ? 'true' : 'false',
+            jacket_override_ftr: element.difficulties[2].jacketOverride == true ? 'true' : 'false',
+            jacket_override_byn: (element.difficulties[3] && element.difficulties[3].jacketOverride == true) ? 'true' : 'false',
           };
 
           // processing "ratingPlus"

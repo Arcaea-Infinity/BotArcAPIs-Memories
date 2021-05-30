@@ -9,6 +9,7 @@ export default interface IDatabaseArcSong {
   time?: number,
   side: number,
   date: number,
+  version: string,
   world_unlock: 'true' | 'false',
   remote_download: 'true' | 'false',
   rating_pst?: number,
@@ -30,5 +31,9 @@ export default interface IDatabaseArcSong {
   jacket_designer_pst: string,
   jacket_designer_prs: string,
   jacket_designer_ftr: string,
-  jacket_designer_byn: string
+  jacket_designer_byn: string,
+  jacket_override_pst: 'true' | 'false',
+  jacket_override_prs: 'true' | 'false',
+  jacket_override_ftr: 'true' | 'false',
+  jacket_override_byn: 'true' | 'false'
 }

@@ -19,11 +19,13 @@ export default interface IArcSong {
     en: string
   },
   date: number,
+  version?: string,
   difficulties: [
     {
       ratingClass: number,
       chartDesigner: string,
       jacketDesigner: string,
+      jacketOverride?: boolean,
       rating: number,
       plusFingers?: boolean,
       ratingPlus?: boolean,
@@ -33,6 +35,7 @@ export default interface IArcSong {
       ratingClass: number,
       chartDesigner: string,
       jacketDesigner: string,
+      jacketOverride?: boolean,
       rating: number,
       plusFingers?: boolean,
       ratingPlus?: boolean
@@ -42,6 +45,7 @@ export default interface IArcSong {
       ratingClass: number,
       chartDesigner: string,
       jacketDesigner: string,
+      jacketOverride?: boolean,
       rating: number,
       plusFingers?: boolean,
       ratingPlus?: boolean
@@ -51,6 +55,7 @@ export default interface IArcSong {
       ratingClass: number,
       chartDesigner: string,
       jacketDesigner: string,
+      jacketOverride?: boolean,
       rating: number,
       plusFingers?: boolean,
       ratingPlus?: boolean
