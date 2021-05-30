@@ -97,7 +97,10 @@ export default (argument: any): Promise<any> => {
         };
       }
 
-      // append rating remove empty field
+      // append rating and remove empty field
+      if (_return.title_localized.ja == '')
+        delete _return.title_localized.ja;
+
       _return.difficulties.map((element: any) => {
         element.rating = Math.floor(element.rating / 2);
         if (!element.ratingPlus)
@@ -106,10 +109,6 @@ export default (argument: any): Promise<any> => {
           delete element.jacketOverride;
         return element;
       });
-
-      // remove empty field
-      if (_return.title_localized.ja == '')
-        delete _return.title_localized.ja;
 
       resolve(_return);
 
