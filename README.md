@@ -5,7 +5,7 @@
 [![chat](https://img.shields.io/static/v1?label=qq-group&message=866231846&color=blue)](#)
 [![Docker Image](https://github.com/TheSnowfield/BotArcAPI/workflows/Docker%20Compose/badge.svg)](#)  
 
-A fast and convenient Arcaea API for your bot.  
+A fast and easy Arcaea API for your bot.  
 
 ## 🤔 Dependences
 - abab >= `2.0.3`
