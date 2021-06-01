@@ -5,5 +5,6 @@ export default interface IDatabaseArcBest30 {
   last_played: number,
   best30_avg: number,
   recent10_avg: number,
-  best30_list: string
+  best30_list: string,
+  best30_overflow: string,
 }

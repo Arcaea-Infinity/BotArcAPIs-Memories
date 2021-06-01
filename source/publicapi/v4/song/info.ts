@@ -1,9 +1,9 @@
 const TAG: string = 'v4/song/info.ts\t';
 
-import syslog from  '../../../modules/syslog/syslog';
-import APIError from  '../../../modules/apierror/apierror';
-import arcsong_sid_byany from  '../../../modules/database/database.arcsong.sid.byany';
-import arcsong_bysongid from  '../../../modules/database/database.arcsong.bysongid';
+import syslog from '../../../modules/syslog/syslog';
+import APIError from '../../../modules/apierror/apierror';
+import arcsong_sid_byany from '../../../modules/database/database.arcsong.sid.byany';
+import arcsong_bysongid from '../../../modules/database/database.arcsong.bysongid';
 
 export default (argument: any): Promise<any> => {
 
@@ -48,11 +48,13 @@ export default (argument: any): Promise<any> => {
         remote_dl: _arc_songinfo.remote_download == 'true' ? true : false,
         world_unlock: _arc_songinfo.world_unlock == 'true' ? true : false,
         date: _arc_songinfo.date,
+        version: _arc_songinfo.version,
         difficulties: [
           {
             ratingClass: 0,
             chartDesigner: _arc_songinfo.chart_designer_pst,
             jacketDesigner: _arc_songinfo.jacket_designer_pst,
+            jacketOverride: _arc_songinfo.jacket_override_pst == 'true' ? true : false,
             rating: _arc_songinfo.difficultly_pst,
             ratingReal: _arc_songinfo.rating_pst,
             ratingPlus: (_arc_songinfo.difficultly_pst % 2 != 0),
@@ -62,6 +64,7 @@ export default (argument: any): Promise<any> => {
             ratingClass: 1,
             chartDesigner: _arc_songinfo.chart_designer_prs,
             jacketDesigner: _arc_songinfo.jacket_designer_prs,
+            jacketOverride: _arc_songinfo.jacket_override_prs == 'true' ? true : false,
             rating: _arc_songinfo.difficultly_prs,
             ratingReal: _arc_songinfo.rating_prs,
             ratingPlus: (_arc_songinfo.difficultly_prs % 2 != 0),
@@ -71,6 +74,7 @@ export default (argument: any): Promise<any> => {
             ratingClass: 2,
             chartDesigner: _arc_songinfo.chart_designer_ftr,
             jacketDesigner: _arc_songinfo.jacket_designer_ftr,
+            jacketOverride: _arc_songinfo.jacket_override_ftr == 'true' ? true : false,
             rating: _arc_songinfo.difficultly_ftr,
             ratingReal: _arc_songinfo.rating_ftr,
             ratingPlus: (_arc_songinfo.difficultly_ftr % 2 != 0),
@@ -85,6 +89,7 @@ export default (argument: any): Promise<any> => {
           ratingClass: 3,
           chartDesigner: _arc_songinfo.chart_designer_byn,
           jacketDesigner: _arc_songinfo.jacket_designer_byn,
+          jacketOverride: _arc_songinfo.jacket_override_byn == 'true' ? true : false,
           rating: _arc_songinfo.difficultly_byn,
           ratingReal: _arc_songinfo.rating_byn,
           ratingPlus: (_arc_songinfo.difficultly_byn % 2 != 0),
@@ -92,17 +97,18 @@ export default (argument: any): Promise<any> => {
         };
       }
 
-      // append rating
+      // append rating and remove empty field
+      if (_return.title_localized.ja == '')
+        delete _return.title_localized.ja;
+
       _return.difficulties.map((element: any) => {
         element.rating = Math.floor(element.rating / 2);
         if (!element.ratingPlus)
           delete element.ratingPlus;
+        if (!element.jacketOverride)
+          delete element.jacketOverride;
         return element;
       });
-
-      // remove empty field
-      if (_return.title_localized.ja == '')
-        delete _return.title_localized.ja;
 
       resolve(_return);
 

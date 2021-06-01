@@ -24,6 +24,7 @@ export default (): Promise<void> => {
         '`time`   INTEGER NOT NULL DEFAULT 0,' +  // total time sec
         '`side`   INTEGER NOT NULL CHECK(`side` IN(0, 1)) DEFAULT 0,' +  // side 0 hikari 1 conflict
         '`date`   INTEGER NOT NULL DEFAULT 0,' +  // release date
+        '`version`   TEXT NOT NULL DEFAULT "",' +  // release version
 
         '`world_unlock`     TEXT NOT NULL CHECK(`world_unlock` IN("true", "false")) DEFAULT "false",' +  // is world unlock
         '`remote_download`  TEXT NOT NULL CHECK(`remote_download` IN("true", "false")) DEFAULT "false",' +  // is remote download
@@ -52,6 +53,11 @@ export default (): Promise<void> => {
         '`jacket_designer_prs` TEXT NOT NULL DEFAULT "",' +  // jacket designer present
         '`jacket_designer_ftr` TEXT NOT NULL DEFAULT "",' +  // jacket designer future
         '`jacket_designer_byn` TEXT NOT NULL DEFAULT "",' +  // jacket designer beyond
+
+        '`jacket_override_pst` TEXT NOT NULL CHECK(`jacket_override_pst` IN("true", "false")) DEFAULT "false",' +  // jacket override past
+        '`jacket_override_prs` TEXT NOT NULL CHECK(`jacket_override_prs` IN("true", "false")) DEFAULT "false",' +  // jacket override present
+        '`jacket_override_ftr` TEXT NOT NULL CHECK(`jacket_override_ftr` IN("true", "false")) DEFAULT "false",' +  // jacket override future
+        '`jacket_override_byn` TEXT NOT NULL CHECK(`jacket_override_byn` IN("true", "false")) DEFAULT "false",' +  // jacket override beyond
 
         'PRIMARY KEY ("sid" ASC))';
       syslog.v(TAG, _sql);

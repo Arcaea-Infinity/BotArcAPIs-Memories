@@ -14,6 +14,7 @@ declare var BOTARCAPI_AGGREGATE_LIMITATION: number;
 declare var BOTARCAPI_AGGREGATE_ENABLED: boolean;
 declare var BOTARCAPI_AGGREGATE_CONCURRENT: boolean;
 declare var BOTARCAPI_FRONTPROXY_NODES: Array<FontProxyNode>;
+declare var BOTARCAPI_FRONTPROXY_CHANGE_NODE: boolean;
 
 interface FontProxyNode {
   url: string,

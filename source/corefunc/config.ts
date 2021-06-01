@@ -64,6 +64,10 @@ const _default_config: any = {
     // { url: "https://your.proxy.node.com", weight: 0.3 },
   ],
 
+  // change proxy node when request fail
+  // this feature is for 3.6.0 arcapi
+  'BOTARCAPI_FRONTPROXY_CHANGE_NODE': false,
+
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 14,
