@@ -12,8 +12,8 @@ export default (userid: number, best30: IArcBest30Result) => {
     last_played: best30.last_played,
     best30_avg: Math.floor(best30.best30_avg * 10000),
     recent10_avg: Math.floor(best30.recent10_avg * 10000),
-    best30_list: btoa(JSON.stringify(best30.best30_list)) ?? '[]',
-    best30_overflow: btoa(JSON.stringify(best30.best30_overflow)) ?? '[]',
+    best30_list: best30.best30_list ? (btoa(JSON.stringify(best30.best30_list)) ?? 'W10=') : 'W10=',
+    best30_overflow: best30.best30_overflow ? (btoa(JSON.stringify(best30.best30_overflow)) ?? 'W10=') : 'W10=',
   };
 
   const _sql: string =
