@@ -6,8 +6,8 @@ const _default_config: any = {
   // botarcapi version
   'BOTARCAPI_MAJOR': 0,
   'BOTARCAPI_MINOR': 3,
-  'BOTARCAPI_VERSION': 5,
-  'BOTARCAPI_VERSTR': 'BotArcAPI v0.3.5',
+  'BOTARCAPI_VERSION': 6,
+  'BOTARCAPI_VERSTR': 'BotArcAPI v0.3.6',
 
   // useragent whitelist
   // if set '[]' will accept all requests
@@ -71,7 +71,7 @@ const _default_config: any = {
   // arcaea api config
   'ARCAPI_RETRY': 3,
   'ARCAPI_VERSION': 14,
-  'ARCAPI_APPVERSION': '3.6.0c',
+  'ARCAPI_APPVERSION': '3.6.2c',
   'ARCAPI_USERAGENT': 'Grievous Lady (Linux; U; Android 2.3.3; BotArcAPI)',
   'ARCAPI_URL': 'https://arcapi.lowiro.com',
   'ARCAPI_URL_CODENAME': 'blockchain',
