@@ -59,9 +59,9 @@ const _default_config: any = {
   // change this will ignore the 'ARCAPI_URL' config
   // if set to '[]' will disable the frontend proxy
   'BOTARCAPI_FRONTPROXY_NODES': [
-    // { url: "https://arcapi.lowiro.com", weight: 1.0 },
-    // { url: "https://example.com", weight: 0.8 },
-    // { url: "https://your.proxy.node.com", weight: 0.3 },
+    /*   1 ms */ { enabled: true, weight: 1.0, url: "http://arc.p.xecus.cc" },
+    /*  53 ms */ { enabled: true, weight: 1.0, url: "https://arcapi.xuekirby.top" },
+    /*  90 ms */ { enabled: true, weight: 0.8, url: "http://source-api.lxns.org/botarcapi_proxy" },
   ],
 
   // change proxy node when request fail
@@ -80,7 +80,7 @@ const _default_config: any = {
   'DATABASE_PATH': './savedata/',
 
   // http server listening post
-  'SERVER_PORT': 80,
+  'SERVER_PORT': 8080,
 
   // log level
   // 3: Error, Fatal

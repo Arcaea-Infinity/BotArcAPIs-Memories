@@ -1,3 +1,10 @@
+# Glitch
+.glitchdotcom.json
+
+# Node-gyp
+.node-gyp
+
+*.map
 # node modules
 [Nn]ode_modules/
 
@@ -9,11 +16,9 @@
 [Ss]avelogs/
 
 # ignore test apis
-[Ss]ource/publicapi/debug/
-[Ss]ource/publicapi/v1/checkupdate.js
+# [Ss]ource/publicapi/debug/
+# [Ss]ource/publicapi/v1/checkupdate.js
 
-# ignore build
-[Bb]uild/
 
 # windows file
 desktop.ini
