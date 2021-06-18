@@ -1,5 +1,5 @@
 // filename : __loader__.js
-// author   : TheSnowfield
+// author   : TheSnowfield, t404owo
 // date     : 02/09/2020
 // comment  : loader handles api requests and map to require files
 //            it's also a global access point
@@ -60,17 +60,16 @@ const handler_request_publicapi =
     let _http_body: string = '';
     let _http_status: number = 0;
     let _http_content_type: string = '';
+    let _api_entry: any;
 
     try {
-
-      let _api_entry: any;
-
-      // try match the forward route
+      
+      // try to match the route to forward
       for (const v in forward_route) {
         if (new RegExp(forward_route[v]).test(path)) {
 
           path = path.replace(forward_route[v], '');
-          _api_entry = await import(`./publicapi/${v}`);
+          _api_entry = await import(`./publicapi${v}`);
 
           break;
         }
@@ -78,11 +77,17 @@ const handler_request_publicapi =
 
       // require directly if no match
       if (!_api_entry)
-        _api_entry = await import(`./publicapi/${path}`);
+        _api_entry = await import(`./publicapi/${path}.js`);
+    }
+    catch (e) {
+      return handler_request_notfound(response, 'request path notfound =(:3) z)_');
+    }
 
-      // try invoke method
+    try {
+
       const _api_result: any = {};
 
+      // try to invoke method
       _api_entry = _api_entry.default;
       await _api_entry(argument, method, path, header, databody)
         .then((result: any) => {
@@ -99,8 +104,8 @@ const handler_request_publicapi =
       _http_content_type = 'application/json; charset=utf-8';
     }
     catch (e) {
-      syslog.e(TAG, e.stack);
-      return handler_request_notfound(response, 'request path notfound =(:3) z)_');
+      syslog.e(e.stack);
+      return handler_request_notfound(response, 'some error happend! (>_<)|||');
     }
 
     // send result to client
@@ -111,7 +116,6 @@ const handler_request_publicapi =
     response.end(_http_body);
 
     syslog.v(TAG, 'Send response back');
-
   }
 
 const handler = async (request: IncomingMessage, response: ServerResponse) => {
@@ -132,6 +136,7 @@ const handler = async (request: IncomingMessage, response: ServerResponse) => {
   const _api_path = _api_url.pathname;
   const _api_headers = request.headers;
   const _api_arguments = Utils.httpGetAllParams(_api_url.searchParams);
+  
   syslog.i(TAG,
     `Accept ${_sign_agent} ` +
     `request => ${request.method} ` +
