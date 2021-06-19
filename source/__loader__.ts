@@ -88,7 +88,7 @@ const handler_request_publicapi =
         _api_entry = await import(`./publicapi/${path}.js`);
     }
     catch (e) {
-      syslog.w(TAG, path);
+      syslog.w(TAG, `Invalid request path ${path}`);
       return handler_request_notfound(response, 'request path notfound =(:3) z)_');
     }
 
