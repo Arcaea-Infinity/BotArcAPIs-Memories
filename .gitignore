@@ -1,3 +1,6 @@
+# Glitch
+.glitchdotcom.json
+
 # node modules
 [Nn]ode_modules/
 
@@ -10,7 +13,6 @@
 
 # ignore test apis
 [Ss]ource/publicapi/debug/
-[Ss]ource/publicapi/v1/checkupdate.js
 
 # ignore build
 [Bb]uild/
