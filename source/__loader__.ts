@@ -88,7 +88,7 @@ const handler_request_publicapi =
         _api_entry = await import(`./publicapi/${path}.js`);
     }
     catch (e) {
-      syslog.w(TAG, `Invalid request path ${path}`);
+      syslog.w(TAG, `Invalid request path => ${path}`);
       return handler_request_notfound(response, 'request path notfound =(:3) z)_');
     }
 
@@ -114,7 +114,7 @@ const handler_request_publicapi =
     }
     catch (e) {
       syslog.e(TAG, e.stack);
-      return handler_request_error(response, 'some error happened! (>_<)|||');
+      return handler_request_error(response, 'some error occurred! (>_<)|||');
     }
 
     // send result to client
