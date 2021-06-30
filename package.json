@@ -1,6 +1,6 @@
 {
   "name": "botarcapi",
-  "version": "0.3.6",
+  "version": "0.3.7",
   "description": "A fast and easy Arcaea API for your bot.",
   "dependencies": {
     "abab": "^2.0.5",
