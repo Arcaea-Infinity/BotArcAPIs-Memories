@@ -8,11 +8,11 @@
 A fast and easy Arcaea API for your bot.  
 
 ## 🤔 Dependences
-- abab >= `2.0.3`
-- node-fetch >= `2.6.1`
-- sqlite-async >= `1.0.12`
-- safe-eval >= `0.4.1`
-- archash4all >= `1.2.0`
+- abab `^2.0.5`
+- archash4all `^1.2.0`
+- node-fetch `^2.6.1`
+- sqlite-async `^1.1.0`
+- safe-eval `^0.4.1`
 
 ## 🌈 Guide for using
 - [Get Started](../../wiki/Get-Started)
